@@ -25,11 +25,17 @@ function createMainPage(){
     var div_content_container = document.getElementById("content-container");
     div_content_container.appendChild(form_name_input);
 
-    // 이름을 서버로 전송하는 이벤트 리스너를 정의합니다.
-    // var listner_
-    // form_name_input.addEventListener("submit", ,true);
+    // 유저 이름을 전달받아 서버에 전송하는 이벤트 리스너를 정의 및 등록합니다.
+    var getNameEventListener = function (event){
+        var user_name = input_name_text.value;
+        console.log(user_name);
 
+        // form 태그의 디폴트 이벤트 리스너를 취소합니다.
+        event.preventDefault();
+    }
+    form_name_input.addEventListener("submit", getNameEventListener,true);
 }
+
 /* 메인 페이지 초기화 */
 window.onload = ()=>{
     console.log("window-onload called.");
