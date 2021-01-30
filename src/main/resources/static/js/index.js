@@ -10,6 +10,12 @@ function setJsonXHR(url){
     return xhr;
 }
 
+/* 유틸리티 */
+function getNowIsoTime() {
+    var now = new Date();
+    return now.toISOString();
+}
+
 /* 메인 페이지 */
 // 인덱스 페이지의 HTML 태그를 생성합니다.
 function createMainPage(){
@@ -41,11 +47,11 @@ function createMainPage(){
     var getNameEventListener = function (event){
         // Ajax를 사용해 서버에 이름을 전달한다.
         var user_name = input_name_text.value;
-        var data = { "user_name" : user_name }
+        var data = { "user_name" : user_name, "transaction_time":getNowIsoTime()};
 
         var xhr = setJsonXHR(host_address+"/home/submit");
         xhr.onreadystatechange = function(){
-            if(xhr.readyState===4 && xhr.response.status===200)
+            if(xhr.readyState===4 && xhr.status===200)
                 console.log(xhr.response);
         }
         xhr.send(JSON.stringify(data));
