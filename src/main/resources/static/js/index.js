@@ -1,7 +1,14 @@
 /* 서버 정보 */
 const host_address = "http://localhost:8080/";
 
-/* */
+/* 네트워크 */
+// JSON으로 전송하기 위한 XMLHttpRequest 객체를 생성합니다.
+function setJsonXHR(url){
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    return xhr;
+}
 
 /* 메인 페이지 */
 // 인덱스 페이지의 HTML 태그를 생성합니다.
@@ -34,17 +41,13 @@ function createMainPage(){
     var getNameEventListener = function (event){
         // Ajax를 사용해 서버에 이름을 전달한다.
         var user_name = input_name_text.value;
-        var data = {
-            "user_name" : user_name
-        }
-        console.log(data);
+        var data = { "user_name" : user_name }
 
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', host_address+"/home/hello");
+        var xhr = setJsonXHR(host_address+"/home/submit");
         xhr.onreadystatechange = function(){
-            console.log(xhr.response);
+            if(xhr.readyState===4 && xhr.response.status===200)
+                console.log(xhr.response);
         }
-        xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(JSON.stringify(data));
 
         // form 태그의 디폴트 이벤트 리스너를 취소합니다.

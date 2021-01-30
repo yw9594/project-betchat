@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/home")
 public class HomeController {
 
-    @PostMapping("/hello")
-    public UserInfo hello(@RequestBody UserInfo userInfo){
-
+    @PostMapping("/submit")
+    public UserInfo submit(@RequestBody UserInfo userInfo){
+        System.out.println(userInfo);
         return userInfo;
     }
 }
