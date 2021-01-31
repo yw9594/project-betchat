@@ -47,7 +47,12 @@ function createMainPage(){
     var getNameEventListener = function (event){
         // Ajax를 사용해 서버에 이름을 전달한다.
         var user_name = input_name_text.value;
-        var data = { "user_name" : user_name, "transaction_time":getNowIsoTime()};
+        var data = {
+            "transaction_time":getNowIsoTime(),
+            "data" : {
+                "user_name":user_name
+            }
+        };
 
         var xhr = setJsonXHR(host_address+"/home/submit");
         xhr.onreadystatechange = function(){

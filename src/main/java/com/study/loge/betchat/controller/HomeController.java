@@ -1,7 +1,9 @@
 package com.study.loge.betchat.controller;
 
-import com.study.loge.betchat.model.UserInfoRequest;
-import com.study.loge.betchat.model.UserInfoResponse;
+import com.study.loge.betchat.model.requests.UserInfoRequest;
+import com.study.loge.betchat.model.response.UserInfoResponse;
+import com.study.loge.betchat.model.MessageHeader;
+import org.aspectj.bridge.Message;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -11,11 +13,15 @@ import java.time.LocalDateTime;
 public class HomeController {
 
     @PostMapping("/submit")
-    public UserInfoResponse submit(@RequestBody UserInfoRequest userInfoRequest){
-        String userId = userInfoRequest.getUserName();
-        LocalDateTime transactionTime = userInfoRequest.getTransactionTime();
+    public MessageHeader<UserInfoResponse> submit(@RequestBody MessageHeader<UserInfoRequest> request){
+        System.out.println(request);
 
-        UserInfoResponse userInfoResponse = UserInfoResponse.builder().userId(userId).transactionTime(transactionTime).build();
-        return userInfoResponse;
+        UserInfoResponse userInfoResponse = UserInfoResponse.builder()
+                .userId("userId")
+                .build();
+
+        MessageHeader<UserInfoResponse> response = MessageHeader.makeMessage(userInfoResponse);
+
+        return response;
     }
 }
