@@ -1,12 +1,13 @@
 package com.study.loge.betchat.model;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.time.LocalDateTime;
 
 @Data
-public class UserInfo {
-    String userName;
+@Builder
+public class UserInfoResponse {
+    String userId;
     LocalDateTime transactionTime;
 }
