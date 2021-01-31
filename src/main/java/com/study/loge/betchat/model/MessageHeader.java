@@ -1,5 +1,6 @@
 package com.study.loge.betchat.model;
 
+import com.study.loge.betchat.enums.MessageStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,12 +10,14 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class MessageHeader<T> {
+    private MessageStatus resultStatus;
     private LocalDateTime transactionTime;  // 메시지 발송 시간
-    T data;                                 // 메시지 body
+    private T data;                                 // 메시지 body
 
-    public static <T> MessageHeader<T> makeMessage(T data){
+    public static <T> MessageHeader<T> makeMessage(MessageStatus messageStatusatus, T data){
         MessageHeader<T> message = MessageHeader.<T>builder()
                 .transactionTime(LocalDateTime.now())
+                .resultStatus(messageStatusatus)
                 .data(data)
                 .build();
         return message;
