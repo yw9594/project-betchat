@@ -1,9 +1,18 @@
 /* 서버 정보 */
+// 서버 주소를 정의합니다.
 const host_address = "http://localhost:8080/";
 
 /* 네트워크 */
+// 서버와 통신하기 위한 JSON 형식을 정의합니다.
+function makeJsonXHRBody(data){
+    return {
+        "transaction_time": getNowIsoTime(),
+        "data": data
+    }
+};
+
 // JSON으로 전송하기 위한 XMLHttpRequest 객체를 생성합니다.
-function setJsonXHR(url){
+function makeJsonXHRObj(url){
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -11,6 +20,7 @@ function setJsonXHR(url){
 }
 
 /* 유틸리티 */
+// 메시지 전송을 위한 현재 시간을 반환합니다.
 function getNowIsoTime() {
     var now = new Date();
     return now.toISOString();
@@ -47,14 +57,10 @@ function createMainPage(){
     var getNameEventListener = function (event){
         // Ajax를 사용해 서버에 이름을 전달한다.
         var user_name = input_name_text.value;
-        var data = {
-            "transaction_time":getNowIsoTime(),
-            "data" : {
-                "user_name":user_name
-            }
-        };
 
-        var xhr = setJsonXHR(host_address+"/home/submit");
+        var xhr = makeJsonXHRObj(host_address+"/home/submit");
+        var data = makeJsonXHRBody({"user_name":user_name});
+
         xhr.onreadystatechange = function(){
             if(xhr.readyState===4 && xhr.status===200)
                 console.log(xhr.response);
@@ -64,6 +70,8 @@ function createMainPage(){
         // form 태그의 디폴트 이벤트 리스너를 취소합니다.
         event.preventDefault();
     }
+
+    // 이름 전송 이벤트 리스너를 등록합니다.
     form_name_input.addEventListener("submit", getNameEventListener,true);
 }
 
