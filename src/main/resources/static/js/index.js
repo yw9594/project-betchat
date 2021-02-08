@@ -50,7 +50,7 @@ function clearHTMLElement(element){
 /* 메인 페이지 */
 // 메인 페이지의 HTML 태그를 생성합니다.
 function createMainPage(){
-    console.log("create-main-page called.");
+    console.log("createMainPage called.");
 
     // 이름을 입력받기 위한 form 태그를 생성합니다.
     var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
@@ -91,12 +91,13 @@ function createMainPage(){
 
 // 채팅방 리스트의 페이지를 생성합니다.
 function createRoomListPage(response){
+    console.log("createRoomListPage called.");
 
 }
 
 /* 메인 페이지 초기화 */
 window.onload = ()=>{
-    console.log("window-onload called.");
+    console.log("window.onload called.");
 
     // 내용을 표현하는 HTML Element를 가져옵니다.
     div_content_container = document.getElementById("content-container");
