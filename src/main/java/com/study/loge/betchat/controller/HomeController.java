@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/home")
 public class HomeController {
-    // userId를 생성하기 위한 객체입니다.
+    // userKey를 생성하기 위한 객체입니다.
     private final KeyGenerator keyGenerator;
 
     @PostMapping("/submit")

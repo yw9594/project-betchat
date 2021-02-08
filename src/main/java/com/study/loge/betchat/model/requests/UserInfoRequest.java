@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 클라이언트에서 유저 이름을 전달받기 위한 클래스입니다.
+// 클라이언트로부터 user name을 전달받기 위한 클래스입니다.
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
