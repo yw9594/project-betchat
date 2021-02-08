@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserInfoResponse {
-    private String userId;
+    private String userKey;
 }

@@ -19,10 +19,10 @@ public class HomeController {
     @PostMapping("/submit")
     public MessageHeader<UserInfoResponse> submit(@RequestBody MessageHeader<UserInfoRequest> request){
         // 유저에게 전달할 response를 생성합니다.
-        String userId = keyGenerator.generateKey();
+        String userKey = keyGenerator.generateKey();
         UserInfoResponse userInfoResponse = UserInfoResponse
                 .builder()
-                .userId(userId)
+                .userKey(userKey)
                 .build();
         MessageHeader<UserInfoResponse> response = MessageHeader.makeMessage(MessageStatus.OK, userInfoResponse);
 
