@@ -35,6 +35,13 @@ function makeHTMLElement(tag_name, attributes) {
     return element;
 }
 
+// parent HTML Element에 child를 추가합니다.
+function addDOMElement(parent, child) {
+    for(const k in child)
+        parent.appendChild(child[k]);
+}
+
+
 
 
 /* 메인 페이지 */
@@ -42,18 +49,18 @@ function makeHTMLElement(tag_name, attributes) {
 function createMainPage(){
     console.log("create-main-page called.");
 
+    var div_content_container = document.getElementById("content-container");
+
     // 이름을 입력받기 위한 form 태그를 생성합니다.
     var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
     var input_name_text =  makeHTMLElement("input", {"id":"input_name_text", "type":"text", "placeholder":"이름을 입력하세요."});
     var input_name_submit = makeHTMLElement("input", {"id":"input_name_submit", "type":"submit", "value":"입장!"});
-    var div_content_container = document.getElementById("content-container");
-
 
     // 생성된 form 태그를 페이지에 추가합니다.
-    form_name_input.appendChild(input_name_text);
-    form_name_input.appendChild(input_name_submit);
+    addDOMElement(form_name_input, [input_name_text, input_name_submit]);
 
-    div_content_container.appendChild(form_name_input);
+    // 페이지에 구성 요소를 추가합니다.
+    addDOMElement(div_content_container, [form_name_input]);
 
     // 유저 이름을 전달받아 서버에 전송하는 이벤트 리스너를 정의 및 등록합니다.
     var getNameEventListener = function (event){
