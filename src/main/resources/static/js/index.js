@@ -26,31 +26,33 @@ function getNowIsoTime() {
     return now.toISOString();
 }
 
+// HTML Element를 생성합니다.
+function makeHTMLElement(tag_name, attributes) {
+    var element = document.createElement(tag_name);
+    for(const key in attributes)
+        element.setAttribute(key, attributes[key]);
+
+    return element;
+}
+
+
+
 /* 메인 페이지 */
 // 인덱스 페이지의 HTML 태그를 생성합니다.
 function createMainPage(){
     console.log("create-main-page called.");
 
     // 이름을 입력받기 위한 form 태그를 생성합니다.
-    var form_name_input = document.createElement("form");
-    var input_name_text = document.createElement("input");
-    var input_name_submit = document.createElement("input");
+    var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
+    var input_name_text =  makeHTMLElement("input", {"id":"input_name_text", "type":"text", "placeholder":"이름을 입력하세요."});
+    var input_name_submit = makeHTMLElement("input", {"id":"input_name_submit", "type":"submit", "value":"입장!"});
+    var div_content_container = document.getElementById("content-container");
 
-    form_name_input.setAttribute("id", "form_name_input");
-
-    input_name_text.setAttribute("id", "input_name_text");
-    input_name_text.setAttribute("type", "text");
-    input_name_text.setAttribute("placeholder", "이름을 입력하세요.");
-
-    input_name_submit.setAttribute("id", "input_name_submit");
-    input_name_submit.setAttribute("type", "submit");
-    input_name_submit.setAttribute("value", "입장!");
 
     // 생성된 form 태그를 페이지에 추가합니다.
     form_name_input.appendChild(input_name_text);
     form_name_input.appendChild(input_name_submit);
 
-    var div_content_container = document.getElementById("content-container");
     div_content_container.appendChild(form_name_input);
 
     // 유저 이름을 전달받아 서버에 전송하는 이벤트 리스너를 정의 및 등록합니다.
