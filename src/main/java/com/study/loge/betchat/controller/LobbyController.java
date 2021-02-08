@@ -1,8 +1,11 @@
 package com.study.loge.betchat.controller;
 
 import com.study.loge.betchat.component.KeyGenerator;
+import com.study.loge.betchat.enums.MessageStatus;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.requests.RoomCreateRequest;
+import com.study.loge.betchat.model.response.RoomCreateResponse;
+import com.study.loge.betchat.model.response.UserInfoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +22,14 @@ public class LobbyController {
 
     // 방 생성 요청을 받고 유저에게 Room Key를 전달합니다.
     @PostMapping("/create")
-    public void createRoom(@RequestBody MessageHeader<RoomCreateRequest> request){
+    public MessageHeader<RoomCreateResponse> createRoom(@RequestBody MessageHeader<RoomCreateRequest> request){
+        String roomKey = keyGenerator.generateKey();
+        RoomCreateResponse roomCreateResponse = RoomCreateResponse
+                .builder()
+                .roomKey(roomKey)
+                .build();
+        MessageHeader<RoomCreateResponse> response = MessageHeader.makeMessage(MessageStatus.OK, roomCreateResponse);
 
+        return response;
     }
 }
