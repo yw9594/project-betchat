@@ -94,9 +94,9 @@ function createLobbyPage(response){
     console.log("createRoomListPage called.");
 
     // 채팅방을 생성하기 위한 태그를 생성합니다.
-    var form_room_create =  makeHTMLElement("form", {"id":"form_room_input"});
+    var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
     var header_room_create = makeHTMLElement("h2");
-    var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_submit", "type":"submit", "value":"생성!"});
+    var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_create_submit", "type":"submit", "value":"생성!"});
 
     var text_room_create = document.createTextNode("채팅방 생성");
 
@@ -113,7 +113,7 @@ function createLobbyPage(response){
     }
 
     // 채팅방 생성 이벤트 리스너를 등록합니다.
-    form_name_input.addEventListener("submit", createRoomEventListener,true);
+    form_room_create.addEventListener("submit", createRoomEventListener,true);
 }
 
 /* 메인 페이지 초기화 */
