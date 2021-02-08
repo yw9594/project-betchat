@@ -51,6 +51,7 @@ function clearHTMLElement(element){
 // 메인 페이지의 HTML 태그를 생성합니다.
 function createMainPage(){
     console.log("createMainPage called.");
+    clearHTMLElement(div_content_container);
 
     // 이름을 입력받기 위한 태그를 생성합니다.
     var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
@@ -71,14 +72,16 @@ function createMainPage(){
         var xhr = makeXHRObj(host_address+"/home/submit");
         var data = makeXHRJsonBody(messageStatus.OK, {"user_name":user_name});
 
-        // 응답을 받은 경우, 채팅방 리스트를 보여줍니다.
+        // 응답을 받은 경우, 로비를 보여줍니다.
         xhr.onreadystatechange = function(){
             if(xhr.readyState===4 && xhr.status===200){
                 var response = JSON.parse(xhr.response);
+                var user_info = {
+                    "user_name" : user_name,
+                    "user_key":response.data.user_key
+                }
 
-
-                clearHTMLElement(div_content_container);
-                createLobbyPage(response);
+                createLobbyPage(user_info);
             }
         }
         xhr.send(JSON.stringify(data));
@@ -93,8 +96,9 @@ function createMainPage(){
 
 
 // 로비 페이지를 생성합니다.
-function createLobbyPage(response){
+function createLobbyPage(user_info){
     console.log("createLobbyPage called.");
+    clearHTMLElement(div_content_container);
 
     // 채팅방을 생성하기 위한 태그를 생성합니다.
     var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
@@ -106,11 +110,12 @@ function createLobbyPage(response){
     // 생성된 form 태그를 페이지에 추가합니다.
     addDOMElement(form_room_create, [input_room_create_submit]);
     addDOMElement(header_room_create, [text_room_create]);
-    addDOMElement(div_content_container, [header_room_create, input_room_create_submit]);
+    addDOMElement(div_content_container, [header_room_create, form_room_create]);
 
     // 채팅방 생성 요청을 처리하는 이벤트 리스너를 정의 및 등록합니다.
     var createRoomEventListener = function (event){
-       
+        console.log(user_info);
+
         // form 태그의 디폴트 이벤트 리스너를 취소합니다.
         event.preventDefault();
     }
