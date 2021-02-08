@@ -74,8 +74,11 @@ function createMainPage(){
         // 응답을 받은 경우, 채팅방 리스트를 보여줍니다.
         xhr.onreadystatechange = function(){
             if(xhr.readyState===4 && xhr.status===200){
+                var response = JSON.parse(xhr.response);
+
+
                 clearHTMLElement(div_content_container);
-                createLobbyPage(xhr.response);
+                createLobbyPage(response);
             }
         }
         xhr.send(JSON.stringify(data));
@@ -89,9 +92,9 @@ function createMainPage(){
 }
 
 
-// 채팅방 리스트의 페이지를 생성합니다.
+// 로비 페이지를 생성합니다.
 function createLobbyPage(response){
-    console.log("createRoomListPage called.");
+    console.log("createLobbyPage called.");
 
     // 채팅방을 생성하기 위한 태그를 생성합니다.
     var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
@@ -107,7 +110,7 @@ function createLobbyPage(response){
 
     // 채팅방 생성 요청을 처리하는 이벤트 리스너를 정의 및 등록합니다.
     var createRoomEventListener = function (event){
-
+       
         // form 태그의 디폴트 이벤트 리스너를 취소합니다.
         event.preventDefault();
     }
