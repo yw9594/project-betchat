@@ -52,7 +52,7 @@ function clearHTMLElement(element){
 function createMainPage(){
     console.log("createMainPage called.");
 
-    // 이름을 입력받기 위한 form 태그를 생성합니다.
+    // 이름을 입력받기 위한 태그를 생성합니다.
     var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
     var input_name_text =  makeHTMLElement("input", {"id":"input_name_text", "type":"text", "placeholder":"이름을 입력하세요."});
     var input_name_submit = makeHTMLElement("input", {"id":"input_name_submit", "type":"submit", "value":"입장!"});
@@ -75,7 +75,7 @@ function createMainPage(){
         xhr.onreadystatechange = function(){
             if(xhr.readyState===4 && xhr.status===200){
                 clearHTMLElement(div_content_container);
-                createRoomListPage(xhr.response);
+                createLobbyPage(xhr.response);
             }
         }
         xhr.send(JSON.stringify(data));
@@ -90,9 +90,20 @@ function createMainPage(){
 
 
 // 채팅방 리스트의 페이지를 생성합니다.
-function createRoomListPage(response){
+function createLobbyPage(response){
     console.log("createRoomListPage called.");
 
+    // 채팅방을 생성하기 위한 태그를 생성합니다.
+    var form_room_create =  makeHTMLElement("form", {"id":"form_room_input"});
+    var header_room_create = makeHTMLElement("h2");
+    var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_submit", "type":"submit", "value":"생성!"});
+
+    var text_room_create = document.createTextNode("채팅방 생성");
+
+    // 생성된 form 태그를 페이지에 추가합니다.
+    addDOMElement(form_room_create, [input_room_create_submit]);
+    addDOMElement(header_room_create, [text_room_create]);
+    addDOMElement(div_content_container, [header_room_create, input_room_create_submit]);
 }
 
 /* 메인 페이지 초기화 */
