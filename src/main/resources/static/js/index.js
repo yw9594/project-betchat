@@ -104,6 +104,16 @@ function createLobbyPage(response){
     addDOMElement(form_room_create, [input_room_create_submit]);
     addDOMElement(header_room_create, [text_room_create]);
     addDOMElement(div_content_container, [header_room_create, input_room_create_submit]);
+
+    // 채팅방 생성 요청을 처리하는 이벤트 리스너를 정의 및 등록합니다.
+    var createRoomEventListener = function (event){
+
+        // form 태그의 디폴트 이벤트 리스너를 취소합니다.
+        event.preventDefault();
+    }
+
+    // 채팅방 생성 이벤트 리스너를 등록합니다.
+    form_name_input.addEventListener("submit", createRoomEventListener,true);
 }
 
 /* 메인 페이지 초기화 */
