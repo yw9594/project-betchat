@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class MessageHeader<T> {
-    private MessageStatus resultStatus;
-    private LocalDateTime transactionTime;  // 메시지 발송 시간
+    private MessageStatus messageStatus;            // 요청/응답 상태
+    private LocalDateTime transactionTime;          // 메시지 발송 시간
     private T data;                                 // 메시지 body
 
-    public static <T> MessageHeader<T> makeMessage(MessageStatus messageStatusatus, T data){
+    public static <T> MessageHeader<T> makeMessage(MessageStatus messageStatus, T data){
         MessageHeader<T> message = MessageHeader.<T>builder()
+                .messageStatus(messageStatus)
                 .transactionTime(LocalDateTime.now())
-                .resultStatus(messageStatusatus)
                 .data(data)
                 .build();
         return message;

@@ -6,7 +6,6 @@ import com.study.loge.betchat.model.requests.UserInfoRequest;
 import com.study.loge.betchat.model.response.UserInfoResponse;
 import com.study.loge.betchat.model.MessageHeader;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 // Home URL 경로를 제어합니다.

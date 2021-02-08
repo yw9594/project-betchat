@@ -1,23 +1,27 @@
 /* 서버 정보 */
-// 서버 주소를 정의합니다.
-const host_address = "http://localhost:8080/";
+const host_address = "http://localhost:8080/";  // 서버 주소를 정의합니다.
+
+/* 페이지 전역 변수 */
+let div_content_container;                      // 페이지의 내용을 표현하는 HTML Element입니다.
 
 /* 네트워크 */
-// 서버와 통신하기 위한 JSON 형식을 정의합니다.
-function makeJsonXHRBody(data){
-    return {
-        "transaction_time": getNowIsoTime(),
-        "data": data
-    }
-};
-
 // JSON으로 전송하기 위한 XMLHttpRequest 객체를 생성합니다.
-function makeJsonXHRObj(url){
+function makeXHRObj(url){
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url);
     xhr.setRequestHeader("Content-Type", "application/json");
     return xhr;
 }
+// 서버와 통신하기 위한 JSON 형식을 정의합니다.
+function makeXHRJsonBody(messageStatus, data){
+    return {
+        "messageStatus":messageStatus,
+        "transaction_time": getNowIsoTime(),
+        "data": data
+    }
+};
+// 요청/응답의 상태를 전달하기 위한 enum입니다.
+const messageStatus = Object.freeze({"OK":"OK", "ERROR":"ERROR"});
 
 /* 유틸리티 */
 // 메시지 전송을 위한 현재 시간을 반환합니다.
@@ -25,7 +29,6 @@ function getNowIsoTime() {
     var now = new Date();
     return now.toISOString();
 }
-
 // HTML Element를 생성합니다.
 function makeHTMLElement(tag_name, attributes) {
     var element = document.createElement(tag_name);
@@ -34,22 +37,20 @@ function makeHTMLElement(tag_name, attributes) {
 
     return element;
 }
-
 // parent HTML Element에 child를 추가합니다.
 function addDOMElement(parent, child) {
     for(const k in child)
         parent.appendChild(child[k]);
 }
-
-
-
+// HTMLElement 내 모든 내용을 삭제합니다.
+function clearHTMLElement(element){
+    element.innerHTML = "";
+}
 
 /* 메인 페이지 */
-// 인덱스 페이지의 HTML 태그를 생성합니다.
+// 메인 페이지의 HTML 태그를 생성합니다.
 function createMainPage(){
     console.log("create-main-page called.");
-
-    var div_content_container = document.getElementById("content-container");
 
     // 이름을 입력받기 위한 form 태그를 생성합니다.
     var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
@@ -64,15 +65,18 @@ function createMainPage(){
 
     // 유저 이름을 전달받아 서버에 전송하는 이벤트 리스너를 정의 및 등록합니다.
     var getNameEventListener = function (event){
-        // Ajax를 사용해 서버에 이름을 전달한다.
+        // Ajax를 사용해 서버에 이름을 전달합니다.
         var user_name = input_name_text.value;
 
-        var xhr = makeJsonXHRObj(host_address+"/home/submit");
-        var data = makeJsonXHRBody({"user_name":user_name});
+        var xhr = makeXHRObj(host_address+"/home/submit");
+        var data = makeXHRJsonBody(messageStatus.OK, {"user_name":user_name});
 
+        // 응답을 받은 경우, 채팅방 리스트를 보여줍니다.
         xhr.onreadystatechange = function(){
-            if(xhr.readyState===4 && xhr.status===200)
-                console.log(xhr.response);
+            if(xhr.readyState===4 && xhr.status===200){
+                clearHTMLElement(div_content_container);
+                createRoomListPage(xhr.response);
+            }
         }
         xhr.send(JSON.stringify(data));
 
@@ -84,8 +88,19 @@ function createMainPage(){
     form_name_input.addEventListener("submit", getNameEventListener,true);
 }
 
+
+// 채팅방 리스트의 페이지를 생성합니다.
+function createRoomListPage(response){
+
+}
+
 /* 메인 페이지 초기화 */
 window.onload = ()=>{
     console.log("window-onload called.");
+
+    // 내용을 표현하는 HTML Element를 가져옵니다.
+    div_content_container = document.getElementById("content-container");
+
+    // 메인 페이지를 표현합니다.
     createMainPage();
 }
