@@ -51,7 +51,7 @@ function clearHTMLElement(element){
 /* 메인 페이지 */
 // 메인 페이지의 HTML 태그를 생성합니다.
 function createMainPage(info_box){
-    console.log("createMainPage called.");
+    console.log("createMainPage : createMainPage called.");
     clearHTMLElement(div_content_container);
 
     // 이름을 입력받기 위한 태그를 생성합니다.
@@ -100,7 +100,7 @@ function createMainPage(info_box){
 
 // 로비 페이지를 생성합니다.
 function createLobbyPage(info_box){
-    console.log("createLobbyPage called.");
+    console.log("createLobbyPage : createLobbyPage called.");
     clearHTMLElement(div_content_container);
 
     // 채팅방을 생성하기 위한 태그를 생성합니다.
@@ -127,7 +127,7 @@ function createLobbyPage(info_box){
                 var response = JSON.parse(xhr.response);
                 info_box["room_key"]=response.data.room_key;
 
-                createRoomPage(info_box);
+                onConnectRoomPage(info_box);
             }
         }
         xhr.send(JSON.stringify(data));
@@ -140,9 +140,9 @@ function createLobbyPage(info_box){
     form_room_create.addEventListener("submit", createLobbyEventListener,true);
 }
 
-// 채팅방 페이지를 표현합니다.
-function createRoomPage(info_box){
-    console.log("createRoomPage called.");
+// 채팅방 로딩 중간 과정을 처리합니다.
+function onConnectRoomPage(info_box){
+    console.log("onConnectRoomPage : onConnectRoomPage called.");
     clearHTMLElement(div_content_container);
 
     // stomp handshaking을 수행합니다.
@@ -152,11 +152,11 @@ function createRoomPage(info_box){
     stompClient.connect({},
         // connection 성공 시 수행합니다.
         ()=>{
-            console.log("createRoomPage.stompClient.connect connection success.");
+            console.log("onConnectRoomPage.stompClient.connect : connection success.");
         },
-        // connection 실패 시 수행합니다.
+        // connection 실패 이전 페이지로 되돌아갑니다.
         ()=>{
-            console.log("createRoomPage.stompClient.connect connection failed.");
+            console.log("onConnectRoomPage.stompClient.connect : connection failed.");
         }
     );
 }
@@ -164,7 +164,7 @@ function createRoomPage(info_box){
 
 /* 메인 페이지 초기화 */
 window.onload = ()=>{
-    console.log("window.onload called.");
+    console.log("window.onload : window.onload called.");
 
     // 내용을 표현하는 HTML Element를 가져옵니다.
     div_content_container = document.getElementById("content-container");
