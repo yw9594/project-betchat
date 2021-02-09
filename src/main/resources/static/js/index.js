@@ -1,5 +1,6 @@
 /* 서버 정보 */
 const host_address = "http://localhost:8080/";  // 서버 주소를 정의합니다.
+const ws_url_path = "ws"
 
 /* 페이지 전역 변수 */
 let div_content_container;                      // 페이지의 내용을 표현하는 HTML Element입니다.
@@ -126,6 +127,7 @@ function createLobbyPage(info_box){
                 var response = JSON.parse(xhr.response);
                 info_box["room_key"]=response.data.room_key;
 
+                createRoomPage(info_box);
             }
         }
         xhr.send(JSON.stringify(data));
@@ -138,44 +140,15 @@ function createLobbyPage(info_box){
     form_room_create.addEventListener("submit", createLobbyEventListener,true);
 }
 
-function createLobbyPage(info_box){
-    console.log("createLobbyPage called.");
+// 채팅방 페이지를 표현합니다.
+function createRoomPage(info_box){
+    console.log("createRoomPage called.");
     clearHTMLElement(div_content_container);
 
-    // 채팅방을 생성하기 위한 태그를 생성합니다.
-    var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
-    var header_room_create = makeHTMLElement("h2");
-    var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_create_submit", "type":"submit", "value":"생성!"});
+    // stomp 기반 채팅방 연결을 수행합니다.
+    var socket = new SockJS(host_address+ws_url_path);
+    var stompClient = Stomp.over(socket);
 
-    var text_room_create = document.createTextNode("채팅방 생성");
-
-    // 생성된 form 태그를 페이지에 추가합니다.
-    addDOMElement(form_room_create, [input_room_create_submit]);
-    addDOMElement(header_room_create, [text_room_create]);
-    addDOMElement(div_content_container, [header_room_create, form_room_create]);
-
-    // 채팅방 생성 요청을 처리하는 이벤트 리스너를 정의 및 등록합니다.
-    var createLobbyEventListener = function (event){
-        // Ajax를 사용해 서버에 이름을 전달합니다
-        var xhr = makeXHRObj(host_address+"/lobby/create");
-        var data = makeXHRJsonBody(messageStatus.OK, {"user_key":info_box.user_key});
-
-        // 응답을 받은 경우, 로비를 보여줍니다.
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState===4 && xhr.status===200){
-                var response = JSON.parse(xhr.response);
-                info_box["room_key"]=response.data.room_key;
-
-            }
-        }
-        xhr.send(JSON.stringify(data));
-
-        // form 태그의 디폴트 이벤트 리스너를 취소합니다.
-        event.preventDefault();
-    }
-
-    // 채팅방 생성 이벤트 리스너를 등록합니다.
-    form_room_create.addEventListener("submit", createLobbyEventListener,true);
 }
 
 
