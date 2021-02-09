@@ -1,6 +1,6 @@
 /* 서버 정보 */
 const host_address = "http://localhost:8080/";  // 서버 주소를 정의합니다.
-const ws_url_path = "ws"
+const ws_url_path = "ws/"
 
 /* 페이지 전역 변수 */
 let div_content_container;                      // 페이지의 내용을 표현하는 HTML Element입니다.
@@ -145,10 +145,20 @@ function createRoomPage(info_box){
     console.log("createRoomPage called.");
     clearHTMLElement(div_content_container);
 
-    // stomp 기반 채팅방 연결을 수행합니다.
+    // stomp handshaking을 수행합니다.
     var socket = new SockJS(host_address+ws_url_path);
     var stompClient = Stomp.over(socket);
 
+    stompClient.connect({},
+        // connection 성공 시 수행합니다.
+        ()=>{
+            console.log("createRoomPage.stompClient.connect connection success.");
+        },
+        // connection 실패 시 수행합니다.
+        ()=>{
+            console.log("createRoomPage.stompClient.connect connection failed.");
+        }
+    );
 }
 
 
