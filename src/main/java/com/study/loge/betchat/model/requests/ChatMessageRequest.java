@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// 채팅 메시지를 처리하는 클래스입니다.
+// 유저가 보내는 채팅 메시지를 처리합니다.
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
