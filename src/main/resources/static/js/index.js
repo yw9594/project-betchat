@@ -147,7 +147,7 @@ function onConnectRoomPage(info_box){
     console.log("onConnectRoomPage : onConnectRoomPage called.");
     clearHTMLElement(div_content_container);
 
-    // stomp handshaking을 수행합니다.
+    // stomp hand shaking을 수행합니다.
     var socket = new SockJS(ws_url);
     var stompClient = Stomp.over(socket);
 
@@ -160,16 +160,12 @@ function onConnectRoomPage(info_box){
             stompClient.subscribe(chat_sub_url + info_box.room_key,
                 (message)=>{
                     console.log("onConnectRoomPage.stompClient.subscribe : subscribe called.");
-
-                    console.log(message);
-
-
-                    createRoomPage(info_box, stompClient);
                 });
         },
         // connection 실패 이전 페이지로 되돌아갑니다.
         ()=>{
             console.log("onConnectRoomPage.stompClient.connect : connection failed.");
+            createLobbyPage(info_box);
         }
     );
 }
