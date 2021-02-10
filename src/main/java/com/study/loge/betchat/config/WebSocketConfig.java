@@ -17,10 +17,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        // chatting을 전달하기 위한 url은 /pub로 시작합니다.
-        registry.setApplicationDestinationPrefixes("/pub");
+        // chatting을 @MessageMapping Controller로 전달하기 위한 prefix를 설정합니다.
+        registry.setApplicationDestinationPrefixes("/pub/chat");
 
-        // chatting을 전달받기 위해 클라이언트는 /sub로 시작하는 url을 subscribe해야합니다.
-        registry.enableSimpleBroker("/sub");
+        // chatting room을 subscribe하기 위한 prefix를 설정합니다.
+        registry.enableSimpleBroker("/sub/chat");
     }
 }
