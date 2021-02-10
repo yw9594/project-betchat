@@ -1,6 +1,8 @@
 /* 서버 정보 */
-const host_address = "http://localhost:8080/";  // 서버 주소를 정의합니다.
-const ws_url_path = "ws/"
+const host_address = "http://localhost:8080";  // 서버 주소를 정의합니다.
+const ws_url = "/ws";
+const chat_pub_url = "/pub/chat/";
+const chat_sub_url = "/sub/chat/";
 
 /* 페이지 전역 변수 */
 let div_content_container;                      // 페이지의 내용을 표현하는 HTML Element입니다.
@@ -118,7 +120,7 @@ function createLobbyPage(info_box){
     // 채팅방 생성 요청을 처리하는 이벤트 리스너를 정의 및 등록합니다.
     var createLobbyEventListener = function (event){
         // Ajax를 사용해 서버에 이름을 전달합니다
-        var xhr = makeXHRObj(host_address+"/lobby/create");
+        var xhr = makeXHRObj(host_address +"/lobby/create");
         var data = makeXHRJsonBody(messageStatus.OK, {"user_key":info_box.user_key});
 
         // 응답을 받은 경우, 로비를 보여줍니다.
@@ -146,19 +148,37 @@ function onConnectRoomPage(info_box){
     clearHTMLElement(div_content_container);
 
     // stomp handshaking을 수행합니다.
-    var socket = new SockJS(host_address+ws_url_path);
+    var socket = new SockJS(ws_url);
     var stompClient = Stomp.over(socket);
 
     stompClient.connect({},
-        // connection 성공 시 수행합니다.
+        // connection 성공 시 채팅방 페이지로 이동합니다.
         ()=>{
             console.log("onConnectRoomPage.stompClient.connect : connection success.");
+
+            // room_key를 기반으로 채팅방을 구독합니다.
+            stompClient.subscribe(chat_sub_url + info_box.room_key,
+                (message)=>{
+                    console.log("onConnectRoomPage.stompClient.subscribe : subscribe called.");
+
+                    console.log(message);
+
+
+                    createRoomPage(info_box, stompClient);
+                });
         },
         // connection 실패 이전 페이지로 되돌아갑니다.
         ()=>{
             console.log("onConnectRoomPage.stompClient.connect : connection failed.");
         }
     );
+}
+
+// 채팅방 페이지를 생성합니다.
+function createRoomPage(info_box, stompClient){
+    console.log("createRoomPage : createRoomPage called.");
+    clearHTMLElement(div_content_container);
+
 }
 
 
