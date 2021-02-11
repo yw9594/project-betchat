@@ -50,6 +50,11 @@ function clearHTMLElement(element){
     element.innerHTML = "";
 }
 
+// 페이지에 표현할 채팅 메시지를 생성합니다.
+function makeChatMessageText(name, text){
+    return name + " : " + text;
+}
+
 /* 메인 페이지 */
 // 메인 페이지의 HTML 태그를 생성합니다.
 function createMainPage(info_box){
@@ -156,11 +161,7 @@ function onConnectRoomPage(info_box){
         ()=>{
             console.log("onConnectRoomPage.stompClient.connect : connection success.");
 
-            // room_key를 기반으로 채팅방을 구독합니다.
-            stompClient.subscribe(chat_sub_url + info_box.room_key,
-                (message)=>{
-                    console.log("onConnectRoomPage.stompClient.subscribe : subscribe called.");
-                });
+            createRoomPage(info_box, stompClient);
         },
         // connection 실패 이전 페이지로 되돌아갑니다.
         ()=>{
@@ -175,8 +176,51 @@ function createRoomPage(info_box, stompClient){
     console.log("createRoomPage : createRoomPage called.");
     clearHTMLElement(div_content_container);
 
-}
+    // 채팅을 표현하기 위한 태그를 생성합니다.
+    var ul_chat_list =  makeHTMLElement("ul", {"id":"ul_chat_list"});
 
+    // 채팅 입력을 생성하기 위한 태그를 생성합니다.
+    var form_chat_create =  makeHTMLElement("form", {"id":"form_chat_create"});
+    var input_chat_text =  makeHTMLElement("input", {"id":"input_chat_text", "type":"text"});
+    var input_chat_submit = makeHTMLElement("input", {"id":"input_chat_submit", "type":"submit", "value":"전송"});
+
+    addDOMElement(form_chat_create, [input_chat_text, input_chat_submit]);
+
+    // 생성된 태그를 페이지에 추가합니다.
+    addDOMElement(div_content_container, [ul_chat_list, form_chat_create]);
+
+    // room_key를 기반으로 채팅방을 구독합니다.
+    stompClient.subscribe(chat_sub_url + info_box.room_key,
+        // 채팅 수신을 처리하는 이벤트 리스너를 정의합니다.
+        (message)=>{
+            console.log("createRoomPage.stompClient.subscribe : message received.");
+            var message_body = JSON.parse(message.body);
+            var li_chat_text =  makeHTMLElement("li");
+            var text_chat_text = document.createTextNode(makeChatMessageText(message_body.data.user_name, message_body.data.text));
+
+            addDOMElement(li_chat_text, [text_chat_text]);
+            addDOMElement(ul_chat_list, [li_chat_text]);
+        });
+
+    // 채팅 송신을 처리하는 이벤트 리스너를 정의 및 등록합니다.
+    var chat_data = JSON.parse(JSON.stringify(info_box));
+    chat_data["text"] = null;
+
+    var sendChatting = function (event){
+        console.log("createRoomPage.sendChatting : message sent.");
+        chat_data["text"] =input_chat_text.value;
+        var message = makeXHRJsonBody(messageStatus.OK, chat_data);
+
+        stompClient.send(chat_pub_url, {}, JSON.stringify(message));
+        input_chat_text.value="";
+
+        // form 태그의 디폴트 이벤트 리스너를 취소합니다.
+        event.preventDefault();
+    }
+
+    // 채팅 전송 이벤트 리스너를 등록합니다.
+    form_chat_create.addEventListener("submit", sendChatting, true);
+}
 
 /* 메인 페이지 초기화 */
 window.onload = ()=>{
