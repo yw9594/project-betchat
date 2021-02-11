@@ -62,12 +62,12 @@ function createMainPage(info_box){
     clearHTMLElement(div_content_container);
 
     // 이름을 입력받기 위한 태그를 생성합니다.
+    var header_name_input = makeHTMLElement("h3");
+    var text_name_input  = document.createTextNode("이름 입력");
+
     var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
     var input_name_text =  makeHTMLElement("input", {"id":"input_name_text", "type":"text", "placeholder":"이름을 입력하세요."});
     var input_name_submit = makeHTMLElement("input", {"id":"input_name_submit", "type":"submit", "value":"입장!"});
-    var header_name_input = makeHTMLElement("h2");
-
-    var text_name_input  = document.createTextNode("이름 입력");
 
     // 생성된 form 태그를 페이지에 추가합니다.
     addDOMElement(header_name_input, [text_name_input]);
@@ -104,7 +104,6 @@ function createMainPage(info_box){
     form_name_input.addEventListener("submit", getNameEventListener,true);
 }
 
-
 // 로비 페이지를 생성합니다.
 function createLobbyPage(info_box){
     console.log("createLobbyPage : createLobbyPage called.");
@@ -112,7 +111,7 @@ function createLobbyPage(info_box){
 
     // 채팅방을 생성하기 위한 태그를 생성합니다.
     var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
-    var header_room_create = makeHTMLElement("h2");
+    var header_room_create = makeHTMLElement("h3");
     var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_create_submit", "type":"submit", "value":"생성!"});
 
     var text_room_create = document.createTextNode("채팅방 생성");
@@ -176,6 +175,10 @@ function createRoomPage(info_box, stompClient){
     console.log("createRoomPage : createRoomPage called.");
     clearHTMLElement(div_content_container);
 
+    // room_key를 표현하기 위한 태그를 생성합니다.
+    var header_room_key =  makeHTMLElement("h3", );
+    var text_room_key = document.createTextNode("room key : " + info_box.room_key);
+
     // 채팅을 표현하기 위한 태그를 생성합니다.
     var ul_chat_list =  makeHTMLElement("ul", {"id":"ul_chat_list"});
 
@@ -184,10 +187,11 @@ function createRoomPage(info_box, stompClient){
     var input_chat_text =  makeHTMLElement("input", {"id":"input_chat_text", "type":"text"});
     var input_chat_submit = makeHTMLElement("input", {"id":"input_chat_submit", "type":"submit", "value":"전송"});
 
+    addDOMElement(header_room_key, [text_room_key]);
     addDOMElement(form_chat_create, [input_chat_text, input_chat_submit]);
 
     // 생성된 태그를 페이지에 추가합니다.
-    addDOMElement(div_content_container, [ul_chat_list, form_chat_create]);
+    addDOMElement(div_content_container, [header_room_key, ul_chat_list, form_chat_create]);
 
     // room_key를 기반으로 채팅방을 구독합니다.
     stompClient.subscribe(chat_sub_url + info_box.room_key,
