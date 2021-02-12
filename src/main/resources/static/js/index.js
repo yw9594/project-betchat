@@ -132,7 +132,7 @@ function createLobbyPage(info_box){
 
     addDOMElement(header_room_create, [text_room_create]);
     addDOMElement(form_room_create, [input_room_create_submit]);
-    addDOMElement(div_content_container, [header_room_join, form_room_join, header_room_create, form_room_create]);
+    addDOMElement(div_content_container, [header_room_create, form_room_create, header_room_join, form_room_join]);
 
     // 채팅방 참가를 처리하는 이벤트 리스너를 정의 및 등록합니다.
     var joinRoomEventListener = function (event){
