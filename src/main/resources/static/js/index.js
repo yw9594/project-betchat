@@ -130,7 +130,6 @@ function createLobbyPage(info_box){
     addDOMElement(header_room_join, [text_room_join]);
     addDOMElement(form_room_join, [input_room_join_text, input_room_join_submit]);
 
-
     addDOMElement(header_room_create, [text_room_create]);
     addDOMElement(form_room_create, [input_room_create_submit]);
     addDOMElement(div_content_container, [header_room_join, form_room_join, header_room_create, form_room_create]);
