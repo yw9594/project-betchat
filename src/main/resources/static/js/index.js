@@ -5,7 +5,8 @@ const chat_pub_url = "/pub/chat/";
 const chat_sub_url = "/sub/chat/";
 
 /* 페이지 전역 변수 */
-let div_content_container;                      // 페이지의 내용을 표현하는 HTML Element입니다.
+let div_head_container;     // 페이지의 헤더를 표현하는 HTML Element입니다.
+let div_content_container;  // 페이지의 내용을 표현하는 HTML Element입니다.
 
 /* 네트워크 */
 // JSON으로 전송하기 위한 XMLHttpRequest 객체를 생성합니다.
@@ -69,7 +70,7 @@ function createMainPage(info_box){
     var input_name_text =  makeHTMLElement("input", {"id":"input_name_text", "type":"text", "placeholder":"이름을 입력하세요."});
     var input_name_submit = makeHTMLElement("input", {"id":"input_name_submit", "type":"submit", "value":"입장!"});
 
-    // 생성된 form 태그를 페이지에 추가합니다.
+    // 생성된 태그를 페이지에 추가합니다.
     addDOMElement(header_name_input, [text_name_input]);
     addDOMElement(form_name_input, [input_name_text, input_name_submit]);
 
@@ -125,7 +126,7 @@ function createLobbyPage(info_box){
     var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
     var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_create_submit", "type":"submit", "value":"생성!"});
 
-    // 생성된 form 태그를 페이지에 추가합니다.
+    // 생성된 태그를 페이지에 추가합니다.
     addDOMElement(header_room_join, [text_room_join]);
     addDOMElement(form_room_join, [input_room_join_text, input_room_join_submit]);
 
@@ -250,12 +251,28 @@ function createRoomPage(info_box, stompClient){
     form_chat_create.addEventListener("submit", sendChatting, true);
 }
 
+// 페이지의 헤더를 생성한다.
+function createHeader(){
+    // 헤더를 표현하기 위한 태그를 생성합니다.
+    var header_title =  makeHTMLElement("h2", );
+    var text_title = document.createTextNode("Betting Chatting");
+
+    // 생성된 태그를 페이지에 추가합니다.
+    addDOMElement(header_title, [text_title]);
+    addDOMElement(div_head_container, [header_title]);
+}
+
 /* 메인 페이지 초기화 */
 window.onload = ()=>{
     console.log("window.onload : window.onload called.");
 
     // 내용을 표현하는 HTML Element를 가져옵니다.
+    div_head_container = document.getElementById("head-container");
     div_content_container = document.getElementById("content-container");
+
+
+    // 페이지의 헤더를 표현합니다.
+    createHeader();
 
     // 페이지 이동 간 필요한 값을 저장하는 객체를 생성합니다.
     let info_box = {};
