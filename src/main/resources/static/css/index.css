@@ -44,19 +44,19 @@ input[type=submit], input[type=submit]:focus {
 #div_chat_list::-webkit-scrollbar {
     display: none;
 }
-#root-container{
+#root_container{
     min-height: 100%;
     min-width:100%;
 
     display: grid;
     grid-template-rows: 0.5fr 4fr;
 }
-#head-container{
+#head_container{
     background-color: #E8DFC7;
     padding: 2%;
     text-align: center;
 }
-#content-container{
+#content_container{
     background-color: #f6f3e0;
     padding: 1% 5% 5% 5%;
     text-align: center;
