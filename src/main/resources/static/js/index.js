@@ -222,12 +222,16 @@ function createRoomPage(info_box, stompClient){
         // 채팅 수신을 처리하는 이벤트 리스너를 정의합니다.
         (message)=>{
             console.log("createRoomPage.stompClient.subscribe : message received.");
+            // 채팅 메시지를 받아 채팅방에 추가합니다.
             var message_body = JSON.parse(message.body);
             var div_chat_text =  makeHTMLElement("div", {"class":"div_chat_text"});
             var text_chat_text = document.createTextNode(makeChatMessageText(message_body.data.user_name, message_body.data.text));
 
             addDOMElement(div_chat_text, [text_chat_text]);
             addDOMElement(div_chat_list, [div_chat_text]);
+
+            // 스크롤바를 아래로 내립니다.
+            div_chat_list.scrollTop = div_chat_list.scrollHeight;
         });
 
     // 채팅 송신을 처리하는 이벤트 리스너를 정의 및 등록합니다.
