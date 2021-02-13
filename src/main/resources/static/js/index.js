@@ -67,8 +67,8 @@ function createMainPage(info_box){
     var text_name_input  = document.createTextNode("이름 입력");
 
     var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
-    var input_name_text =  makeHTMLElement("input", {"id":"input_name_text", "type":"text", "placeholder":"이름을 입력하세요."});
-    var input_name_submit = makeHTMLElement("input", {"id":"input_name_submit", "type":"submit", "value":"입장!"});
+    var input_name_text =  makeHTMLElement("input", {"id":"input_name_text", "type":"text", "autocomplete":"off"});
+    var input_name_submit = makeHTMLElement("input", {"id":"input_name_submit", "type":"submit", "value":"입장"});
 
     // 생성된 태그를 페이지에 추가합니다.
     addDOMElement(header_name_input, [text_name_input]);
@@ -115,8 +115,8 @@ function createLobbyPage(info_box){
     var text_room_join = document.createTextNode("채팅방 참가");
 
     var form_room_join =  makeHTMLElement("form", {"id":"form_room_join"});
-    var input_room_join_text =  makeHTMLElement("input", {"id":"input_room_join_text", "type":"text", "placeholder":"room key"});
-    var input_room_join_submit = makeHTMLElement("input", {"id":"input_room_join_submit", "type":"submit", "value":"참가!"});
+    var input_room_join_text =  makeHTMLElement("input", {"id":"input_room_join_text", "type":"text", "placeholder":"room key", "autocomplete":"off"});
+    var input_room_join_submit = makeHTMLElement("input", {"id":"input_room_join_submit", "type":"submit", "value":"참가"});
 
 
     // 채팅방을 생성하기 위한 태그를 생성합니다.
@@ -124,7 +124,7 @@ function createLobbyPage(info_box){
     var text_room_create = document.createTextNode("채팅방 생성");
 
     var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
-    var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_create_submit", "type":"submit", "value":"생성!"});
+    var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_create_submit", "type":"submit", "value":"생성"});
 
     // 생성된 태그를 페이지에 추가합니다.
     addDOMElement(header_room_join, [text_room_join]);
@@ -208,7 +208,7 @@ function createRoomPage(info_box, stompClient){
 
     // 채팅 입력을 생성하기 위한 태그를 생성합니다.
     var form_chat_create =  makeHTMLElement("form", {"id":"form_chat_create"});
-    var input_chat_text =  makeHTMLElement("input", {"id":"input_chat_text", "type":"text"});
+    var input_chat_text =  makeHTMLElement("input", {"id":"input_chat_text", "type":"text", "autocomplete":"off"});
     var input_chat_submit = makeHTMLElement("input", {"id":"input_chat_submit", "type":"submit", "value":"전송"});
 
     addDOMElement(header_room_key, [text_room_key]);
