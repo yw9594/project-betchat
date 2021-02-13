@@ -223,7 +223,7 @@ function createRoomPage(info_box, stompClient){
         (message)=>{
             console.log("createRoomPage.stompClient.subscribe : message received.");
             var message_body = JSON.parse(message.body);
-            var li_chat_text =  makeHTMLElement("li");
+            var li_chat_text =  makeHTMLElement("li", {"class":"li_chat_text"});
             var text_chat_text = document.createTextNode(makeChatMessageText(message_body.data.user_name, message_body.data.text));
 
             addDOMElement(li_chat_text, [text_chat_text]);
