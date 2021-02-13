@@ -25,14 +25,11 @@ input[type=submit] {
 .div_chat_text{
     text-align: left;
 }
-
 #div_chat_list{
     background-color: white;
     background-clip: content-box;
 
     margin:auto;
-    padding-left: 20%;
-    padding-right: 20%;
 
     height: 400px;
     width: 600px;
