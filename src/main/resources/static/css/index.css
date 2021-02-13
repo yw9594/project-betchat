@@ -9,18 +9,23 @@ body{
 form{
     margin:10px;
 }
+h1, h2, h3, h4, h5, h6 {
+    color:#72604a;
+}
 input[type=text], input[type=text]:focus {
     align-content: center;
     box-sizing: border-box;
     border: 2px solid #BA9686;
     border-radius: 5px;
+    text-decoration-line: none;
     outline: none;
 }
-input[type=submit] {
+input[type=submit], input[type=submit]:focus {
     background-color: #f6f3e0;
     border: none;
     border-radius: 5px;
     color: #a97e53;
+    outline: none;
 }
 .div_chat_text{
     text-align: left;
