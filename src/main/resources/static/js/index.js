@@ -204,7 +204,7 @@ function createRoomPage(info_box, stompClient){
     var text_room_key = document.createTextNode("room key : " + info_box.room_key);
 
     // 채팅을 표현하기 위한 태그를 생성합니다.
-    var ul_chat_list =  makeHTMLElement("ul", {"id":"ul_chat_list"});
+    var div_chat_list =  makeHTMLElement("div", {"id":"div_chat_list"});
 
     // 채팅 입력을 생성하기 위한 태그를 생성합니다.
     var form_chat_create =  makeHTMLElement("form", {"id":"form_chat_create"});
@@ -215,7 +215,7 @@ function createRoomPage(info_box, stompClient){
     addDOMElement(form_chat_create, [input_chat_text, input_chat_submit]);
 
     // 생성된 태그를 페이지에 추가합니다.
-    addDOMElement(div_content_container, [header_room_key, ul_chat_list, form_chat_create]);
+    addDOMElement(div_content_container, [header_room_key, div_chat_list, form_chat_create]);
 
     // room_key를 기반으로 채팅방을 구독합니다.
     stompClient.subscribe(chat_sub_url + info_box.room_key,
@@ -223,11 +223,11 @@ function createRoomPage(info_box, stompClient){
         (message)=>{
             console.log("createRoomPage.stompClient.subscribe : message received.");
             var message_body = JSON.parse(message.body);
-            var li_chat_text =  makeHTMLElement("li", {"class":"li_chat_text"});
+            var div_chat_text =  makeHTMLElement("div", {"class":"div_chat_text"});
             var text_chat_text = document.createTextNode(makeChatMessageText(message_body.data.user_name, message_body.data.text));
 
-            addDOMElement(li_chat_text, [text_chat_text]);
-            addDOMElement(ul_chat_list, [li_chat_text]);
+            addDOMElement(div_chat_text, [text_chat_text]);
+            addDOMElement(div_chat_list, [div_chat_text]);
         });
 
     // 채팅 송신을 처리하는 이벤트 리스너를 정의 및 등록합니다.

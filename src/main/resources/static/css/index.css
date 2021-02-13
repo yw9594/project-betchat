@@ -3,7 +3,12 @@ html, body{
     width:100%;
     margin: 0px;
 }
-
+body{
+    overflow-y: hidden;
+}
+form{
+    margin:10px;
+}
 input[type=text], input[type=text]:focus {
     align-content: center;
     box-sizing: border-box;
@@ -11,15 +16,31 @@ input[type=text], input[type=text]:focus {
     border-radius: 5px;
     outline: none;
 }
-
 input[type=submit] {
     background-color: #f6f3e0;
     border: none;
     border-radius: 5px;
     color: #a97e53;
 }
-.li_chat_text{
+.div_chat_text{
     text-align: left;
+}
+
+#div_chat_list{
+    background-color: white;
+    background-clip: content-box;
+
+    margin:auto;
+    padding-left: 20%;
+    padding-right: 20%;
+
+    height: 400px;
+    width: 600px;
+    list-style-type: none;
+    overflow: scroll;
+}
+#div_chat_list::-webkit-scrollbar {
+    display: none;
 }
 #root-container{
     min-height: 100%;
@@ -38,16 +59,3 @@ input[type=submit] {
     padding: 1% 5% 5% 5%;
     text-align: center;
 }
-#ul_chat_list{
-    background-color: white;
-    background-clip: content-box;
-
-    margin:0;
-    padding-left: 20%;
-    padding-right: 20%;
-    padding-bottom: 1%;
-
-    height: 70%;
-    list-style-type: none;
-}
-
