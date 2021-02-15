@@ -1,6 +1,6 @@
 package com.study.loge.betchat.controller;
 
-import com.study.loge.betchat.enums.MessageStatus;
+import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.requests.ChatMessageRequest;
 import com.study.loge.betchat.model.response.ChatMessageResponse;
@@ -25,7 +25,7 @@ public class ChatController {
                     .userName(request.getData().getUserName())
                     .text(request.getData().getText())
                     .build();
-        MessageHeader<ChatMessageResponse> response = MessageHeader.makeMessage(MessageStatus.OK, message);
+        MessageHeader<ChatMessageResponse> response = MessageHeader.makeMessage(ResultState.OK, message);
 
         // 전달받은 채팅을 broker로 전달해 broadcast합니다.
         template.convertAndSend("/sub/chat/"+roomKey, response);

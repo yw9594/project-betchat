@@ -1,11 +1,10 @@
 package com.study.loge.betchat.controller;
 
 import com.study.loge.betchat.component.KeyGenerator;
-import com.study.loge.betchat.enums.MessageStatus;
+import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.requests.RoomCreateRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
-import com.study.loge.betchat.model.response.UserInfoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +27,7 @@ public class LobbyController {
                 .builder()
                 .roomKey(roomKey)
                 .build();
-        MessageHeader<RoomCreateResponse> response = MessageHeader.makeMessage(MessageStatus.OK, roomCreateResponse);
+        MessageHeader<RoomCreateResponse> response = MessageHeader.makeMessage(ResultState.OK, roomCreateResponse);
 
         return response;
     }
