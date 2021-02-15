@@ -17,15 +17,15 @@ function makeXHRObj(url){
     return xhr;
 }
 // 서버와 통신하기 위한 JSON 형식을 정의합니다.
-function makeXHRJsonBody(messageStatus, data){
+function makeXHRJsonBody(resultState, data){
     return {
-        "messageStatus":messageStatus,
+        "resultState":resultState,
         "transaction_time": getNowIsoTime(),
         "data": data
     }
 };
 // 요청/응답의 상태를 전달하기 위한 enum입니다.
-const messageStatus = Object.freeze({"OK":"OK", "ERROR":"ERROR"});
+const resultState = Object.freeze({"OK":"OK", "ERROR":"ERROR"});
 
 /* 유틸리티 */
 // 메시지 전송을 위한 현재 시간을 반환합니다.
@@ -83,7 +83,7 @@ function createMainPage(info_box){
         var user_name = input_name_text.value;
 
         var xhr = makeXHRObj(host_address+"/home/submit");
-        var data = makeXHRJsonBody(messageStatus.OK, {"user_name":user_name});
+        var data = makeXHRJsonBody(resultState.OK, {"user_name":user_name});
 
         // 응답을 받은 경우, 로비를 보여줍니다.
         xhr.onreadystatechange = function(){
@@ -148,7 +148,7 @@ function createLobbyPage(info_box){
     var createRoomEventListener = function (event){
         // Ajax를 사용해 서버에 이름을 전달합니다
         var xhr = makeXHRObj(host_address +"/lobby/create");
-        var data = makeXHRJsonBody(messageStatus.OK, {"user_key":info_box.user_key});
+        var data = makeXHRJsonBody(resultState.OK, {"user_key":info_box.user_key});
 
         // 응답을 받은 경우, 로비를 보여줍니다.
         xhr.onreadystatechange = function(){
@@ -241,7 +241,7 @@ function createRoomPage(info_box, stomp_client){
     var sendChatting = function (event){
         console.log("createRoomPage.sendChatting : message sent.");
         chat_data["text"] =input_chat_text.value;
-        var message = makeXHRJsonBody(messageStatus.OK, chat_data);
+        var message = makeXHRJsonBody(resultState.OK, chat_data);
 
         stomp_client.send(chat_pub_url, {}, JSON.stringify(message));
         input_chat_text.value="";
