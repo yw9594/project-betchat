@@ -50,11 +50,18 @@ function addDOMElement(parent, child) {
 function clearHTMLElement(element){
     element.innerHTML = "";
 }
-
 // 페이지에 표현할 채팅 메시지를 생성합니다.
 function makeChatMessageText(name, text){
-    return name + " : " + text;
+    return "[" + name + "] " + text;
 }
+// 모든 form 버튼을 활성화/비활성화합니다.
+function controlFormTagSubmit(flag){
+    var form_tags = document.querySelectorAll("form");
+    form_tags.forEach(form_tag=>{
+        form_tag.disabled = flag;
+    });
+}
+
 
 /* 홈 페이지 */
 // 홈 페이지의 HTML 태그를 생성합니다.
@@ -79,6 +86,9 @@ function createHomePage(info_box){
 
     // 유저 이름을 전달받아 서버에 전송하는 이벤트 리스너를 정의 및 등록합니다.
     var getNameEventListener = function (event){
+        // submit 기능을 일시정지합니다.
+        controlFormTagSubmit(false);
+
         // Ajax를 사용해 서버에 이름을 전달합니다.
         var user_name = input_name_text.value;
 
@@ -92,6 +102,7 @@ function createHomePage(info_box){
 
                 // 정상적으로 응답을 받은 경우, 로비 페이지를 표현합니다.
                 if(response.result_state===result_state.OK){
+
                     info_box["user_name"] = user_name;
                     info_box["user_key"] = response.data.user_key;
 
@@ -101,6 +112,9 @@ function createHomePage(info_box){
                 else
                     alert("이름은 2~8글자, 특수문자는 사용이 불가능합니다.");
             }
+
+            // submit 기능을 활성화합니다.
+            controlFormTagSubmit(true);
         }
         xhr.send(JSON.stringify(data));
 
