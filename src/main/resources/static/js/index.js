@@ -82,7 +82,7 @@ function createMainPage(info_box){
         // Ajax를 사용해 서버에 이름을 전달합니다.
         var user_name = input_name_text.value;
 
-        var xhr = makeXHRObj(host_address+"/home/submit");
+        var xhr = makeXHRObj(host_address+"/home/login");
         var data = makeXHRJsonBody(resultState.OK, {"user_name":user_name});
 
         // 응답을 받은 경우, 로비를 보여줍니다.
