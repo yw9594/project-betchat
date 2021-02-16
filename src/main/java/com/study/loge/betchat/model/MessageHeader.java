@@ -14,9 +14,9 @@ public class MessageHeader<T> {
     private LocalDateTime transactionTime;          // 메시지 발송 시간
     private T data;                                 // 메시지 body
 
-    public static <T> MessageHeader<T> makeMessage(ResultState messageStatus, T data){
+    public static <T> MessageHeader<T> makeMessage(ResultState resultState, T data){
         MessageHeader<T> message = MessageHeader.<T>builder()
-                .resultState(messageStatus)
+                .resultState(resultState)
                 .transactionTime(LocalDateTime.now())
                 .data(data)
                 .build();

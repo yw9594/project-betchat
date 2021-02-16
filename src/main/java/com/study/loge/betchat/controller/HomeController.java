@@ -2,8 +2,8 @@ package com.study.loge.betchat.controller;
 
 import com.study.loge.betchat.component.KeyGenerator;
 import com.study.loge.betchat.enums.ResultState;
-import com.study.loge.betchat.model.requests.UserInfoRequest;
-import com.study.loge.betchat.model.response.UserInfoResponse;
+import com.study.loge.betchat.model.requests.UserLoginRequest;
+import com.study.loge.betchat.model.response.UserLoginResponse;
 import com.study.loge.betchat.model.MessageHeader;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +17,13 @@ public class HomeController {
     private final KeyGenerator keyGenerator;
 
     @PostMapping("/submit")
-    public MessageHeader<UserInfoResponse> submit(@RequestBody MessageHeader<UserInfoRequest> request){
+    public MessageHeader<UserLoginResponse> userLogin(@RequestBody MessageHeader<UserLoginRequest> request){
         String userKey = keyGenerator.generateKey();
-        UserInfoResponse userInfoResponse = UserInfoResponse
+        UserLoginResponse userLoginResponse = UserLoginResponse
                 .builder()
                 .userKey(userKey)
                 .build();
-        MessageHeader<UserInfoResponse> response = MessageHeader.makeMessage(ResultState.OK, userInfoResponse);
+        MessageHeader<UserLoginResponse> response = MessageHeader.makeMessage(ResultState.OK, userLoginResponse);
 
         return response;
     }
