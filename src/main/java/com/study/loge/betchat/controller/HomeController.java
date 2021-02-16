@@ -16,7 +16,7 @@ public class HomeController {
     // userKey를 생성하기 위한 객체입니다.
     private final KeyGenerator keyGenerator;
 
-    @PostMapping("/submit")
+    @PostMapping("/login")
     public MessageHeader<UserLoginResponse> userLogin(@RequestBody MessageHeader<UserLoginRequest> request){
         String userKey = keyGenerator.generateKey();
         UserLoginResponse userLoginResponse = UserLoginResponse
