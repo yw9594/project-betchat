@@ -17,15 +17,15 @@ function makeXHRObj(url){
     return xhr;
 }
 // 서버와 통신하기 위한 JSON 형식을 정의합니다.
-function makeXHRJsonBody(resultState, data){
+function makeXHRJsonBody(result_state, data){
     return {
-        "resultState":resultState,
+        "result_state":result_state,
         "transaction_time": getNowIsoTime(),
         "data": data
     }
 };
 // 요청/응답의 상태를 전달하기 위한 enum입니다.
-const resultState = Object.freeze({"OK":"OK", "ERROR":"ERROR"});
+const result_state = Object.freeze({"OK":"OK", "ERROR":"ERROR"});
 
 /* 유틸리티 */
 // 메시지 전송을 위한 현재 시간을 반환합니다.
@@ -56,9 +56,9 @@ function makeChatMessageText(name, text){
     return name + " : " + text;
 }
 
-/* 메인 페이지 */
-// 메인 페이지의 HTML 태그를 생성합니다.
-function createMainPage(info_box){
+/* 홈 페이지 */
+// 홈 페이지의 HTML 태그를 생성합니다.
+function createHomePage(info_box){
     console.log("createMainPage : createMainPage called.");
     clearHTMLElement(div_content_container);
 
@@ -83,16 +83,23 @@ function createMainPage(info_box){
         var user_name = input_name_text.value;
 
         var xhr = makeXHRObj(host_address+"/home/login");
-        var data = makeXHRJsonBody(resultState.OK, {"user_name":user_name});
+        var data = makeXHRJsonBody(result_state.OK, {"user_name":user_name});
 
-        // 응답을 받은 경우, 로비를 보여줍니다.
+        // 유저 이름을 서버에 전송합니다.
         xhr.onreadystatechange = function(){
             if(xhr.readyState===4 && xhr.status===200){
                 var response = JSON.parse(xhr.response);
-                info_box["user_name"] = user_name;
-                info_box["user_key"] = response.data.user_key;
 
-                createLobbyPage(info_box);
+                // 정상적으로 응답을 받은 경우, 로비 페이지를 표현합니다.
+                if(response.result_state===result_state.OK){
+                    info_box["user_name"] = user_name;
+                    info_box["user_key"] = response.data.user_key;
+
+                    createLobbyPage(info_box);
+                }
+                // 오류가 발생했을 경우, 현재 페이지에 머뭅니다.
+                else
+                    alert("이름은 2~8글자, 특수문자는 사용이 불가능합니다.");
             }
         }
         xhr.send(JSON.stringify(data));
@@ -117,7 +124,6 @@ function createLobbyPage(info_box){
     var form_room_join =  makeHTMLElement("form", {"id":"form_room_join"});
     var input_room_join_text =  makeHTMLElement("input", {"id":"input_room_join_text", "type":"text", "placeholder":"room key", "autocomplete":"off"});
     var input_room_join_submit = makeHTMLElement("input", {"id":"input_room_join_submit", "type":"submit", "value":"참가"});
-
 
     // 채팅방을 생성하기 위한 태그를 생성합니다.
     var header_room_create = makeHTMLElement("h3");
@@ -148,7 +154,7 @@ function createLobbyPage(info_box){
     var createRoomEventListener = function (event){
         // Ajax를 사용해 서버에 이름을 전달합니다
         var xhr = makeXHRObj(host_address +"/lobby/create");
-        var data = makeXHRJsonBody(resultState.OK, {"user_key":info_box.user_key});
+        var data = makeXHRJsonBody(result_state.OK, {"user_key":info_box.user_key});
 
         // 응답을 받은 경우, 로비를 보여줍니다.
         xhr.onreadystatechange = function(){
@@ -241,7 +247,7 @@ function createRoomPage(info_box, stomp_client){
     var sendChatting = function (event){
         console.log("createRoomPage.sendChatting : message sent.");
         chat_data["text"] =input_chat_text.value;
-        var message = makeXHRJsonBody(resultState.OK, chat_data);
+        var message = makeXHRJsonBody(result_state.OK, chat_data);
 
         stomp_client.send(chat_pub_url, {}, JSON.stringify(message));
         input_chat_text.value="";
@@ -273,7 +279,6 @@ window.onload = ()=>{
     div_head_container = document.getElementById("head_container");
     div_content_container = document.getElementById("content_container");
 
-
     // 페이지의 헤더를 표현합니다.
     createHeader();
 
@@ -281,5 +286,5 @@ window.onload = ()=>{
     let info_box = {};
 
     // 메인 페이지를 표현합니다.
-    createMainPage(info_box);
+    createHomePage(info_box);
 }
