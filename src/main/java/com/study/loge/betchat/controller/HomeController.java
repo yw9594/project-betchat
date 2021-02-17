@@ -17,7 +17,6 @@ public class HomeController {
     // 유저의 로그인 요청을 처리합니다.
     @PostMapping("/login")
     public MessageHeader<UserLoginResponse> userLogin(@RequestBody MessageHeader<UserLoginRequest> request){
-        System.out.println(request);
         return userLoginService.userLogin(request);
     }
 }
