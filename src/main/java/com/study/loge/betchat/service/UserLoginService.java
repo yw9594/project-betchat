@@ -3,6 +3,7 @@ package com.study.loge.betchat.service;
 import com.study.loge.betchat.component.KeyGenerator;
 import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.enums.UserLoginValidationState;
+import com.study.loge.betchat.exceptions.UserLoginException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.requests.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
@@ -18,34 +19,39 @@ public class UserLoginService {
 
     // 유저의 로그인 요청을 처리합니다.
     public MessageHeader<UserLoginResponse> userLogin(MessageHeader<UserLoginRequest> request){
-        // userName의 유효성을 검사합니다.
+        ResultState resultState=null;
+
         String userName = request.getData().getUserName();
-        UserLoginValidationState userLoginValidationState = checkUserNameValidation(userName);
+        try {
+            // userName의 유효성을 검사합니다.
+            checkUserNameValidation(userName);
 
-        // response를 생성해 전달합니다.
-        String userKey = (userLoginValidationState==UserLoginValidationState.OK) ? keyGenerator.generateKey() : null;
-        ResultState resultState = (userLoginValidationState==UserLoginValidationState.OK) ? ResultState.OK : ResultState.ERROR;
-        UserLoginResponse userLoginResponse = UserLoginResponse.builder()
-                .userKey(userKey)
-                .build();
-
-        MessageHeader<UserLoginResponse> response = MessageHeader.makeMessage(resultState, userLoginResponse);
-
-        return response;
+            resultState = ResultState.OK;
+        }
+        catch(UserLoginException e){
+            resultState = ResultState.ERROR;
+        }
+        finally {
+            // response를 생성해 전달합니다.
+            return MessageHeader.makeMessage(resultState, createUserLoginResponse(resultState));
+        }
     }
 
     // userName의 유효성을 검사합니다.
-    private UserLoginValidationState checkUserNameValidation(String userName){
+    private void checkUserNameValidation(String userName) throws UserLoginException {
         String pattern = "\\[가-힣a-Z0-9\\]+";
-        UserLoginValidationState result;
+        int userNameLength = userName.length();
 
-        if(userName.length()<2 || userName.length()>8 )
-            result = UserLoginValidationState.TOO_SHORT;
-        else if(userName.matches(pattern))
-            result =  UserLoginValidationState.INVALID_CHAR;
-        else
-            result =  UserLoginValidationState.OK;
+        if(userNameLength<2 || userNameLength>8 || userName.matches(pattern))
+            throw new UserLoginException();
+    }
 
-        return result;
+    // resultState에 따른 UserLoginResponse 객체를 생성합니다.
+    private UserLoginResponse createUserLoginResponse(ResultState resultState){
+        String userKey = resultState==ResultState.OK ? keyGenerator.generateKey() : null;
+
+        return UserLoginResponse.builder()
+                .userKey(userKey)
+                .build();
     }
 }
