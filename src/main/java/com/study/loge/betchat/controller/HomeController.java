@@ -1,10 +1,9 @@
 package com.study.loge.betchat.controller;
 
-import com.study.loge.betchat.component.KeyGenerator;
-import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.model.requests.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
 import com.study.loge.betchat.model.MessageHeader;
+import com.study.loge.betchat.service.UserLoginService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,18 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/home")
 public class HomeController {
-    // userKey를 생성하기 위한 객체입니다.
-    private final KeyGenerator keyGenerator;
+    private final UserLoginService userLoginService;
 
+    // 유저의 로그인 요청을 처리합니다.
     @PostMapping("/login")
     public MessageHeader<UserLoginResponse> userLogin(@RequestBody MessageHeader<UserLoginRequest> request){
-        String userKey = keyGenerator.generateKey();
-        UserLoginResponse userLoginResponse = UserLoginResponse
-                .builder()
-                .userKey(userKey)
-                .build();
-        MessageHeader<UserLoginResponse> response = MessageHeader.makeMessage(ResultState.OK, userLoginResponse);
-
-        return response;
+        return userLoginService.userLogin(request);
     }
 }
