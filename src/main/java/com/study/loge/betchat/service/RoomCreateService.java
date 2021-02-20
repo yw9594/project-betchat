@@ -1,15 +1,19 @@
 package com.study.loge.betchat.service;
 
 import com.study.loge.betchat.component.KeyGenerator;
+import com.study.loge.betchat.entity.Room;
 import com.study.loge.betchat.entity.User;
 import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.exceptions.RoomCreateException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.requests.RoomCreateRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
+import com.study.loge.betchat.repository.RoomRepository;
 import com.study.loge.betchat.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 // room create 로직을 처리합니다.
 @AllArgsConstructor
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Service;
 public class RoomCreateService {
     // userId를 생성하기 위한 객체입니다.
     private final KeyGenerator keyGenerator;
+    private final RoomRepository roomRepository;
     private final UserRepository userRepository;
 
     // 방 생성 요청을 받고 유저에게 Room Key를 전달합니다.
@@ -29,6 +34,15 @@ public class RoomCreateService {
 
             resultState = ResultState.OK;
             roomKey = keyGenerator.generateKey();
+
+            Room room = Room.builder()
+                    .roomKey(roomKey)
+                    .activated(1)
+                    .localDateTime(LocalDateTime.now())
+                    .build();
+
+            roomRepository.save(room);
+
         }
         catch(RoomCreateException e){
             resultState = ResultState.ERROR;
