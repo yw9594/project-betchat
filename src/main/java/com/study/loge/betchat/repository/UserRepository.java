@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 // user table에 접근하기 위한 repository 클래스입니다.
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+    User findByUserKey(String userKey);
 }
