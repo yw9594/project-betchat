@@ -1,9 +1,7 @@
 package com.study.loge.betchat.controller;
 
-import com.study.loge.betchat.component.KeyGenerator;
-import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.model.MessageHeader;
-import com.study.loge.betchat.model.requests.RoomCreateRequest;
+import com.study.loge.betchat.model.request.RoomCreateRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
 import com.study.loge.betchat.service.RoomCreateService;
 import lombok.AllArgsConstructor;

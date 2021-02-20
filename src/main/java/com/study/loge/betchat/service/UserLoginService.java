@@ -3,16 +3,14 @@ package com.study.loge.betchat.service;
 import com.study.loge.betchat.component.KeyGenerator;
 import com.study.loge.betchat.entity.User;
 import com.study.loge.betchat.enums.ResultState;
-import com.study.loge.betchat.enums.UserLoginValidationState;
-import com.study.loge.betchat.exceptions.UserLoginException;
+import com.study.loge.betchat.exception.UserLoginException;
 import com.study.loge.betchat.model.MessageHeader;
-import com.study.loge.betchat.model.requests.UserLoginRequest;
+import com.study.loge.betchat.model.request.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
 import com.study.loge.betchat.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 // user login 로직을 처리합니다.

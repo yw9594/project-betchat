@@ -2,7 +2,7 @@ package com.study.loge.betchat.controller;
 
 import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.model.MessageHeader;
-import com.study.loge.betchat.model.requests.ChatMessageRequest;
+import com.study.loge.betchat.model.request.ChatMessageRequest;
 import com.study.loge.betchat.model.response.ChatMessageResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;

@@ -1,4 +1,4 @@
-package com.study.loge.betchat.model.requests;
+package com.study.loge.betchat.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
