@@ -38,11 +38,10 @@ public class RoomCreateService {
             Room room = Room.builder()
                     .roomKey(roomKey)
                     .activated(1)
-                    .localDateTime(LocalDateTime.now())
+                    .createdAt(LocalDateTime.now())
                     .build();
 
             roomRepository.save(room);
-
         }
         catch(RoomCreateException e){
             resultState = ResultState.ERROR;
