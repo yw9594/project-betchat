@@ -110,7 +110,7 @@ function createHomePage(info_box){
                 }
                 // 오류가 발생했을 경우, 현재 페이지에 머뭅니다.
                 else
-                    alert("이름은 2~8글자, 특수문자는 사용이 불가능합니다.");
+                    alert("이름은 2~8글자, 한글, 영어, _만 가능합니다.");
             }
 
             // submit 기능을 활성화합니다.
@@ -174,9 +174,17 @@ function createLobbyPage(info_box){
         xhr.onreadystatechange = function(){
             if(xhr.readyState===4 && xhr.status===200){
                 var response = JSON.parse(xhr.response);
-                info_box["room_key"]=response.data.room_key;
 
-                onConnectRoomPage(info_box);
+                // 정상적으로 응답을 받은 경우, 로비 페이지를 표현합니다.
+                if(response.result_state===result_state.OK){
+
+                    info_box["room_key"]=response.data.room_key;
+
+                    onConnectRoomPage(info_box);
+                }
+                // 오류가 발생했을 경우, 현재 페이지에 머뭅니다.
+                else
+                    alert("유효하지 않은 접근입니다.");
             }
         }
         xhr.send(JSON.stringify(data));
