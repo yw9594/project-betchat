@@ -21,7 +21,7 @@ public class Room {
     private Long id;
     private String roomKey;
     private Integer activated;
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
 
     @Override
     public String toString() {
@@ -29,7 +29,7 @@ public class Room {
                 "id=" + id +
                 ", roomKey='" + roomKey + '\'' +
                 ", activated=" + activated +
-                ", localDateTime=" + localDateTime +
+                ", createdAt=" + createdAt +
                 '}';
     }
 }
