@@ -1,11 +1,9 @@
 package com.study.loge.betchat.entity;
 
+import com.sun.istack.Nullable;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -24,6 +22,10 @@ public class User {
     private String userKey;
     private Integer activated;
     private LocalDateTime createdAt;
+
+    @ManyToOne(targetEntity = Joined.class, optional = false)
+    @JoinColumn(name="joined_id")
+    private Joined joined;
 
     @Override
     public String toString() {
