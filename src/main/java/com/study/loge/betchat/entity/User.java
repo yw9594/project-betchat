@@ -23,9 +23,9 @@ public class User {
     private Integer activated;
     private LocalDateTime createdAt;
 
-    @ManyToOne(targetEntity = Joined.class, optional = false)
-    @JoinColumn(name="joined_id")
-    private Joined joined;
+//    @ManyToOne(targetEntity = Joined.class, optional = false)
+//    @JoinColumn(name="joined_id")
+//    private Joined joined;
 
     @Override
     public String toString() {
