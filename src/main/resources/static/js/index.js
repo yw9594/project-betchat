@@ -166,6 +166,9 @@ function createLobbyPage(info_box){
 
     // 채팅방 생성 요청을 처리하는 이벤트 리스너를 정의 및 등록합니다.
     var createRoomEventListener = function (event){
+        // submit 기능을 일시정지합니다.
+        controlFormTagSubmit(false);
+
         // Ajax를 사용해 서버에 이름을 전달합니다
         var xhr = makeXHRObj(host_address +"/lobby/create");
         var data = makeXHRJsonBody(result_state.OK, {"user_key":info_box.user_key});
@@ -177,7 +180,6 @@ function createLobbyPage(info_box){
 
                 // 정상적으로 응답을 받은 경우, 로비 페이지를 표현합니다.
                 if(response.result_state===result_state.OK){
-
                     info_box["room_key"]=response.data.room_key;
 
                     onConnectRoomPage(info_box);
@@ -186,6 +188,9 @@ function createLobbyPage(info_box){
                 else
                     alert("유효하지 않은 접근입니다.");
             }
+
+            // submit 기능을 활성화합니다.
+            controlFormTagSubmit(true);
         }
         xhr.send(JSON.stringify(data));
 
