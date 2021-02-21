@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 // room create 로직을 처리합니다.
 @AllArgsConstructor
 @Service
-public class RoomService {
+public class LobbyService {
     // userId를 생성하기 위한 객체입니다.
     private final KeyGenerator keyGenerator;
     private final RoomRepository roomRepository;
@@ -83,6 +83,7 @@ public class RoomService {
         // user key의 유효성을 검사합니다.
         String userKey = request.getData().getUserKey();
         User user = userRepository.findByUserKey(userKey);
+
 
         if(user==null || user.getActivated()==0) throw new RoomCreateException();
     }

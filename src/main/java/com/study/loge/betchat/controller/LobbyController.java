@@ -5,7 +5,7 @@ import com.study.loge.betchat.model.request.RoomCreateRequest;
 import com.study.loge.betchat.model.request.RoomJoinRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
 import com.study.loge.betchat.model.response.RoomJoinResponse;
-import com.study.loge.betchat.service.RoomService;
+import com.study.loge.betchat.service.LobbyService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,16 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/lobby")
 public class LobbyController {
 
-    private RoomService roomService;
+    private LobbyService lobbyService;
 
     // 방 생성 요청을 받고 유저에게 Room Key를 전달합니다.
     @PostMapping("/create")
     public MessageHeader<RoomCreateResponse> createRoom(@RequestBody MessageHeader<RoomCreateRequest> request){
-        return roomService.createRoom(request);
+        return lobbyService.createRoom(request);
     }
     // 방 참가 요청을 받고 유효성 검사 여부를 전달합니다.
     @PostMapping("/join")
     public MessageHeader<RoomJoinResponse> joinRoom(@RequestBody MessageHeader<RoomJoinRequest> request){
-        return roomService.joinRoom(request);
+        return lobbyService.joinRoom(request);
     }
 }
