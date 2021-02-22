@@ -49,6 +49,9 @@ public class LobbyService {
         catch(RoomCreateException e){
             resultState = ResultState.ERROR;
         }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         finally {
             RoomCreateResponse roomCreateResponse = RoomCreateResponse
                     .builder()

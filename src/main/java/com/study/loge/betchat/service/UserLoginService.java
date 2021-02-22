@@ -49,6 +49,9 @@ public class UserLoginService {
         catch(UserLoginException e){
             resultState = ResultState.ERROR;
         }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         finally {
             // response를 생성한 뒤, 반환한다.
             UserLoginResponse userLoginResponse = UserLoginResponse.builder()

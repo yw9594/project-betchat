@@ -20,6 +20,9 @@ public class Joined {
     private LocalDateTime joinedAt;
     private LocalDateTime chattedAt;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "joined")
+    private List<User> user;
+
 //    @ManyToOne(targetEntity = Room.class, fetch = FetchType.LAZY)
 //    @JoinColumn(name="room_id")
 //    private Room room;
