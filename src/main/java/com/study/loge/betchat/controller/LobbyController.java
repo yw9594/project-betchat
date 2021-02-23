@@ -1,10 +1,11 @@
 package com.study.loge.betchat.controller;
 
-import com.study.loge.betchat.component.KeyGenerator;
-import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.model.MessageHeader;
-import com.study.loge.betchat.model.requests.RoomCreateRequest;
+import com.study.loge.betchat.model.request.RoomCreateRequest;
+import com.study.loge.betchat.model.request.RoomJoinRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
+import com.study.loge.betchat.model.response.RoomJoinResponse;
+import com.study.loge.betchat.service.LobbyService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,19 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/lobby")
 public class LobbyController {
-    // userId를 생성하기 위한 객체입니다.
-    private final KeyGenerator keyGenerator;
+
+    private LobbyService lobbyService;
 
     // 방 생성 요청을 받고 유저에게 Room Key를 전달합니다.
     @PostMapping("/create")
     public MessageHeader<RoomCreateResponse> createRoom(@RequestBody MessageHeader<RoomCreateRequest> request){
-        String roomKey = keyGenerator.generateKey();
-        RoomCreateResponse roomCreateResponse = RoomCreateResponse
-                .builder()
-                .roomKey(roomKey)
-                .build();
-        MessageHeader<RoomCreateResponse> response = MessageHeader.makeMessage(ResultState.OK, roomCreateResponse);
-
-        return response;
+        return lobbyService.createRoom(request);
+    }
+    // 방 참가 요청을 받고 유효성 검사 여부를 전달합니다.
+    @PostMapping("/join")
+    public MessageHeader<RoomJoinResponse> joinRoom(@RequestBody MessageHeader<RoomJoinRequest> request){
+        return lobbyService.joinRoom(request);
     }
 }
