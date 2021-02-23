@@ -2,11 +2,9 @@ package com.study.loge.betchat.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 // room entity를 표현하기 위한 entity 클래스입니다.
 @Entity
@@ -22,6 +20,9 @@ public class Room {
     private String roomKey;
     private Integer activated;
     private LocalDateTime createdAt;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    private List<Joined> joined;
 
     @Override
     public String toString() {

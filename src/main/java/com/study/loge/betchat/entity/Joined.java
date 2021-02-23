@@ -23,9 +23,9 @@ public class Joined {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "joined")
     private List<User> user;
 
-//    @ManyToOne(targetEntity = Room.class, fetch = FetchType.LAZY)
-//    @JoinColumn(name="room_id")
-//    private Room room;
+    @ManyToOne(targetEntity = Room.class, optional = false)
+    @JoinColumn(name="room_id")
+    private Room room;
 
     @Override
     public String toString() {
