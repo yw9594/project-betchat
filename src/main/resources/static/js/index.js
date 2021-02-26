@@ -276,7 +276,7 @@ function createRoomPage(info_box, stomp_client){
     addDOMElement(div_content_container, [header_room_key, div_chat_list, form_chat_create]);
 
     // room_key를 기반으로 채팅방을 구독합니다.
-    stomp_client.subscribe(chat_sub_url + info_box.room_key,
+    stomp_client.subscribe(chat_sub_url + info_box.user_key + '/' + info_box.room_key,
         // 채팅 수신을 처리하는 이벤트 리스너를 정의합니다.
         (message)=>{
             console.log("createRoomPage.stompClient.subscribe : message received.");
