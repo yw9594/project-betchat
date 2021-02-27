@@ -35,6 +35,7 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         try {
             // subscribe 요청 시 Joined table에 등록합니다.
             if (messageType.equals(StompCommand.SUBSCRIBE)) {
+                System.out.println(message);
                 registerSubscribe(message);
             }
         }
@@ -51,14 +52,8 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
     // subscribe message가 도착한 경우 joined에 저장합니다.
     private void registerSubscribe(Message<?> message) throws SubscribeException {
         Map<String, List<String>> nativeHeaders = (Map<String, List<String>>) message.getHeaders().get("nativeHeaders");
-        String[] destinationElements = nativeHeaders.get("destination").get(0).split("/", 5);
-
-        // destination이 정상적으로 분할되지 않은 경우 예외를 발생시킵니다.
-        if(destinationElements.length > 5)
-            throw new SubscribeException("잘못된 경로입니다.");
-
-        String userKey = destinationElements[3];
-        String roomKey = destinationElements[4];
+        String userKey = nativeHeaders.get("user_key").get(0);
+        String roomKey = nativeHeaders.get("room_key").get(0);
 
         User user = userReposotory.findByUserKey(userKey);
         Room room = roomRepository.findByRoomKey(roomKey);
@@ -77,17 +72,5 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         Joined newJoined = joinedRepository.save(joined);
         user.setJoined(newJoined);
         userReposotory.save(user);
-
-        // message의 subscribe의 경로를 roomKey로 변경합니다.
-        StringBuffer subscribeDestination = new StringBuffer("");
-        for(int i=0; i<destinationElements.length; i++){
-            // 공백과 userKey는 제외합니다.
-            if(i==0 || i==3) continue;
-            subscribeDestination.append("/" + destinationElements[i]);
-        }
-        MessageHeaderAccessor messageHeaderAccessor = new MessageHeaderAccessor(message);
-
-        nativeHeaders.get("destination").set(0, subscribeDestination.toString());
-        messageHeaderAccessor.setHeader("nativeHeaders", nativeHeaders);
     }
 }
