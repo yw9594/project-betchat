@@ -49,7 +49,7 @@ function createHomePage(info_box){
                 }
                 // 오류가 발생했을 경우, 현재 페이지에 머뭅니다.
                 else
-                    alert("이름은 2~8글자, 한글, 영어, _만 가능합니다.");
+                    alert("이름은 2~6글자, 한글, 영어, _만 가능합니다.");
             }
 
             // submit 기능을 활성화합니다.
