@@ -12,7 +12,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -35,7 +34,6 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         try {
             // subscribe 요청 시 Joined table에 등록합니다.
             if (messageType.equals(StompCommand.SUBSCRIBE)) {
-                System.out.println(message);
                 registerSubscribe(message);
             }
         }
