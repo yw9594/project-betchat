@@ -1,15 +1,17 @@
 # BetChat
 Real-Time Chatting Project With Betting System
-
-# Environment
+# Environment 
+## IDE
+- IntellyJ 2020.3
+- sourcetree 3.4.2
+# Stack
 ## FE
 - HTML/CSS/JavaScript
 ## BE
-- Spring Boot
-- JPA/hibernate
-- MySQL
-## Protocol
-- STOMP
+- Java 12.0.2
+- Spring Boot v2.4.2
+- Gradle 6.7.1
+- MySQL 8.0.22
 
 # Entire Flow
-![BetChat Flow Charts](https://user-images.githubusercontent.com/38889912/108813948-56e1ad80-75f5-11eb-8cb5-e116cd4b7c7b.png)
+![BetChat Flow Charts (4)](https://user-images.githubusercontent.com/38889912/109395086-d52fae00-796d-11eb-8df6-5d9a8d54f60d.jpg)
