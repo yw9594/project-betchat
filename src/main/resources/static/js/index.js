@@ -290,7 +290,10 @@ function createRoomPage(info_box, stomp_client){
 
             // 스크롤바를 아래로 내립니다.
             div_chat_list.scrollTop = div_chat_list.scrollHeight;
-        });
+        },
+        // 누가 어느 채팅방에 등록할 지 정보를 서버에 전달합니다.
+        {"user_key":info_box.user_key, "room_key":info_box.room_key}
+        );
 
     // 채팅 송신을 처리하는 이벤트 리스너를 정의 및 등록합니다.
     var chat_data = JSON.parse(JSON.stringify(info_box));
