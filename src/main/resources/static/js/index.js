@@ -4,7 +4,7 @@ const ws_url = "/ws";
 const chat_pub_url = "/pub/chat/";
 const chat_sub_url = "/sub/chat/";
 
-/* 페이지 전역 변수 */
+/* 전역 변수 */
 let div_head_container;     // 페이지의 헤더를 표현하는 HTML Element입니다.
 let div_content_container;  // 페이지의 내용을 표현하는 HTML Element입니다.
 
@@ -52,7 +52,7 @@ function clearHTMLElement(element){
 }
 // 페이지에 표현할 채팅 메시지를 생성합니다.
 function makeChatMessageText(name, text){
-    return "[" + name + "] " + text;
+    return sprintf("[%8s] : %s", name, text);
 }
 // 모든 form 버튼을 활성화/비활성화합니다.
 function controlFormTagSubmit(flag){
@@ -247,6 +247,7 @@ function onConnectRoomPage(info_box){
         // connection 실패 이전 페이지로 되돌아갑니다.
         ()=>{
             console.log("onConnectRoomPage.stompClient.connect : connection failed.");
+            alert("서버와의 연결이 종료되었습니다.");
             createLobbyPage(info_box);
         }
     );
