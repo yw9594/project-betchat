@@ -1,7 +1,6 @@
 # BetChat
 Real-Time Chatting Project With Betting System
 # Environment 
-## IDE
 - IntellyJ 2020.3
 - sourcetree 3.4.2
 # Stack
