@@ -1,67 +1,6 @@
-/* 서버 정보 */
-const host_address = "http://localhost:8080";  // 서버 주소를 정의합니다.
-const ws_url = "/ws";
-const chat_pub_url = "/pub/chat/";
-const chat_sub_url = "/sub/chat/";
-
 /* 전역 변수 */
 let div_head_container;     // 페이지의 헤더를 표현하는 HTML Element입니다.
 let div_content_container;  // 페이지의 내용을 표현하는 HTML Element입니다.
-
-/* 네트워크 */
-// JSON으로 전송하기 위한 XMLHttpRequest 객체를 생성합니다.
-function makeXHRObj(url){
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    return xhr;
-}
-// 서버와 통신하기 위한 JSON 형식을 정의합니다.
-function makeXHRJsonBody(result_state, data){
-    return {
-        "result_state":result_state,
-        "transaction_time": getNowIsoTime(),
-        "data": data
-    }
-};
-// 요청/응답의 상태를 전달하기 위한 enum입니다.
-const result_state = Object.freeze({"OK":"OK", "ERROR":"ERROR"});
-
-/* 유틸리티 */
-// 메시지 전송을 위한 현재 시간을 반환합니다.
-function getNowIsoTime() {
-    var now = new Date();
-    return now.toISOString();
-}
-// HTML Element를 생성합니다.
-function makeHTMLElement(tag_name, attributes) {
-    var element = document.createElement(tag_name);
-    for(const key in attributes)
-        element.setAttribute(key, attributes[key]);
-
-    return element;
-}
-// parent HTML Element에 child를 추가합니다.
-function addDOMElement(parent, child) {
-    for(const k in child)
-        parent.appendChild(child[k]);
-}
-// HTMLElement 내 모든 내용을 삭제합니다.
-function clearHTMLElement(element){
-    element.innerHTML = "";
-}
-// 페이지에 표현할 채팅 메시지를 생성합니다.
-function makeChatMessageText(name, text){
-    return sprintf("[%8s] : %s", name, text);
-}
-// 모든 form 버튼을 활성화/비활성화합니다.
-function controlFormTagSubmit(flag){
-    var form_tags = document.querySelectorAll("form");
-    form_tags.forEach(form_tag=>{
-        form_tag.disabled = flag;
-    });
-}
-
 
 /* 홈 페이지 */
 // 홈 페이지의 HTML 태그를 생성합니다.
