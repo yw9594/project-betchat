@@ -27,6 +27,10 @@ input[type=submit], input[type=submit]:focus {
     color: #a97e53;
     outline: none;
 }
+.div_chat{
+    display: grid;
+    grid-template-columns: 1fr 4.5fr;
+}
 .div_chat_text{
     text-align: left;
 }

@@ -73,3 +73,25 @@ function createPageHeaderTag(div_head_container){
     addDOMElement(header_title, [text_title]);
     addDOMElement(div_head_container, [header_title]);
 }
+
+// 채팅을 표시하는 태그를 생성합니다.
+function createChattingTag(message_body) {
+    // 채팅 태그를 생성합니다.
+    let div_chat =  makeHTMLElement("div", {"class":"div_chat"});
+    let div_chat_name =  makeHTMLElement("div", {"class":"div_chat_name"});
+    let div_chat_text =  makeHTMLElement("div", {"class":"div_chat_text"});
+
+    let text_chat_name = document.createTextNode(message_body.data.user_name);
+    let text_chat_text = document.createTextNode(message_body.data.text);
+
+    // 채팅 리스트 태그를 가져옵니다.
+    let div_chat_list = document.getElementById("div_chat_list");
+
+    addDOMElement(div_chat_name, [text_chat_name]);
+    addDOMElement(div_chat_text, [text_chat_text]);
+    addDOMElement(div_chat, [div_chat_name, div_chat_text]);
+    addDOMElement(div_chat_list, [div_chat]);
+
+    // 스크롤바를 아래로 내립니다.
+    div_chat_list.scrollTop = div_chat_list.scrollHeight;
+}

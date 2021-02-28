@@ -21,11 +21,6 @@ function addDOMElement(parent, child) {
 function clearHTMLElement(element){
     element.innerHTML = "";
 }
-// 페이지에 표현할 채팅 메시지를 생성합니다.
-function makeChatMessageText(name, text){
-    name = v.padLeft(name, 6, '　');
-    return v.sprintf("[%s] %s", name, text);
-}
 // 모든 form 버튼을 활성화/비활성화합니다.
 function controlFormTagSubmit(flag){
     let form_tags = document.querySelectorAll("form");

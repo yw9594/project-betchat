@@ -174,16 +174,7 @@ function roomPageLogic(info_box, stomp_client){
             console.log("createRoomPage.stompClient.subscribe : message received.");
             // 채팅 메시지를 받아 채팅방에 추가합니다.
             let message_body = JSON.parse(message.body);
-            let div_chat_text =  makeHTMLElement("div", {"class":"div_chat_text"});
-            let text_chat_text = document.createTextNode(makeChatMessageText(message_body.data.user_name, message_body.data.text));
-
-            let div_chat_list = document.getElementById("div_chat_list");
-
-            addDOMElement(div_chat_text, [text_chat_text]);
-            addDOMElement(div_chat_list, [div_chat_text]);
-
-            // 스크롤바를 아래로 내립니다.
-            div_chat_list.scrollTop = div_chat_list.scrollHeight;
+            createChattingTag(message_body);
         },
         // 누가 어느 채팅방에 등록할 지 정보를 서버에 전달합니다.
         {"user_key":info_box.user_key, "room_key":info_box.room_key}
