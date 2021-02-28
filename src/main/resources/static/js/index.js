@@ -31,7 +31,7 @@ function createHomePage(info_box){
         // Ajax를 사용해 서버에 이름을 전달합니다.
         var user_name = input_name_text.value;
 
-        var xhr = makeXHRObj(host_address+"/home/login");
+        var xhr = makeXHRObj(address.home.login);
         var data = makeXHRJsonBody(result_state.OK, {"user_name":user_name});
 
         // 유저 이름을 서버에 전송합니다.
@@ -101,7 +101,7 @@ function createLobbyPage(info_box){
         var room_key = input_room_join_text.value;
 
         // Ajax를 사용해 서버에 room key를 전달합니다
-        var xhr = makeXHRObj(host_address +"/lobby/join");
+        var xhr = makeXHRObj(address.lobby.join);
         var data = makeXHRJsonBody(result_state.OK, {"room_key":room_key});
 
         // 응답을 받은 경우, 채팅방을 보여줍니다.
@@ -134,7 +134,7 @@ function createLobbyPage(info_box){
         controlFormTagSubmit(false);
 
         // Ajax를 사용해 서버에 user key를 전달합니다
-        var xhr = makeXHRObj(host_address +"/lobby/create");
+        var xhr = makeXHRObj(address.lobby.create);
         var data = makeXHRJsonBody(result_state.OK, {"user_key":info_box.user_key});
 
         // 응답을 받은 경우, 채팅방을 보여줍니다.
@@ -173,7 +173,7 @@ function onConnectRoomPage(info_box){
     clearHTMLElement(div_content_container);
 
     // stomp hand shaking을 수행합니다.
-    var socket = new SockJS(ws_url);
+    var socket = new SockJS(address.ws);
     var stomp_client = Stomp.over(socket);
 
     stomp_client.connect({},
@@ -216,7 +216,7 @@ function createRoomPage(info_box, stomp_client){
     addDOMElement(div_content_container, [header_room_key, div_chat_list, form_chat_create]);
 
     // room_key를 기반으로 채팅방을 구독합니다.
-    stomp_client.subscribe(chat_sub_url + info_box.room_key,
+    stomp_client.subscribe(address.chat.subscribe + info_box.room_key,
         // 채팅 수신을 처리하는 이벤트 리스너를 정의합니다.
         (message)=>{
             console.log("createRoomPage.stompClient.subscribe : message received.");
@@ -244,7 +244,7 @@ function createRoomPage(info_box, stomp_client){
         chat_data["text"] =input_chat_text.value;
         var message = makeXHRJsonBody(result_state.OK, chat_data);
 
-        stomp_client.send(chat_pub_url, {}, JSON.stringify(message));
+        stomp_client.send(address.chat.publish, {}, JSON.stringify(message));
         input_chat_text.value="";
 
         // form 태그의 디폴트 이벤트 리스너를 취소합니다.
