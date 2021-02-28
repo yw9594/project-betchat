@@ -22,7 +22,7 @@ const result_state = Object.freeze({
 
 // JSON으로 전송하기 위한 XMLHttpRequest 객체를 생성합니다.
 function makeXHRObj(addr){
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open('POST', addr);
     xhr.setRequestHeader("Content-Type", "application/json");
     return xhr;

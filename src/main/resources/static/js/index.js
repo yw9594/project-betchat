@@ -11,20 +11,20 @@ function homePageLogic(info_box){
     createHomePageTags(div_content_container);
 
     // 유저 이름을 전달받아 서버에 전송하는 이벤트 리스너를 정의 및 등록합니다.
-    var getNameEventListener = function (event){
+    let getNameEventListener = function (event){
         // submit 기능을 일시정지합니다.
         controlFormTagSubmit(false);
 
         // Ajax를 사용해 서버에 이름을 전달합니다.
-        var user_name = input_name_text.value;
+        let user_name = input_name_text.value;
 
-        var xhr = makeXHRObj(address.home.login);
-        var data = makeXHRJsonBody(result_state.OK, {"user_name":user_name});
+        let xhr = makeXHRObj(address.home.login);
+        let data = makeXHRJsonBody(result_state.OK, {"user_name":user_name});
 
         // 유저 이름을 서버에 전송합니다.
         xhr.onreadystatechange = function(){
             if(xhr.readyState===4 && xhr.status===200){
-                var response = JSON.parse(xhr.response);
+                let response = JSON.parse(xhr.response);
 
                 // 정상적으로 응답을 받은 경우, 로비 페이지를 표현합니다.
                 if(response.result_state===result_state.OK){
@@ -61,20 +61,20 @@ function lobbyPageLogic(info_box){
     createLobbyPageTags(div_content_container);
 
     // 채팅방 참가를 처리하는 이벤트 리스너를 정의 및 등록합니다.
-    var joinRoomEventListener = function (event){
+    let joinRoomEventListener = function (event){
         // submit 기능을 일시정지합니다.
         controlFormTagSubmit(false);
 
-        var room_key = input_room_join_text.value;
+        let room_key = input_room_join_text.value;
 
         // Ajax를 사용해 서버에 room key를 전달합니다
-        var xhr = makeXHRObj(address.lobby.join);
-        var data = makeXHRJsonBody(result_state.OK, {"room_key":room_key});
+        let xhr = makeXHRObj(address.lobby.join);
+        let data = makeXHRJsonBody(result_state.OK, {"room_key":room_key});
 
         // 응답을 받은 경우, 채팅방을 보여줍니다.
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var response = JSON.parse(xhr.response);
+                let response = JSON.parse(xhr.response);
 
                 // 정상적으로 응답을 받은 경우, 로비 페이지를 표현합니다.
                 if (response.result_state === result_state.OK) {
@@ -96,18 +96,18 @@ function lobbyPageLogic(info_box){
     }
 
     // 채팅방 생성 요청을 처리하는 이벤트 리스너를 정의 및 등록합니다.
-    var createRoomEventListener = function (event){
+    let createRoomEventListener = function (event){
         // submit 기능을 일시정지합니다.
         controlFormTagSubmit(false);
 
         // Ajax를 사용해 서버에 user key를 전달합니다
-        var xhr = makeXHRObj(address.lobby.create);
-        var data = makeXHRJsonBody(result_state.OK, {"user_key":info_box.user_key});
+        let xhr = makeXHRObj(address.lobby.create);
+        let data = makeXHRJsonBody(result_state.OK, {"user_key":info_box.user_key});
 
         // 응답을 받은 경우, 채팅방을 보여줍니다.
         xhr.onreadystatechange = function(){
             if(xhr.readyState===4 && xhr.status===200){
-                var response = JSON.parse(xhr.response);
+                let response = JSON.parse(xhr.response);
 
                 // 정상적으로 응답을 받은 경우, 로비 페이지를 표현합니다.
                 if(response.result_state===result_state.OK){
@@ -140,8 +140,8 @@ function onConnectRoomPage(info_box){
     clearHTMLElement(div_content_container);
 
     // stomp hand shaking을 수행합니다.
-    var socket = new SockJS(address.ws);
-    var stomp_client = Stomp.over(socket);
+    let socket = new SockJS(address.ws);
+    let stomp_client = Stomp.over(socket);
 
     stomp_client.connect({},
         // connection 성공 시 채팅방 페이지로 이동합니다.
@@ -173,11 +173,11 @@ function roomPageLogic(info_box, stomp_client){
         (message)=>{
             console.log("createRoomPage.stompClient.subscribe : message received.");
             // 채팅 메시지를 받아 채팅방에 추가합니다.
-            var message_body = JSON.parse(message.body);
-            var div_chat_text =  makeHTMLElement("div", {"class":"div_chat_text"});
-            var text_chat_text = document.createTextNode(makeChatMessageText(message_body.data.user_name, message_body.data.text));
+            let message_body = JSON.parse(message.body);
+            let div_chat_text =  makeHTMLElement("div", {"class":"div_chat_text"});
+            let text_chat_text = document.createTextNode(makeChatMessageText(message_body.data.user_name, message_body.data.text));
 
-            var div_chat_list = document.getElementById("div_chat_list");
+            let div_chat_list = document.getElementById("div_chat_list");
 
             addDOMElement(div_chat_text, [text_chat_text]);
             addDOMElement(div_chat_list, [div_chat_text]);
@@ -190,14 +190,14 @@ function roomPageLogic(info_box, stomp_client){
         );
 
     // 채팅 송신을 처리하는 이벤트 리스너를 정의 및 등록합니다.
-    var chat_data = JSON.parse(JSON.stringify(info_box)); // info_box의 내용을 복사합니다.
+    let chat_data = JSON.parse(JSON.stringify(info_box)); // info_box의 내용을 복사합니다.
     chat_data["text"] = null;
 
-    var sendChatting = function (event){
+    let sendChatting = function (event){
         console.log("createRoomPage.sendChatting : message sent.");
-        var input_chat_text = document.getElementById("input_chat_text");
+        let input_chat_text = document.getElementById("input_chat_text");
         chat_data["text"] =input_chat_text.value;
-        var message = makeXHRJsonBody(result_state.OK, chat_data);
+        let message = makeXHRJsonBody(result_state.OK, chat_data);
 
         stomp_client.send(address.chat.publish, {}, JSON.stringify(message));
         input_chat_text.value="";

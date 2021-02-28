@@ -1,12 +1,12 @@
 /* 유틸리티 */
 // 메시지 전송을 위한 현재 시간을 반환합니다.
 function getNowIsoTime() {
-    var now = new Date();
+    let now = new Date();
     return now.toISOString();
 }
 // HTML Element를 생성합니다.
 function makeHTMLElement(tag_name, attributes) {
-    var element = document.createElement(tag_name);
+    let element = document.createElement(tag_name);
     for(const key in attributes)
         element.setAttribute(key, attributes[key]);
 
@@ -28,7 +28,7 @@ function makeChatMessageText(name, text){
 }
 // 모든 form 버튼을 활성화/비활성화합니다.
 function controlFormTagSubmit(flag){
-    var form_tags = document.querySelectorAll("form");
+    let form_tags = document.querySelectorAll("form");
     form_tags.forEach(form_tag=>{
         form_tag.disabled = flag;
     });
