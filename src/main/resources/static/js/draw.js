@@ -15,3 +15,29 @@ function createHomePageTags(div_content_container){
     // 페이지에 구성 요소를 추가합니다.
     addDOMElement(div_content_container, [header_name_input, form_name_input]);
 }
+
+/* 로비 페이지 */
+function createLobbyPageTags(div_content_container){
+    // 채팅방에 참가하기 위한 태그를 생성합니다.
+    var header_room_join = makeHTMLElement("h3");
+    var text_room_join = document.createTextNode("채팅방 참가");
+
+    var form_room_join =  makeHTMLElement("form", {"id":"form_room_join"});
+    var input_room_join_text =  makeHTMLElement("input", {"id":"input_room_join_text", "type":"text", "placeholder":"room key", "autocomplete":"off"});
+    var input_room_join_submit = makeHTMLElement("input", {"id":"input_room_join_submit", "type":"submit", "value":"참가"});
+
+    // 채팅방을 생성하기 위한 태그를 생성합니다.
+    var header_room_create = makeHTMLElement("h3");
+    var text_room_create = document.createTextNode("채팅방 생성");
+
+    var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
+    var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_create_submit", "type":"submit", "value":"생성"});
+
+    // 생성된 태그를 페이지에 추가합니다.
+    addDOMElement(header_room_join, [text_room_join]);
+    addDOMElement(form_room_join, [input_room_join_text, input_room_join_submit]);
+
+    addDOMElement(header_room_create, [text_room_create]);
+    addDOMElement(form_room_create, [input_room_create_submit]);
+    addDOMElement(div_content_container, [header_room_create, form_room_create, header_room_join, form_room_join]);
+}

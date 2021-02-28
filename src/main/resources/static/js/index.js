@@ -52,33 +52,13 @@ function homePageLogic(info_box){
     document.getElementById("form_name_input").addEventListener("submit", getNameEventListener,true);
 }
 
-// 로비 페이지를 생성합니다.
+/* 로비 페이지 */
 function createLobbyPage(info_box){
     console.log("createLobbyPage : createLobbyPage called.");
     clearHTMLElement(div_content_container);
 
-    // 채팅방에 참가하기 위한 태그를 생성합니다.
-    var header_room_join = makeHTMLElement("h3");
-    var text_room_join = document.createTextNode("채팅방 참가");
-
-    var form_room_join =  makeHTMLElement("form", {"id":"form_room_join"});
-    var input_room_join_text =  makeHTMLElement("input", {"id":"input_room_join_text", "type":"text", "placeholder":"room key", "autocomplete":"off"});
-    var input_room_join_submit = makeHTMLElement("input", {"id":"input_room_join_submit", "type":"submit", "value":"참가"});
-
-    // 채팅방을 생성하기 위한 태그를 생성합니다.
-    var header_room_create = makeHTMLElement("h3");
-    var text_room_create = document.createTextNode("채팅방 생성");
-
-    var form_room_create =  makeHTMLElement("form", {"id":"form_room_create"});
-    var input_room_create_submit = makeHTMLElement("input", {"id":"input_room_create_submit", "type":"submit", "value":"생성"});
-
-    // 생성된 태그를 페이지에 추가합니다.
-    addDOMElement(header_room_join, [text_room_join]);
-    addDOMElement(form_room_join, [input_room_join_text, input_room_join_submit]);
-
-    addDOMElement(header_room_create, [text_room_create]);
-    addDOMElement(form_room_create, [input_room_create_submit]);
-    addDOMElement(div_content_container, [header_room_create, form_room_create, header_room_join, form_room_join]);
+    // 로비 페이지의 HTML 태그들을 생성합니다.
+    createLobbyPageTags(div_content_container);
 
     // 채팅방 참가를 처리하는 이벤트 리스너를 정의 및 등록합니다.
     var joinRoomEventListener = function (event){
@@ -150,8 +130,8 @@ function createLobbyPage(info_box){
     }
 
     // 채팅방 이벤트 리스너를 등록합니다.
-    form_room_join.addEventListener("submit", joinRoomEventListener,true);
-    form_room_create.addEventListener("submit", createRoomEventListener,true);
+    document.getElementById("form_room_join").addEventListener("submit", joinRoomEventListener,true);
+    document.getElementById("form_room_create").addEventListener("submit", createRoomEventListener,true);
 }
 
 // 채팅방 로딩 중간 과정을 처리합니다.
