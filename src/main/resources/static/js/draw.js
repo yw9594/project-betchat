@@ -64,7 +64,7 @@ function createRoomPageTags(div_content_container, info_box){
 }
 
 // 페이지 헤더를 생성합니다.
-function createHeader(div_head_container){
+function createPageHeaderTag(div_head_container){
     // 헤더를 표현하기 위한 태그를 생성합니다.
     let header_title =  makeHTMLElement("h2", );
     let text_title = document.createTextNode("Betting Chatting");

@@ -219,7 +219,7 @@ window.onload = ()=>{
     div_content_container = document.getElementById("content_container");
 
     // 페이지의 헤더를 표현합니다.
-    createHeader(div_head_container);
+    createPageHeaderTag(div_head_container);
 
     // 페이지 이동 간 필요한 값을 저장하는 객체를 생성합니다.
     let info_box = {};
