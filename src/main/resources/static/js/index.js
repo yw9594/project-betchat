@@ -148,39 +148,24 @@ function onConnectRoomPage(info_box){
         ()=>{
             console.log("onConnectRoomPage.stompClient.connect : connection success.");
 
-            createRoomPage(info_box, stomp_client);
+            roomPageLogic(info_box, stomp_client);
         },
         // connection 실패 이전 페이지로 되돌아갑니다.
         ()=>{
             console.log("onConnectRoomPage.stompClient.connect : connection failed.");
             alert("서버와의 연결이 종료되었습니다.");
-            createLobbyPage(info_box);
+            lobbyPageLogic(info_box);
         }
     );
 }
 
 // 채팅방 페이지를 생성합니다.
-function createRoomPage(info_box, stomp_client){
+function roomPageLogic(info_box, stomp_client){
     console.log("createRoomPage : createRoomPage called.");
     clearHTMLElement(div_content_container);
 
-    // room_key를 표현하기 위한 태그를 생성합니다.
-    var header_room_key =  makeHTMLElement("h3", );
-    var text_room_key = document.createTextNode("room key : " + info_box.room_key);
-
-    // 채팅을 표현하기 위한 태그를 생성합니다.
-    var div_chat_list =  makeHTMLElement("div", {"id":"div_chat_list"});
-
-    // 채팅 입력을 생성하기 위한 태그를 생성합니다.
-    var form_chat_create =  makeHTMLElement("form", {"id":"form_chat_create"});
-    var input_chat_text =  makeHTMLElement("input", {"id":"input_chat_text", "type":"text", "autocomplete":"off"});
-    var input_chat_submit = makeHTMLElement("input", {"id":"input_chat_submit", "type":"submit", "value":"전송"});
-
-    addDOMElement(header_room_key, [text_room_key]);
-    addDOMElement(form_chat_create, [input_chat_text, input_chat_submit]);
-
-    // 생성된 태그를 페이지에 추가합니다.
-    addDOMElement(div_content_container, [header_room_key, div_chat_list, form_chat_create]);
+    // 채팅방 페이지의 HTML 태그들을 생성합니다.
+    createRoomPageTags(div_content_container, info_box);
 
     // room_key를 기반으로 채팅방을 구독합니다.
     stomp_client.subscribe(address.chat.subscribe + info_box.room_key,
@@ -191,6 +176,8 @@ function createRoomPage(info_box, stomp_client){
             var message_body = JSON.parse(message.body);
             var div_chat_text =  makeHTMLElement("div", {"class":"div_chat_text"});
             var text_chat_text = document.createTextNode(makeChatMessageText(message_body.data.user_name, message_body.data.text));
+
+            var div_chat_list = document.getElementById("div_chat_list");
 
             addDOMElement(div_chat_text, [text_chat_text]);
             addDOMElement(div_chat_list, [div_chat_text]);
@@ -203,11 +190,12 @@ function createRoomPage(info_box, stomp_client){
         );
 
     // 채팅 송신을 처리하는 이벤트 리스너를 정의 및 등록합니다.
-    var chat_data = JSON.parse(JSON.stringify(info_box));
+    var chat_data = JSON.parse(JSON.stringify(info_box)); // info_box의 내용을 복사합니다.
     chat_data["text"] = null;
 
     var sendChatting = function (event){
         console.log("createRoomPage.sendChatting : message sent.");
+        var input_chat_text = document.getElementById("input_chat_text");
         chat_data["text"] =input_chat_text.value;
         var message = makeXHRJsonBody(result_state.OK, chat_data);
 
@@ -219,7 +207,7 @@ function createRoomPage(info_box, stomp_client){
     }
 
     // 채팅 전송 이벤트 리스너를 등록합니다.
-    form_chat_create.addEventListener("submit", sendChatting, true);
+    document.getElementById("form_chat_create").addEventListener("submit", sendChatting, true);
 }
 
 // 페이지의 헤더를 생성한다.
