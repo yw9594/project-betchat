@@ -32,7 +32,7 @@ function homePageLogic(info_box){
                     info_box["user_name"] = user_name;
                     info_box["user_key"] = response.data.user_key;
 
-                    createLobbyPage(info_box);
+                    lobbyPageLogic(info_box);
                 }
                 // 오류가 발생했을 경우, 현재 페이지에 머뭅니다.
                 else
@@ -53,7 +53,7 @@ function homePageLogic(info_box){
 }
 
 /* 로비 페이지 */
-function createLobbyPage(info_box){
+function lobbyPageLogic(info_box){
     console.log("createLobbyPage : createLobbyPage called.");
     clearHTMLElement(div_content_container);
 
@@ -134,7 +134,7 @@ function createLobbyPage(info_box){
     document.getElementById("form_room_create").addEventListener("submit", createRoomEventListener,true);
 }
 
-// 채팅방 로딩 중간 과정을 처리합니다.
+/* 채팅방 연결 처리 */
 function onConnectRoomPage(info_box){
     console.log("onConnectRoomPage : onConnectRoomPage called.");
     clearHTMLElement(div_content_container);

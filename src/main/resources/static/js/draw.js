@@ -1,5 +1,5 @@
 /* 페이지 표현 */
-/* 홈 페이지 */
+// 홈 페이지의 태그를 표현합니다.
 function createHomePageTags(div_content_container){
     // 이름을 입력받기 위한 태그를 생성합니다.
     var header_name_input = makeHTMLElement("h3");
@@ -16,7 +16,7 @@ function createHomePageTags(div_content_container){
     addDOMElement(div_content_container, [header_name_input, form_name_input]);
 }
 
-/* 로비 페이지 */
+// 로비 페이지의 태그를 표현합니다.
 function createLobbyPageTags(div_content_container){
     // 채팅방에 참가하기 위한 태그를 생성합니다.
     var header_room_join = makeHTMLElement("h3");
