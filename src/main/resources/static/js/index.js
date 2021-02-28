@@ -3,25 +3,12 @@ let div_head_container;     // 페이지의 헤더를 표현하는 HTML Element�
 let div_content_container;  // 페이지의 내용을 표현하는 HTML Element입니다.
 
 /* 홈 페이지 */
-// 홈 페이지의 HTML 태그를 생성합니다.
-function createHomePage(info_box){
+function homePageLogic(info_box){
     console.log("createMainPage : createMainPage called.");
     clearHTMLElement(div_content_container);
 
-    // 이름을 입력받기 위한 태그를 생성합니다.
-    var header_name_input = makeHTMLElement("h3");
-    var text_name_input  = document.createTextNode("이름 입력");
-
-    var form_name_input =  makeHTMLElement("form", {"id":"form_name_input"});
-    var input_name_text =  makeHTMLElement("input", {"id":"input_name_text", "type":"text", "autocomplete":"off"});
-    var input_name_submit = makeHTMLElement("input", {"id":"input_name_submit", "type":"submit", "value":"입장"});
-
-    // 생성된 태그를 페이지에 추가합니다.
-    addDOMElement(header_name_input, [text_name_input]);
-    addDOMElement(form_name_input, [input_name_text, input_name_submit]);
-
-    // 페이지에 구성 요소를 추가합니다.
-    addDOMElement(div_content_container, [header_name_input, form_name_input]);
+    // 홈 페이지의 HTML 태그들을 생성합니다.
+    createHomePageTags(div_content_container);
 
     // 유저 이름을 전달받아 서버에 전송하는 이벤트 리스너를 정의 및 등록합니다.
     var getNameEventListener = function (event){
@@ -62,7 +49,7 @@ function createHomePage(info_box){
     }
 
     // 이름 전송 이벤트 리스너를 등록합니다.
-    form_name_input.addEventListener("submit", getNameEventListener,true);
+    document.getElementById("form_name_input").addEventListener("submit", getNameEventListener,true);
 }
 
 // 로비 페이지를 생성합니다.
@@ -281,5 +268,5 @@ window.onload = ()=>{
     let info_box = {};
 
     // 메인 페이지를 표현합니다.
-    createHomePage(info_box);
+    homePageLogic(info_box);
 }
