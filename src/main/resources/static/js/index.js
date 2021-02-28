@@ -2,7 +2,7 @@
 let div_head_container;     // 페이지의 헤더를 표현하는 HTML Element입니다.
 let div_content_container;  // 페이지의 내용을 표현하는 HTML Element입니다.
 
-/* 홈 페이지 */
+// 홈 페이지의 로직입니다.
 function homePageLogic(info_box){
     console.log("createMainPage : createMainPage called.");
     clearHTMLElement(div_content_container);
@@ -52,7 +52,7 @@ function homePageLogic(info_box){
     document.getElementById("form_name_input").addEventListener("submit", getNameEventListener,true);
 }
 
-/* 로비 페이지 */
+// 로비 페이지의 로직입니다.
 function lobbyPageLogic(info_box){
     console.log("createLobbyPage : createLobbyPage called.");
     clearHTMLElement(div_content_container);
@@ -134,7 +134,7 @@ function lobbyPageLogic(info_box){
     document.getElementById("form_room_create").addEventListener("submit", createRoomEventListener,true);
 }
 
-/* 채팅방 연결 처리 */
+// 채팅방 연결을 처리합니다.
 function onConnectRoomPage(info_box){
     console.log("onConnectRoomPage : onConnectRoomPage called.");
     clearHTMLElement(div_content_container);
