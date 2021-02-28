@@ -210,17 +210,6 @@ function roomPageLogic(info_box, stomp_client){
     document.getElementById("form_chat_create").addEventListener("submit", sendChatting, true);
 }
 
-// 페이지의 헤더를 생성한다.
-function createHeader(){
-    // 헤더를 표현하기 위한 태그를 생성합니다.
-    var header_title =  makeHTMLElement("h2", );
-    var text_title = document.createTextNode("Betting Chatting");
-
-    // 생성된 태그를 페이지에 추가합니다.
-    addDOMElement(header_title, [text_title]);
-    addDOMElement(div_head_container, [header_title]);
-}
-
 /* 메인 페이지 초기화 */
 window.onload = ()=>{
     console.log("window.onload : window.onload called.");
@@ -230,7 +219,7 @@ window.onload = ()=>{
     div_content_container = document.getElementById("content_container");
 
     // 페이지의 헤더를 표현합니다.
-    createHeader();
+    createHeader(div_head_container);
 
     // 페이지 이동 간 필요한 값을 저장하는 객체를 생성합니다.
     let info_box = {};
