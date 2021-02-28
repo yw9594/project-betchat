@@ -63,7 +63,7 @@ public class UserLoginService {
 
     // userName의 유효성을 검사합니다.
     private void checkUserNameValidation(String userName) throws UserLoginException {
-        String pattern = "^[가-힣a-zA-Z0-9_]{2,8}$";
+        String pattern = "^[가-힣ㄱ-ㅎa-zA-Z0-9_]{2,6}$";
 
         if(!userName.matches(pattern))
             throw new UserLoginException();

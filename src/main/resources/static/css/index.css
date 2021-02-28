@@ -27,7 +27,14 @@ input[type=submit], input[type=submit]:focus {
     color: #a97e53;
     outline: none;
 }
+.div_chat{
+    display: grid;
+    grid-template-columns: 1fr 4.5fr;
+    font-family: 'Gaegu', cursive;
+    font-size:22px;
+}
 .div_chat_text{
+    padding-left:10px;
     text-align: left;
 }
 #div_chat_list{
