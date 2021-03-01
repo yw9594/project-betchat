@@ -12,6 +12,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
@@ -32,8 +33,9 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
     // Message를 Controller 또는 Broker로 보내기 전, Dkem전처리를 수행합니다.
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        StompCommand messageType = (StompCommand) message.getHeaders().get("stompCommand");
-        System.out.println(message);
+        StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
+        SimpMessageType messageType = stompHeaderAccessor.getMessageType();
+
         try {
             // message type에 따라 특정 로직을 수행합니다.
             switch(messageType){
