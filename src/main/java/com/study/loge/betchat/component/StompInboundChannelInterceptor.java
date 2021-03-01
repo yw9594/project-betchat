@@ -4,7 +4,7 @@ import com.study.loge.betchat.entity.Join;
 import com.study.loge.betchat.entity.Room;
 import com.study.loge.betchat.entity.User;
 import com.study.loge.betchat.exception.SubscribeException;
-import com.study.loge.betchat.repository.JoinedRepository;
+import com.study.loge.betchat.repository.JoinRepository;
 import com.study.loge.betchat.repository.RoomRepository;
 import com.study.loge.betchat.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 public class StompInboundChannelInterceptor implements ChannelInterceptor {
     private UserRepository userReposotory;
     private RoomRepository roomRepository;
-    private JoinedRepository joinedRepository;
+    private JoinRepository joinedRepository;
 
     // Message를 Controller 또는 Broker로 보내기 전, Dkem전처리를 수행합니다.
     @Override
@@ -54,7 +54,7 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
             return message;
         }
     }
-    // subscribe message가 도착한 경우 joined에 저장합니다.
+    // subscribe message가 도착한 경우 Join Table에 저장합니다.
     private void registerSubscribe(Message<?> message) throws SubscribeException {
         MessageHeaders headers = message.getHeaders();
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
@@ -74,7 +74,6 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         Join join = Join.builder()
                 .room(room)
                 .joinedAt(LocalDateTime.now())
-                .chattedAt(null)
                 .simpSessionId(simpSessionId)
                 .build();
 
