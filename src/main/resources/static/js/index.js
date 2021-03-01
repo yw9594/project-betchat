@@ -4,7 +4,7 @@ let div_content_container;  // 페이지의 내용을 표현하는 HTML Element�
 
 // 홈 페이지의 로직입니다.
 function homePageLogic(info_box){
-    console.log("createMainPage : createMainPage called.");
+    console.log("homePageLogic : homePageLogic called.");
     clearHTMLElement(div_content_container);
 
     // 홈 페이지의 HTML 태그들을 생성합니다.
@@ -54,7 +54,7 @@ function homePageLogic(info_box){
 
 // 로비 페이지의 로직입니다.
 function lobbyPageLogic(info_box){
-    console.log("createLobbyPage : createLobbyPage called.");
+    console.log("lobbyPageLogic : lobbyPageLogic called.");
     clearHTMLElement(div_content_container);
 
     // 로비 페이지의 HTML 태그들을 생성합니다.
@@ -161,7 +161,7 @@ function onConnectRoomPage(info_box){
 
 // 채팅방 페이지를 생성합니다.
 function roomPageLogic(info_box, stomp_client){
-    console.log("createRoomPage : createRoomPage called.");
+    console.log("roomPageLogic : roomPageLogic called.");
     clearHTMLElement(div_content_container);
 
     // 채팅방 페이지의 HTML 태그들을 생성합니다.
@@ -171,7 +171,7 @@ function roomPageLogic(info_box, stomp_client){
     stomp_client.subscribe(address.chat.subscribe + info_box.room_key,
         // 채팅 수신을 처리하는 이벤트 리스너를 정의합니다.
         (message)=>{
-            console.log("createRoomPage.stompClient.subscribe : message received.");
+            console.log("roomPageLogic.stompClient.subscribe : message received.");
             // 채팅 메시지를 받아 채팅방에 추가합니다.
             let message_body = JSON.parse(message.body);
             createChattingTag(message_body);
@@ -185,7 +185,7 @@ function roomPageLogic(info_box, stomp_client){
     chat_data["text"] = null;
 
     let sendChatting = function (event){
-        console.log("createRoomPage.sendChatting : message sent.");
+        console.log("roomPageLogic.sendChatting : message sent.");
         let input_chat_text = document.getElementById("input_chat_text");
         chat_data["text"] =input_chat_text.value;
         let message = makeXHRJsonBody(result_state.OK, chat_data);
