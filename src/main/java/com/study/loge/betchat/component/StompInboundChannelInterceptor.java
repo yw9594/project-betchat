@@ -1,10 +1,10 @@
 package com.study.loge.betchat.component;
 
-import com.study.loge.betchat.entity.Join;
+import com.study.loge.betchat.entity.Participate;
 import com.study.loge.betchat.entity.Room;
 import com.study.loge.betchat.entity.User;
 import com.study.loge.betchat.exception.SubscribeException;
-import com.study.loge.betchat.repository.JoinRepository;
+import com.study.loge.betchat.repository.ParticipateRepository;
 import com.study.loge.betchat.repository.RoomRepository;
 import com.study.loge.betchat.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 public class StompInboundChannelInterceptor implements ChannelInterceptor {
     private UserRepository userReposotory;
     private RoomRepository roomRepository;
-    private JoinRepository joinRepository;
+    private ParticipateRepository participateRepository;
 
     // Message를 Controller 또는 Broker로 보내기 전, Dkem전처리를 수행합니다.
     @Override
@@ -35,7 +35,7 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         try {
             // message type에 따라 특정 로직을 수행합니다.
             switch(messageType){
-                // subscribe 요청 시 Joined table에 등록합니다.
+                // subscribe 요청 시 Participate table에 등록합니다.
                 case SUBSCRIBE:
                     registerSubscribe(message);
                     break;
@@ -54,7 +54,7 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
             return message;
         }
     }
-    // subscribe message가 도착한 경우 Join Table에 저장합니다.
+    // subscribe message가 도착한 경우 Participate Table에 저장합니다.
     private void registerSubscribe(Message<?> message) throws SubscribeException {
         MessageHeaders headers = message.getHeaders();
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
@@ -71,15 +71,18 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
             throw new SubscribeException("유효하지 않은 user key 또는 room key입니다.");
 
         // 유저가 채팅방에 참가한 것을 DB에 저장합니다.
-        Join join = Join.builder()
+        Participate participate = Participate.builder()
                 .user(user)
                 .room(room)
                 .isJoined(1)
                 .joinedAt(LocalDateTime.now())
                 .simpSessionId(simpSessionId)
                 .build();
+        System.out.println(participate);
+        System.out.println(user);
+        System.out.println(room);
 
-        joinRepository.save(join);
+        participateRepository.save(participate);
     }
 
     // unsubscribe, disconnect message가 도착한 경우, 퇴장 처리합니다.
@@ -87,11 +90,11 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
         String simpSessionId = stompHeaderAccessor.getSessionId();
 
-        Join join = joinRepository.findBySimpSessionId(simpSessionId);
-        join.setIsJoined(0);
-        join.setExitedAt(LocalDateTime.now());
+        Participate participate = participateRepository.findBySimpSessionId(simpSessionId);
+        participate.setIsJoined(0);
+        participate.setExitedAt(LocalDateTime.now());
 
-        joinRepository.save(join);
+        participateRepository.save(participate);
     }
 
 }

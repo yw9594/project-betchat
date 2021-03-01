@@ -22,8 +22,7 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Join> user;
-
+    private List<Participate> participate;
 
     @Override
     public String toString() {

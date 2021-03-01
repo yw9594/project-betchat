@@ -21,7 +21,7 @@ public class Room {
     private LocalDateTime createdAt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private List<Join> join;
+    private List<Participate> participate;
 
     @Override
     public String toString() {
