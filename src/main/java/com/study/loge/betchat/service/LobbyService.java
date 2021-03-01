@@ -40,7 +40,6 @@ public class LobbyService {
 
             Room room = Room.builder()
                     .roomKey(roomKey)
-                    .activated(1)
                     .createdAt(LocalDateTime.now())
                     .build();
 
@@ -88,7 +87,7 @@ public class LobbyService {
         User user = userRepository.findByUserKey(userKey);
 
 
-        if(user==null || user.getActivated()==0) throw new RoomCreateException();
+        if(user==null) throw new RoomCreateException();
     }
 
     // room join request의 유효성 검사를 수행합니다.
@@ -97,6 +96,6 @@ public class LobbyService {
         String roomKey = request.getData().getRoomKey();
         Room room = roomRepository.findByRoomKey(roomKey);
 
-        if(room==null || room.getActivated()==0) throw new RoomJoinException();
+        if(room==null) throw new RoomJoinException();
     }
 }
