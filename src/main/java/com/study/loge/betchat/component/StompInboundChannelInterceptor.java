@@ -30,11 +30,16 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompCommand messageType = (StompCommand) message.getHeaders().get("stompCommand");
-
+        System.out.println(message);
         try {
-            // subscribe 요청 시 Joined table에 등록합니다.
-            if (messageType.equals(StompCommand.SUBSCRIBE)) {
-                registerSubscribe(message);
+            // message type에 따라 특정 로직을 수행합니다.
+            switch(messageType){
+                // subscribe 요청 시 Joined table에 등록합니다.
+                case SUBSCRIBE:
+                    registerSubscribe(message);
+                    break;
+                case DISCONNECT:
+                    break;
             }
         }
         catch(Exception e){
