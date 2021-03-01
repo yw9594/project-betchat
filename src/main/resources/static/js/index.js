@@ -197,8 +197,22 @@ function roomPageLogic(info_box, stomp_client){
         event.preventDefault();
     }
 
-    // 채팅 전송 이벤트 리스너를 등록합니다.
+    // 채팅방 퇴장 이벤트 리스너를 정의합니다.
+    let exitChatRoom = function(event){
+        console.log("roomPageLogic.exitChatRoom : exit chat room.");
+        stomp_client.disconnect(()=>{
+            alert("채팅방에서 퇴장했습니다.");
+        });
+        lobbyPageLogic(info_box);
+
+        // 다른 디폴트 event
+        event.preventDefault();
+    };
+
+
+    // 채팅 이벤트 리스너를 등록합니다.
     document.getElementById("form_chat_create").addEventListener("submit", sendChatting, true);
+    document.getElementById("button_chat_exit").addEventListener("click", exitChatRoom, true);
 }
 
 /* 메인 페이지 초기화 */
