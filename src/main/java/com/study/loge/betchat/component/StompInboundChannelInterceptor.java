@@ -78,9 +78,6 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
                 .joinedAt(LocalDateTime.now())
                 .simpSessionId(simpSessionId)
                 .build();
-        System.out.println(participate);
-        System.out.println(user);
-        System.out.println(room);
 
         participateRepository.save(participate);
     }
