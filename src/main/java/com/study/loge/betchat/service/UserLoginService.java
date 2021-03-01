@@ -41,7 +41,6 @@ public class UserLoginService {
             User user = User.builder()
                     .userName(userName)
                     .userKey(userKey)
-                    .activated(1)
                     .createdAt(LocalDateTime.now())
                     .build();
             userRepository.save(user);
