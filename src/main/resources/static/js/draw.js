@@ -51,16 +51,25 @@ function createRoomPageTags(div_content_container, info_box){
     // 채팅을 표현하기 위한 태그를 생성합니다.
     let div_chat_list =  makeHTMLElement("div", {"id":"div_chat_list"});
 
+    // 채팅방 기능 관련 태그를 모아두기 위한 태그를 생성합니다.
+    let div_chat_utils = makeHTMLElement("div", {"id":"div_chat_utils"});
+
     // 채팅 입력을 생성하기 위한 태그를 생성합니다.
     let form_chat_create =  makeHTMLElement("form", {"id":"form_chat_create"});
     let input_chat_text =  makeHTMLElement("input", {"id":"input_chat_text", "type":"text", "autocomplete":"off"});
     let input_chat_submit = makeHTMLElement("input", {"id":"input_chat_submit", "type":"submit", "value":"전송"});
 
+    // 채팅방을 나가기 위한 태그를 생성합니다.
+    let button_chat_exit = makeHTMLElement("button", {"id":"button_chat_exit", "type":"button", "value":"나가기"});
+    let text_chat_exit = document.createTextNode("나가기");
+
     addDOMElement(header_room_key, [text_room_key]);
     addDOMElement(form_chat_create, [input_chat_text, input_chat_submit]);
+    addDOMElement(button_chat_exit, [text_chat_exit]);
+    addDOMElement(div_chat_utils, [form_chat_create, button_chat_exit]);
 
     // 생성된 태그를 페이지에 추가합니다.
-    addDOMElement(div_content_container, [header_room_key, div_chat_list, form_chat_create]);
+    addDOMElement(div_content_container, [header_room_key, div_chat_list, div_chat_utils]);
 }
 
 // 페이지 헤더를 생성합니다.

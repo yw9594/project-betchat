@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-// room entity를 표현하기 위한 entity 클래스입니다.
+// Room Entity를 표현하기 위한 Entity 클래스입니다.
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,18 +18,16 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String roomKey;
-    private Integer activated;
     private LocalDateTime createdAt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private List<Joined> joined;
+    private List<Participate> participate;
 
     @Override
     public String toString() {
         return "Room{" +
                 "id=" + id +
                 ", roomKey='" + roomKey + '\'' +
-                ", activated=" + activated +
                 ", createdAt=" + createdAt +
                 '}';
     }

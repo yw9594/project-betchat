@@ -13,14 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-// user login 로직을 처리합니다.
+// 유저 로그인 로직을 정의하는 클래스입니다.
 @AllArgsConstructor
 @Service
 public class UserLoginService {
-    // userKey를 생성하기 위한 객체입니다.
     private final KeyGenerator keyGenerator;
-
-    // DB에 접근하기 위한 repository 객체입니다.
     private UserRepository userRepository;
 
     // 유저의 로그인 요청을 처리합니다.
@@ -41,7 +38,6 @@ public class UserLoginService {
             User user = User.builder()
                     .userName(userName)
                     .userKey(userKey)
-                    .activated(1)
                     .createdAt(LocalDateTime.now())
                     .build();
             userRepository.save(user);
@@ -53,7 +49,7 @@ public class UserLoginService {
             e.printStackTrace();
         }
         finally {
-            // response를 생성한 뒤, 반환한다.
+            // response를 생성한 뒤, 반환합니다.
             UserLoginResponse userLoginResponse = UserLoginResponse.builder()
                     .userKey(userKey)
                     .build();

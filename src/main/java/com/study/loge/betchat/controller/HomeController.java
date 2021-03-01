@@ -7,7 +7,7 @@ import com.study.loge.betchat.service.UserLoginService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-// Home URL 경로를 제어합니다.
+// 홈 페이지의 경로를 제어합니다.
 @AllArgsConstructor
 @RestController
 @RequestMapping("/home")
