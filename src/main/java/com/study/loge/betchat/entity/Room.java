@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-// room entity를 표현하기 위한 entity 클래스입니다.
+// Room Entity를 표현하기 위한 Entity 클래스입니다.
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

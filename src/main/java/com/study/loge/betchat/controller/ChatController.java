@@ -10,7 +10,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-// 전달된 채팅을 처리하는 controller 클래스입니다.
+// 채팅방 페이지의 요청을 제어합니다.
 @AllArgsConstructor
 @RestController
 public class ChatController {

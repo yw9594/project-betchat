@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-// room create 로직을 처리합니다.
+// 로비 페이지에서의 로직을 정의합니다.
 @AllArgsConstructor
 @Service
 public class LobbyService {

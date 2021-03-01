@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-// participate entity를 표현하기 위한 entity 클래스입니다.
+// Participate Entity를 표현하기 위한 Entity 클래스입니다.
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
