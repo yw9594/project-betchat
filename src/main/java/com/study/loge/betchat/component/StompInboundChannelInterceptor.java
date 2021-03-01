@@ -1,6 +1,6 @@
 package com.study.loge.betchat.component;
 
-import com.study.loge.betchat.entity.Joined;
+import com.study.loge.betchat.entity.Join;
 import com.study.loge.betchat.entity.Room;
 import com.study.loge.betchat.entity.User;
 import com.study.loge.betchat.exception.SubscribeException;
@@ -11,16 +11,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
-import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
 
 // StompInboudChannel의 Interceptor 클래스입니다.
 @AllArgsConstructor
@@ -71,19 +67,19 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         Room room = roomRepository.findByRoomKey(roomKey);
 
         // 유효하지 않은 user 또는 room일 경우 예외를 발생시킵니다.
-        if(user==null || user.getActivated()==0 || room==null || room.getActivated()==0)
+        if(user==null || room==null)
             throw new SubscribeException("유효하지 않은 user key 또는 room key입니다.");
 
         // 유저가 채팅방에 참가한 것을 DB에 저장합니다.
-        Joined joined = Joined.builder()
+        Join join = Join.builder()
                 .room(room)
                 .joinedAt(LocalDateTime.now())
                 .chattedAt(null)
                 .simpSessionId(simpSessionId)
                 .build();
 
-        Joined newJoined = joinedRepository.save(joined);
-        user.setJoined(newJoined);
+        Join newJoin = joinedRepository.save(join);
+        user.setJoin(newJoin);
         userReposotory.save(user);
     }
 
@@ -92,14 +88,14 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
         String simpSessionId = stompHeaderAccessor.getSessionId();
 
-        Joined joined = joinedRepository.findBySimpSessionId(simpSessionId);
-        joined.setSimpSessionId(null);
-        joined.setRoom(null);
+        Join join = joinedRepository.findBySimpSessionId(simpSessionId);
+        join.setSimpSessionId(null);
+        join.setRoom(null);
 
-        User user = (User) joined.getUser();
-        user.setJoined(null);
+        User user = (User) join.getUser();
+        user.setJoin(null);
 
-        joinedRepository.save(joined);
+        joinedRepository.save(join);
         userReposotory.save(user);
     }
 

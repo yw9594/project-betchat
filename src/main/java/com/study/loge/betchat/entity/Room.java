@@ -18,18 +18,16 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String roomKey;
-    private Integer activated;
     private LocalDateTime createdAt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
-    private List<Joined> joined;
+    private List<Join> join;
 
     @Override
     public String toString() {
         return "Room{" +
                 "id=" + id +
                 ", roomKey='" + roomKey + '\'' +
-                ", activated=" + activated +
                 ", createdAt=" + createdAt +
                 '}';
     }

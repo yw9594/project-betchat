@@ -1,11 +1,10 @@
 package com.study.loge.betchat.entity;
 
-import com.sun.istack.Nullable;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 // user entity를 표현하기 위한 entity 클래스입니다.
 @Entity
@@ -20,12 +19,11 @@ public class User {
     private Long id;
     private String userName;
     private String userKey;
-    private Integer activated;
     private LocalDateTime createdAt;
 
-    @ManyToOne(targetEntity = Joined.class, optional = true)
-    @JoinColumn(name="joined_id")
-    private Joined joined;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "joined")
+    private List<Join> user;
+
 
     @Override
     public String toString() {
@@ -33,7 +31,6 @@ public class User {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", userKey='" + userKey + '\'' +
-                ", activated='" + activated + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
     }

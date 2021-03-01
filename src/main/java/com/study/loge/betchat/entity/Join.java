@@ -6,34 +6,41 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-// joined entity를 표현하기 위한 entity 클래스입니다.
+// join entity를 표현하기 위한 entity 클래스입니다.
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Joined {
+public class Join {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime joinedAt;
-    private LocalDateTime chattedAt;
+    private LocalDateTime exitedAt;
     private String simpSessionId;
+    private int is_joined;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "joined")
-    private List<User> user;
+    // Join Table은 log를 저장하므로, FK에 대해 optional=false입니다.
+    @ManyToOne(targetEntity = User.class, optional = false)
+    @JoinColumn(name="user_id")
+    private User user;
 
     @ManyToOne(targetEntity = Room.class, optional = false)
     @JoinColumn(name="room_id")
     private Room room;
 
+
+
     @Override
     public String toString() {
-        return "Joined{" +
+        return "Join{" +
                 "id=" + id +
                 ", joinedAt=" + joinedAt +
-                ", chattedAt=" + chattedAt +
+                ", exitedAt=" + exitedAt +
+                ", simpSessionId='" + simpSessionId + '\'' +
+                ", is_joined=" + is_joined +
                 '}';
     }
 }
