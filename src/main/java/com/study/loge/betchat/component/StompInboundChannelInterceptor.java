@@ -62,6 +62,7 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
 
         String userKey = stompHeaderAccessor.getNativeHeader("user_key").get(0);
         String roomKey = stompHeaderAccessor.getNativeHeader("room_key").get(0);
+        String simpSessionId = stompHeaderAccessor.getSessionId();
 
         User user = userReposotory.findByUserKey(userKey);
         Room room = roomRepository.findByRoomKey(roomKey);
@@ -75,6 +76,7 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
                 .room(room)
                 .joinedAt(LocalDateTime.now())
                 .chattedAt(null)
+                .simpSessionId(simpSessionId)
                 .build();
 
         Joined newJoined = joinedRepository.save(joined);
