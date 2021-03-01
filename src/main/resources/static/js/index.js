@@ -16,7 +16,7 @@ function homePageLogic(info_box){
         controlFormTagSubmit(false);
 
         // Ajax를 사용해 서버에 이름을 전달합니다.
-        let user_name = input_name_text.value;
+        let user_name = document.getElementById("input_name_text").value;
 
         let xhr = makeXHRObj(address.home.login);
         let data = makeXHRJsonBody(result_state.OK, {"user_name":user_name});
@@ -65,7 +65,7 @@ function lobbyPageLogic(info_box){
         // submit 기능을 일시정지합니다.
         controlFormTagSubmit(false);
 
-        let room_key = input_room_join_text.value;
+        let room_key = document.getElementById("input_room_join_text").value;
 
         // Ajax를 사용해 서버에 room key를 전달합니다
         let xhr = makeXHRObj(address.lobby.join);
