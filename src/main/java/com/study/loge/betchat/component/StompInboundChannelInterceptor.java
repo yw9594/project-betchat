@@ -89,6 +89,7 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
 
         Join join = joinedRepository.findBySimpSessionId(simpSessionId);
         join.setIsJoined(0);
+        join.setExitedAt(LocalDateTime.now());
 
         joinedRepository.save(join);
     }
