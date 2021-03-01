@@ -13,4 +13,4 @@ Real-Time Chatting Project With Betting System
 - MySQL 8.0.22
 
 # Entire Flow
-![BetChat Flow Charts (1)](https://user-images.githubusercontent.com/38889912/109550360-85d6b280-7b12-11eb-8cb0-40f9c66aa322.png)
+![BetChat Flow Charts (2)](https://user-images.githubusercontent.com/38889912/109551134-828ff680-7b13-11eb-917b-568c8e70a55b.png)
