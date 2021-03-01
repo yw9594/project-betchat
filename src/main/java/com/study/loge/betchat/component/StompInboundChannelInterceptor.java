@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 public class StompInboundChannelInterceptor implements ChannelInterceptor {
     private UserRepository userReposotory;
     private RoomRepository roomRepository;
-    private JoinRepository joinedRepository;
+    private JoinRepository joinRepository;
 
     // Message를 Controller 또는 Broker로 보내기 전, Dkem전처리를 수행합니다.
     @Override
@@ -79,7 +79,7 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
                 .simpSessionId(simpSessionId)
                 .build();
 
-        joinedRepository.save(join);
+        joinRepository.save(join);
     }
 
     // unsubscribe, disconnect message가 도착한 경우, 퇴장 처리합니다.
@@ -87,11 +87,11 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
         String simpSessionId = stompHeaderAccessor.getSessionId();
 
-        Join join = joinedRepository.findBySimpSessionId(simpSessionId);
+        Join join = joinRepository.findBySimpSessionId(simpSessionId);
         join.setIsJoined(0);
         join.setExitedAt(LocalDateTime.now());
 
-        joinedRepository.save(join);
+        joinRepository.save(join);
     }
 
 }
