@@ -19,6 +19,7 @@ public class Joined {
     private Long id;
     private LocalDateTime joinedAt;
     private LocalDateTime chattedAt;
+    private String simpSessionId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "joined")
     private List<User> user;
