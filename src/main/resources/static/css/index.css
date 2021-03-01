@@ -20,7 +20,7 @@ input[type=text], input[type=text]:focus {
     text-decoration-line: none;
     outline: none;
 }
-input[type=submit], input[type=submit]:focus {
+input[type=submit], input[type=submit]:focus, button {
     background-color: #f6f3e0;
     border: none;
     border-radius: 5px;
@@ -50,6 +50,14 @@ input[type=submit], input[type=submit]:focus {
 }
 #div_chat_list::-webkit-scrollbar {
     display: none;
+}
+#div_chat_utils{
+    display: grid;
+    margin:auto;
+    width: 600px;
+}
+#button_chat_exit{
+    text-align: right;
 }
 #root_container{
     min-height: 100%;
