@@ -10,7 +10,10 @@ import com.study.loge.betchat.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.stomp.StompCommand;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
 
@@ -54,9 +57,11 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
 
     // subscribe message가 도착한 경우 joined에 저장합니다.
     private void registerSubscribe(Message<?> message) throws SubscribeException {
-        Map<String, List<String>> nativeHeaders = (Map<String, List<String>>) message.getHeaders().get("nativeHeaders");
-        String userKey = nativeHeaders.get("user_key").get(0);
-        String roomKey = nativeHeaders.get("room_key").get(0);
+        MessageHeaders headers = message.getHeaders();
+        StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
+
+        String userKey = stompHeaderAccessor.getNativeHeader("user_key").get(0);
+        String roomKey = stompHeaderAccessor.getNativeHeader("room_key").get(0);
 
         User user = userReposotory.findByUserKey(userKey);
         Room room = roomRepository.findByRoomKey(roomKey);
