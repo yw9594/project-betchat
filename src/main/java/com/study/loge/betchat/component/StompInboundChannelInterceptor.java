@@ -44,6 +44,8 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
                     registerSubscribe(message);
                     break;
                 case DISCONNECT:
+                case UNSUBSCRIBE:
+                    unregisterSubscribe(message);
                     break;
             }
         }
@@ -56,7 +58,6 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
             return message;
         }
     }
-
     // subscribe message가 도착한 경우 joined에 저장합니다.
     private void registerSubscribe(Message<?> message) throws SubscribeException {
         MessageHeaders headers = message.getHeaders();
@@ -85,4 +86,21 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         user.setJoined(newJoined);
         userReposotory.save(user);
     }
+
+    // unsubscribe, disconnect message가 도착한 경우 처리합니다.
+    private void unregisterSubscribe(Message<?> message) {
+        StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
+        String simpSessionId = stompHeaderAccessor.getSessionId();
+
+        Joined joined = joinedRepository.findBySimpSessionId(simpSessionId);
+        joined.setSimpSessionId(null);
+        joined.setRoom(null);
+
+        User user = (User) joined.getUser();
+        user.setJoined(null);
+
+        joinedRepository.save(joined);
+        userReposotory.save(user);
+    }
+
 }
