@@ -20,7 +20,7 @@ public class Join {
     private LocalDateTime joinedAt;
     private LocalDateTime exitedAt;
     private String simpSessionId;
-    private int is_joined;
+    private int isJoined;
 
     // Join Table은 log를 저장하므로, FK에 대해 optional=false입니다.
     @ManyToOne(targetEntity = User.class, optional = false)
@@ -40,7 +40,7 @@ public class Join {
                 ", joinedAt=" + joinedAt +
                 ", exitedAt=" + exitedAt +
                 ", simpSessionId='" + simpSessionId + '\'' +
-                ", is_joined=" + is_joined +
+                ", is_joined=" + isJoined +
                 '}';
     }
 }

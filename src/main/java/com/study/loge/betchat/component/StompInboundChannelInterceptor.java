@@ -72,30 +72,25 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
 
         // 유저가 채팅방에 참가한 것을 DB에 저장합니다.
         Join join = Join.builder()
+                .user(user)
                 .room(room)
+                .isJoined(1)
                 .joinedAt(LocalDateTime.now())
                 .simpSessionId(simpSessionId)
                 .build();
 
-        Join newJoin = joinedRepository.save(join);
-        user.setJoin(newJoin);
-        userReposotory.save(user);
+        joinedRepository.save(join);
     }
 
-    // unsubscribe, disconnect message가 도착한 경우 처리합니다.
+    // unsubscribe, disconnect message가 도착한 경우, 퇴장 처리합니다.
     private void unregisterSubscribe(Message<?> message) {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
         String simpSessionId = stompHeaderAccessor.getSessionId();
 
         Join join = joinedRepository.findBySimpSessionId(simpSessionId);
-        join.setSimpSessionId(null);
-        join.setRoom(null);
-
-        User user = (User) join.getUser();
-        user.setJoin(null);
+        join.setIsJoined(0);
 
         joinedRepository.save(join);
-        userReposotory.save(user);
     }
 
 }
