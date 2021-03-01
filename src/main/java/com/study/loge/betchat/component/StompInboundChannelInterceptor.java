@@ -37,11 +37,11 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
             switch(messageType){
                 // subscribe 요청 시 Participate table에 등록합니다.
                 case SUBSCRIBE:
-                    registerSubscribe(message);
+                    processParticipate(message);
                     break;
                 case DISCONNECT:
                 case UNSUBSCRIBE:
-                    unregisterSubscribe(message);
+                    processExit(message);
                     break;
             }
         }
@@ -54,8 +54,8 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
             return message;
         }
     }
-    // subscribe message가 도착한 경우 Participate Table에 저장합니다.
-    private void registerSubscribe(Message<?> message) throws SubscribeException {
+    // 유저가 채팅방에 참가하는 행위를 처리합니다.
+    private void processParticipate(Message<?> message) throws SubscribeException {
         MessageHeaders headers = message.getHeaders();
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
 
@@ -82,8 +82,8 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
         participateRepository.save(participate);
     }
 
-    // unsubscribe, disconnect message가 도착한 경우, 퇴장 처리합니다.
-    private void unregisterSubscribe(Message<?> message) {
+    // 유저가 채팅방에서 나가는 행위를 처리합니다.
+    private void processExit(Message<?> message) {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
         String simpSessionId = stompHeaderAccessor.getSessionId();
 
