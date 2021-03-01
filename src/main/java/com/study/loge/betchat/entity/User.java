@@ -21,7 +21,7 @@ public class User {
     private String userKey;
     private LocalDateTime createdAt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "joined")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Join> user;
 
 
