@@ -2,7 +2,6 @@ package com.study.loge.betchat.component;
 
 import com.study.loge.betchat.service.UserParticipateExitService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessageType;
@@ -10,15 +9,13 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 // StompInboudChannel의 Interceptor 클래스입니다.
 @AllArgsConstructor
 @Component
 public class StompInboundChannelInterceptor implements ChannelInterceptor {
     private UserParticipateExitService userParticipateExitService;
 
-    // Message를 Controller 또는 Broker로 보내기 전, Dkem전처리를 수행합니다.
+    // Message를 Controller 또는 Broker로 보내기 전, 전처리를 수행합니다.
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);

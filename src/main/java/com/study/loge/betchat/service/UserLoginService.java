@@ -52,7 +52,7 @@ public class UserLoginService {
             e.printStackTrace();
         }
         finally {
-            // response를 생성한 뒤, 반환한다.
+            // response를 생성한 뒤, 반환합니다.
             UserLoginResponse userLoginResponse = UserLoginResponse.builder()
                     .userKey(userKey)
                     .build();
