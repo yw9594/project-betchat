@@ -1,8 +1,8 @@
 /* 네트워크 */
 // 서버 주소 관련 변수입니다.
-const host_address = "http://localhost:8080";
+const host_address = "http://13.125.3.37:8080";
 const address = Object.freeze({
-    "host":"http://localhost:8080",
+    "host": host_address,
     "ws" : "/ws",
     "home" : {
         "login":host_address+"/home/login"},
