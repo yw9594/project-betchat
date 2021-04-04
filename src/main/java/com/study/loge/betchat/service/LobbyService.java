@@ -13,6 +13,8 @@ import com.study.loge.betchat.model.response.RoomCreateResponse;
 import com.study.loge.betchat.model.response.RoomJoinResponse;
 import com.study.loge.betchat.repository.RoomRepository;
 import com.study.loge.betchat.repository.UserRepository;
+import com.study.loge.betchat.utils.validation.RoomCreationValidationChecker;
+import com.study.loge.betchat.utils.validation.RoomJoinValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +27,17 @@ public class LobbyService {
     // userId를 생성하기 위한 객체입니다.
     private final KeyGenerator keyGenerator;
     private final RoomRepository roomRepository;
-    private final UserRepository userRepository;
+
+    private final RoomCreationValidationChecker roomCreationValidationChecker;
+    private final RoomJoinValidationChecker roomJoinValidationChecker;
 
     // 방 생성 요청을 받고 유저에게 Room Key를 전달합니다.
-    public MessageHeader<RoomCreateResponse> createRoom(MessageHeader<RoomCreateRequest> request){
+    public MessageHeader<RoomCreateResponse> createRoom(MessageHeader<RoomCreateRequest> request) {
         ResultState resultState = null;
         String roomKey = null;
 
         try {
-            checkRoomCreateValidation(request);
+            roomCreationValidationChecker.check(request);
 
             resultState = ResultState.OK;
             roomKey = keyGenerator.generateKey();
@@ -44,14 +48,11 @@ public class LobbyService {
                     .build();
 
             roomRepository.save(room);
-        }
-        catch(RoomCreateException e){
+        } catch (RoomCreateException e) {
             resultState = ResultState.ERROR;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             RoomCreateResponse roomCreateResponse = RoomCreateResponse
                     .builder()
                     .roomKey(roomKey)
@@ -63,39 +64,18 @@ public class LobbyService {
     }
 
     // 채팅방 참가 요청을 받고 유저에게 처리 결과를 전달합니다.
-    public MessageHeader<RoomJoinResponse> joinRoom(MessageHeader<RoomJoinRequest> request){
+    public MessageHeader<RoomJoinResponse> joinRoom(MessageHeader<RoomJoinRequest> request) {
         ResultState resultState = null;
 
         try {
-            checkJoinCreateValidation(request);
+            roomJoinValidationChecker.check(request);
             resultState = ResultState.OK;
-        }
-        catch(RoomJoinException e){
+        } catch (RoomJoinException e) {
             resultState = ResultState.ERROR;
-        }
-        finally {
+        } finally {
             MessageHeader<RoomJoinResponse> response = MessageHeader.makeMessage(resultState, null);
 
             return response;
         }
-    }
-
-    // room create request의 유효성 검사를 수행합니다.
-    private void checkRoomCreateValidation(MessageHeader<RoomCreateRequest> request) throws RoomCreateException {
-        // user key의 유효성을 검사합니다.
-        String userKey = request.getData().getUserKey();
-        User user = userRepository.findByUserKey(userKey);
-
-
-        if(user==null) throw new RoomCreateException();
-    }
-
-    // room join request의 유효성 검사를 수행합니다.
-    private void checkJoinCreateValidation(MessageHeader<RoomJoinRequest> request) throws RoomJoinException {
-        // room key의 유효성을 검사합니다.
-        String roomKey = request.getData().getRoomKey();
-        Room room = roomRepository.findByRoomKey(roomKey);
-
-        if(room==null) throw new RoomJoinException();
     }
 }

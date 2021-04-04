@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// 로비 페이지의 요청을 제어합니다.
+// 페이지의 요청을 제어합니다.
 @AllArgsConstructor
 @RestController
 @RequestMapping("/lobby")
