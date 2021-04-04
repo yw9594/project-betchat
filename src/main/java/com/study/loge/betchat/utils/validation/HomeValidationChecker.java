@@ -5,9 +5,9 @@ import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import org.springframework.stereotype.Component;
 
-// 로그인 유효성 검사 클래스입니다.
+// 홈페이지 내 유효성 검사 클래스입니다.
 @Component
-public class LoginValidationChecker extends AbstractMessageHeaderValidationChecker{
+public class HomeValidationChecker extends AbstractMessageHeaderValidationChecker{
     @Override
     public void isValid(MessageHeader messageHeader) throws UserLoginException {
         MessageHeader<UserLoginRequest> request = (MessageHeader<UserLoginRequest>)messageHeader;

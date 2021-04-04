@@ -8,19 +8,19 @@ import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
 import com.study.loge.betchat.repository.UserRepository;
-import com.study.loge.betchat.utils.validation.LoginValidationChecker;
+import com.study.loge.betchat.utils.validation.HomeValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-// 유저 로그인 로직을 정의하는 클래스입니다.
+// 홈 페이지 로직을 정의하는 클래스입니다.
 @AllArgsConstructor
 @Service
 public class HomeService {
     private final KeyGenerator keyGenerator;
     private UserRepository userRepository;
-    private LoginValidationChecker loginValidationChecker;
+    private HomeValidationChecker homeValidationChecker;
 
     // 유저의 로그인 요청을 처리합니다.
     public MessageHeader<UserLoginResponse> userLogin(MessageHeader<UserLoginRequest> request){
@@ -30,7 +30,7 @@ public class HomeService {
         String userName = request.getData().getUserName();
         try {
             // 로그인 요청의 유효성을 검사합니다.
-            loginValidationChecker.check(request);
+            homeValidationChecker.check(request);
 
             // response에 필요한 값을 생성합니다.
             resultState = ResultState.OK;
