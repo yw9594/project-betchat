@@ -3,7 +3,7 @@ package com.study.loge.betchat.controller;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
 import com.study.loge.betchat.model.MessageHeader;
-import com.study.loge.betchat.service.UserLoginService;
+import com.study.loge.betchat.service.HomeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/home")
 public class HomeController {
-    private final UserLoginService userLoginService;
+    private final HomeService homeService;
 
     // 유저의 로그인 요청을 처리합니다.
     @PostMapping("/login")
     public MessageHeader<UserLoginResponse> userLogin(@RequestBody MessageHeader<UserLoginRequest> request){
-        return userLoginService.userLogin(request);
+        return homeService.userLogin(request);
     }
 }
