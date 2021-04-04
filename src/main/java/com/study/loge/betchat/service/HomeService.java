@@ -1,6 +1,6 @@
 package com.study.loge.betchat.service;
 
-import com.study.loge.betchat.component.KeyGenerator;
+import com.study.loge.betchat.utils.KeyGenerator;
 import com.study.loge.betchat.entity.User;
 import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.exception.UserLoginException;
@@ -8,7 +8,7 @@ import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
 import com.study.loge.betchat.repository.UserRepository;
-import com.study.loge.betchat.utils.validation.HomeValidationChecker;
+import com.study.loge.betchat.utils.validation.LoginValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class HomeService {
     private final KeyGenerator keyGenerator;
     private UserRepository userRepository;
-    private HomeValidationChecker homeValidationChecker;
+    private LoginValidationChecker loginValidationChecker;
 
     // 유저의 로그인 요청을 처리합니다.
     public MessageHeader<UserLoginResponse> userLogin(MessageHeader<UserLoginRequest> request){
@@ -30,7 +30,7 @@ public class HomeService {
         String userName = request.getData().getUserName();
         try {
             // 로그인 요청의 유효성을 검사합니다.
-            homeValidationChecker.check(request);
+            loginValidationChecker.check(request);
 
             // response에 필요한 값을 생성합니다.
             resultState = ResultState.OK;

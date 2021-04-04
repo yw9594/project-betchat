@@ -1,4 +1,4 @@
-package com.study.loge.betchat.component;
+package com.study.loge.betchat.utils;
 
 import org.springframework.stereotype.Component;
 

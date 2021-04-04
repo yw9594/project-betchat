@@ -1,8 +1,7 @@
 package com.study.loge.betchat.service;
 
-import com.study.loge.betchat.component.KeyGenerator;
+import com.study.loge.betchat.utils.KeyGenerator;
 import com.study.loge.betchat.entity.Room;
-import com.study.loge.betchat.entity.User;
 import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.exception.RoomCreateException;
 import com.study.loge.betchat.exception.RoomJoinException;
@@ -12,7 +11,6 @@ import com.study.loge.betchat.model.request.RoomJoinRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
 import com.study.loge.betchat.model.response.RoomJoinResponse;
 import com.study.loge.betchat.repository.RoomRepository;
-import com.study.loge.betchat.repository.UserRepository;
 import com.study.loge.betchat.utils.validation.RoomCreationValidationChecker;
 import com.study.loge.betchat.utils.validation.RoomJoinValidationChecker;
 import lombok.AllArgsConstructor;
