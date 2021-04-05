@@ -1,6 +1,6 @@
 package com.study.loge.betchat.config;
 
-import com.study.loge.betchat.component.StompInboundChannelInterceptor;
+import com.study.loge.betchat.component.RoomEntranceMonitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -14,7 +14,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Autowired
-    private StompInboundChannelInterceptor stompInboundChannelInterceptor;
+    private RoomEntranceMonitor roomEntranceMonitor;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -25,7 +25,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
         // InboundChannel에 대한 Interceptor를 지정합니다.
-        registration.interceptors(stompInboundChannelInterceptor);
+        registration.interceptors(roomEntranceMonitor);
     }
 
     @Override

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 // 메세지가 Controller 또는 Broker로 전달하기 전 처리하는 클래스입니다.
 @AllArgsConstructor
 @Component
-public class StompInboundChannelInterceptor implements ChannelInterceptor {
+public class RoomEntranceMonitor implements ChannelInterceptor {
     private UserParticipateExitService userParticipateExitService;
 
     // 유저가 채팅방에 참가/퇴장 시 로직을 제어합니다.
@@ -25,7 +25,8 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
             // message type에 따라 특정 로직을 수행합니다.
             if(SimpMessageType.SUBSCRIBE.equals(messageType) )
                 userParticipateExitService.processParticipate(message);
-            else if(SimpMessageType.DISCONNECT.equals(messageType) || SimpMessageType.UNSUBSCRIBE.equals(messageType))
+            else if(SimpMessageType.DISCONNECT.equals(messageType) ||
+                    SimpMessageType.UNSUBSCRIBE.equals(messageType))
                 userParticipateExitService.processExit(message);
 
         } catch (Exception e) {
