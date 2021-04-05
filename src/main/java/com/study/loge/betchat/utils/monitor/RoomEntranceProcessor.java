@@ -1,4 +1,4 @@
-package com.study.loge.betchat.service;
+package com.study.loge.betchat.utils.monitor;
 
 import com.study.loge.betchat.entity.Participate;
 import com.study.loge.betchat.entity.Room;
@@ -10,14 +10,14 @@ import com.study.loge.betchat.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 // 유저의 채팅방 참가 및 퇴장 이벤트를 처리하는 로직입니다.
 @AllArgsConstructor
-@Service
-public class UserParticipateExitService {
+@Component
+public class RoomEntranceProcessor {
     private UserRepository userReposotory;
     private RoomRepository roomRepository;
     private ParticipateRepository participateRepository;

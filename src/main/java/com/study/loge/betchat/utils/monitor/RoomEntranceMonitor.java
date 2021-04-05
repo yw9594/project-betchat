@@ -1,6 +1,5 @@
-package com.study.loge.betchat.component;
+package com.study.loge.betchat.utils.monitor;
 
-import com.study.loge.betchat.service.UserParticipateExitService;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 public class RoomEntranceMonitor implements ChannelInterceptor {
-    private UserParticipateExitService userParticipateExitService;
+    private RoomEntranceProcessor roomEntranceProcessor;
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -23,11 +22,10 @@ public class RoomEntranceMonitor implements ChannelInterceptor {
         // Stomp Message Type에 따라 정보를 처리합니다.
         try {
             if(SimpMessageType.SUBSCRIBE.equals(messageType) )
-                userParticipateExitService.processParticipate(message);
+                roomEntranceProcessor.processParticipate(message);
             else if(SimpMessageType.DISCONNECT.equals(messageType) ||
                     SimpMessageType.UNSUBSCRIBE.equals(messageType))
-                userParticipateExitService.processExit(message);
-
+                roomEntranceProcessor.processExit(message);
         }
         // 예외가 발생한 경우 subscribe 시키지 않습니다.
         catch (Exception e) {
