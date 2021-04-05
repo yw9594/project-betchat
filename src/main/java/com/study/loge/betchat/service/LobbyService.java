@@ -11,8 +11,8 @@ import com.study.loge.betchat.model.request.RoomJoinRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
 import com.study.loge.betchat.model.response.RoomJoinResponse;
 import com.study.loge.betchat.repository.RoomRepository;
-import com.study.loge.betchat.utils.validation.RoomCreationValidationChecker;
-import com.study.loge.betchat.utils.validation.RoomJoinValidationChecker;
+import com.study.loge.betchat.utils.validation.messageheader.RoomCreationValidationChecker;
+import com.study.loge.betchat.utils.validation.messageheader.RoomJoinValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

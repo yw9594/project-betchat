@@ -1,4 +1,4 @@
-package com.study.loge.betchat.utils.validation;
+package com.study.loge.betchat.utils.validation.messageheader;
 
 import com.study.loge.betchat.entity.Room;
 import com.study.loge.betchat.exception.RoomJoinException;

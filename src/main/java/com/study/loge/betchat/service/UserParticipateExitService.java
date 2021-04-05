@@ -1,6 +1,5 @@
 package com.study.loge.betchat.service;
 
-
 import com.study.loge.betchat.entity.Participate;
 import com.study.loge.betchat.entity.Room;
 import com.study.loge.betchat.entity.User;

@@ -4,7 +4,7 @@ import com.study.loge.betchat.enums.ResultState;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.ChatMessageRequest;
 import com.study.loge.betchat.model.response.ChatMessageResponse;
-import com.study.loge.betchat.utils.validation.ChatMessageValidationChecker;
+import com.study.loge.betchat.utils.validation.messageheader.ChatMessageValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

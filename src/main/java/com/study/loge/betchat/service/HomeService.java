@@ -8,7 +8,7 @@ import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
 import com.study.loge.betchat.repository.UserRepository;
-import com.study.loge.betchat.utils.validation.LoginValidationChecker;
+import com.study.loge.betchat.utils.validation.messageheader.LoginValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

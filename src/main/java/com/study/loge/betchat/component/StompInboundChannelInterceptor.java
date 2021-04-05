@@ -23,16 +23,11 @@ public class StompInboundChannelInterceptor implements ChannelInterceptor {
 
         try {
             // message type에 따라 특정 로직을 수행합니다.
-            switch (messageType) {
-                // subscribe 요청 시 Participate table에 등록합니다.
-                case SUBSCRIBE:
-                    userParticipateExitService.processParticipate(message);
-                    break;
-                case DISCONNECT:
-                case UNSUBSCRIBE:
-                    userParticipateExitService.processExit(message);
-                    break;
-            }
+            if(SimpMessageType.SUBSCRIBE.equals(messageType) )
+                userParticipateExitService.processParticipate(message);
+            else if(SimpMessageType.DISCONNECT.equals(messageType) || SimpMessageType.UNSUBSCRIBE.equals(messageType))
+                userParticipateExitService.processExit(message);
+
         } catch (Exception e) {
             // 예외가 발생한 경우 subscribe 시키지 않습니다.
             e.printStackTrace();
