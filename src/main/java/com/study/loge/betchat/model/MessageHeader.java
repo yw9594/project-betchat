@@ -1,6 +1,6 @@
 package com.study.loge.betchat.model;
 
-import com.study.loge.betchat.enums.ResultState;
+import com.study.loge.betchat.utils.enums.ResultState;
 import lombok.Builder;
 import lombok.Data;
 

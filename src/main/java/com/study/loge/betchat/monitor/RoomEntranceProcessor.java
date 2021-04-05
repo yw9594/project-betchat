@@ -1,9 +1,9 @@
-package com.study.loge.betchat.utils.monitor;
+package com.study.loge.betchat.monitor;
 
 import com.study.loge.betchat.entity.Participate;
 import com.study.loge.betchat.entity.Room;
 import com.study.loge.betchat.entity.User;
-import com.study.loge.betchat.exception.SubscribeException;
+import com.study.loge.betchat.utils.exception.SubscribeException;
 import com.study.loge.betchat.repository.ParticipateRepository;
 import com.study.loge.betchat.repository.RoomRepository;
 import com.study.loge.betchat.repository.UserRepository;

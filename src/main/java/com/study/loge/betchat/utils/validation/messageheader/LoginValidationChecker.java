@@ -1,6 +1,6 @@
 package com.study.loge.betchat.utils.validation.messageheader;
 
-import com.study.loge.betchat.exception.LoginException;
+import com.study.loge.betchat.utils.exception.LoginException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import org.springframework.stereotype.Component;

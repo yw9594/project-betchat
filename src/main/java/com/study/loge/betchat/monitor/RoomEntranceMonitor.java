@@ -1,4 +1,4 @@
-package com.study.loge.betchat.utils.monitor;
+package com.study.loge.betchat.monitor;
 
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;

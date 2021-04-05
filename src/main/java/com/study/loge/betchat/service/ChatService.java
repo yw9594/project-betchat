@@ -1,6 +1,6 @@
 package com.study.loge.betchat.service;
 
-import com.study.loge.betchat.enums.ResultState;
+import com.study.loge.betchat.utils.enums.ResultState;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.ChatMessageRequest;
 import com.study.loge.betchat.model.response.ChatMessageResponse;

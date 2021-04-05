@@ -1,7 +1,7 @@
 package com.study.loge.betchat.utils.validation.messageheader;
 
 import com.study.loge.betchat.entity.Room;
-import com.study.loge.betchat.exception.RoomJoinException;
+import com.study.loge.betchat.utils.exception.RoomJoinException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.RoomJoinRequest;
 import com.study.loge.betchat.repository.RoomRepository;

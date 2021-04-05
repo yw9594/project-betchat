@@ -2,9 +2,9 @@ package com.study.loge.betchat.service;
 
 import com.study.loge.betchat.utils.KeyGenerator;
 import com.study.loge.betchat.entity.Room;
-import com.study.loge.betchat.enums.ResultState;
-import com.study.loge.betchat.exception.RoomCreateException;
-import com.study.loge.betchat.exception.RoomJoinException;
+import com.study.loge.betchat.utils.enums.ResultState;
+import com.study.loge.betchat.utils.exception.RoomCreateException;
+import com.study.loge.betchat.utils.exception.RoomJoinException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.RoomCreateRequest;
 import com.study.loge.betchat.model.request.RoomJoinRequest;
