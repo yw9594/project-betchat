@@ -1,6 +1,6 @@
 package com.study.loge.betchat.utils.validation;
 
-import com.study.loge.betchat.exception.UserLoginException;
+import com.study.loge.betchat.exception.LoginException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoginValidationChecker extends AbstractMessageHeaderValidationChecker{
     @Override
-    public void isValid(MessageHeader messageHeader) throws UserLoginException {
+    public void isValid(MessageHeader messageHeader) throws LoginException {
         MessageHeader<UserLoginRequest> request = (MessageHeader<UserLoginRequest>)messageHeader;
         String userName = request.getData().getUserName();
 
@@ -17,10 +17,10 @@ public class LoginValidationChecker extends AbstractMessageHeaderValidationCheck
     }
 
     // userName의 유효성을 검사합니다.
-    private void checkUserName(String userName) throws UserLoginException {
+    private void checkUserName(String userName) throws LoginException {
         String pattern = "^[가-힣ㄱ-ㅎa-zA-Z0-9_]{2,6}$";
 
         if(!userName.matches(pattern))
-            throw new UserLoginException();
+            throw new LoginException();
     }
 }
