@@ -1,6 +1,6 @@
 package com.study.loge.betchat.utils.validation.messageheader;
 
-import com.study.loge.betchat.entity.User;
+import com.study.loge.betchat.model.entity.User;
 import com.study.loge.betchat.utils.exception.RoomCreateException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.RoomCreateRequest;

@@ -1,7 +1,7 @@
 package com.study.loge.betchat.service;
 
 import com.study.loge.betchat.utils.KeyGenerator;
-import com.study.loge.betchat.entity.Room;
+import com.study.loge.betchat.model.entity.Room;
 import com.study.loge.betchat.utils.enums.ResultState;
 import com.study.loge.betchat.utils.exception.RoomCreateException;
 import com.study.loge.betchat.utils.exception.RoomJoinException;
