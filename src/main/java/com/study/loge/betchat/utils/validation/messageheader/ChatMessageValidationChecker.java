@@ -1,6 +1,6 @@
 package com.study.loge.betchat.utils.validation.messageheader;
 
-import com.study.loge.betchat.exception.ChatMessageTextException;
+import com.study.loge.betchat.utils.exception.ChatMessageTextException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.ChatMessageRequest;
 import lombok.AllArgsConstructor;

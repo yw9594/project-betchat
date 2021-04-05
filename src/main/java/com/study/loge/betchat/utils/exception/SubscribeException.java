@@ -1,4 +1,4 @@
-package com.study.loge.betchat.exception;
+package com.study.loge.betchat.utils.exception;
 
 import lombok.NoArgsConstructor;
 

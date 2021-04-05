@@ -1,4 +1,4 @@
-package com.study.loge.betchat.entity;
+package com.study.loge.betchat.model.entity;
 
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package com.study.loge.betchat.config;
 
-import com.study.loge.betchat.utils.monitor.RoomEntranceMonitor;
+import com.study.loge.betchat.monitor.RoomEntranceMonitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;

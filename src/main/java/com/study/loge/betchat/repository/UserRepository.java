@@ -1,6 +1,6 @@
 package com.study.loge.betchat.repository;
 
-import com.study.loge.betchat.entity.User;
+import com.study.loge.betchat.model.entity.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

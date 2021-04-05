@@ -1,9 +1,9 @@
 package com.study.loge.betchat.service;
 
 import com.study.loge.betchat.utils.KeyGenerator;
-import com.study.loge.betchat.entity.User;
-import com.study.loge.betchat.enums.ResultState;
-import com.study.loge.betchat.exception.LoginException;
+import com.study.loge.betchat.model.entity.User;
+import com.study.loge.betchat.utils.enums.ResultState;
+import com.study.loge.betchat.utils.exception.LoginException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
