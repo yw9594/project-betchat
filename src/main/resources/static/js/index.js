@@ -208,14 +208,15 @@ function roomPageLogic(info_box, stomp_client){
         );
         lobbyPageLogic(info_box);
 
-        //
+        // 버튼의 디폴트 이벤트를 막고 상위 태그로 이벤트가 전파되는 것을 막습니다.
         event.preventDefault();
+        event.stopPropagation();
     };
 
 
     // 채팅 이벤트 리스너를 등록합니다.
     document.getElementById("form_chat_create").addEventListener("submit", sendChatting, true);
-    document.getElementById("button_chat_exit").addEventListener("click", exitChatRoom, true);
+    document.getElementById("button_chat_exit").addEventListener("click", exitChatRoom, false);
 }
 
 /* 메인 페이지 초기화 */
