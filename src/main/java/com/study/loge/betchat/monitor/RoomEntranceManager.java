@@ -42,9 +42,11 @@ public class RoomEntranceManager {
         // 채팅방 참가 인원 수를 추가합니다.
         synchronized (this) {
             Integer count = roomManager.get(roomKey);
-            if(count.equals(0)) throw new SubscribeException("비활성화된 채팅방입니다.");
-            else if(count==null) count = 1;
+
+            if(count==null) count = 1;
+            else if(count.equals(0)) throw new SubscribeException("비활성화된 채팅방입니다.");
             else count += 1;
+
             roomManager.put(roomKey, count);
         }
 
@@ -64,6 +66,14 @@ public class RoomEntranceManager {
     public void processExit(Message<?> message) {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
         String simpSessionId = stompHeaderAccessor.getSessionId();
+
+        String roomKey = stompHeaderAccessor.getNativeHeader("room_key").get(0);
+        System.out.println(stompHeaderAccessor);
+        synchronized (this) {
+            Integer count = roomManager.get(roomKey);
+            count--;
+            roomManager.put(roomKey, count);
+        }
 
         Participate participate = participateRepository.findBySimpSessionId(simpSessionId);
         participate.setIsJoined(0);

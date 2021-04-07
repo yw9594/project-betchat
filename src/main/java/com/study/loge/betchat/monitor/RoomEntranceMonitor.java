@@ -23,9 +23,9 @@ public class RoomEntranceMonitor implements ChannelInterceptor {
         try {
             if(SimpMessageType.SUBSCRIBE.equals(messageType) )
                 roomEntranceManager.processParticipate(message);
-            else if(SimpMessageType.DISCONNECT.equals(messageType) ||
-                    SimpMessageType.UNSUBSCRIBE.equals(messageType))
+            else if(SimpMessageType.DISCONNECT.equals(messageType) || SimpMessageType.UNSUBSCRIBE.equals(messageType)) {
                 roomEntranceManager.processExit(message);
+            }
         }
         // 예외가 발생한 경우 subscribe 시키지 않습니다.
         catch (Exception e) {
