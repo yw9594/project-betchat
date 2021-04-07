@@ -202,10 +202,13 @@ function roomPageLogic(info_box, stomp_client){
         console.log("roomPageLogic.exitChatRoom : exit chat room.");
         stomp_client.disconnect(()=>{
             alert("채팅방에서 퇴장했습니다.");
-        });
+        },
+        // 어느 유저가 어느 채팅방에서 퇴장했는지 전달합니다.
+        {"user_key":info_box.user_key, "room_key":info_box.room_key}
+        );
         lobbyPageLogic(info_box);
 
-        // 다른 디폴트 event
+        //
         event.preventDefault();
     };
 
