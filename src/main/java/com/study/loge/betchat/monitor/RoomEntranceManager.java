@@ -17,10 +17,12 @@ import java.time.LocalDateTime;
 // 유저의 채팅방 참가 및 퇴장 이벤트를 처리하는 로직입니다.
 @AllArgsConstructor
 @Component
-public class RoomEntranceProcessor {
+public class RoomEntranceManager {
     private UserRepository userReposotory;
     private RoomRepository roomRepository;
     private ParticipateRepository participateRepository;
+
+    private RoomEntranceCounter roomEntranceCounter;
 
     // 유저가 채팅방에 참가하는 행위를 처리합니다.
     public void processParticipate(Message<?> message) throws SubscribeException {
@@ -34,8 +36,10 @@ public class RoomEntranceProcessor {
         Room room = roomRepository.findByRoomKey(roomKey);
 
         // 유효하지 않은 user 또는 room일 경우 예외를 발생시킵니다.
-        if(user==null || room==null)
-            throw new SubscribeException("유효하지 않은 user key 또는 room key입니다.");
+        if(user==null || room==null) throw new SubscribeException("유효하지 않은 user key 또는 room key입니다.");
+
+        // 채팅방 참가를 카운팅합니다.
+        roomEntranceCounter.participate(simpSessionId, roomKey);
 
         // 유저가 채팅방에 참가한 것을 DB에 저장합니다.
         Participate participate = Participate.builder()
@@ -53,6 +57,9 @@ public class RoomEntranceProcessor {
     public void processExit(Message<?> message) {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
         String simpSessionId = stompHeaderAccessor.getSessionId();
+
+        // 채팅방 퇴장을 카운팅합니다.
+        roomEntranceCounter.exit(simpSessionId);
 
         Participate participate = participateRepository.findBySimpSessionId(simpSessionId);
         participate.setIsJoined(0);

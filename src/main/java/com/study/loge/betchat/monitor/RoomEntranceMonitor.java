@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 public class RoomEntranceMonitor implements ChannelInterceptor {
-    private RoomEntranceProcessor roomEntranceProcessor;
+    private RoomEntranceManager roomEntranceManager;
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
@@ -22,14 +22,12 @@ public class RoomEntranceMonitor implements ChannelInterceptor {
         // Stomp Message Type에 따라 정보를 처리합니다.
         try {
             if(SimpMessageType.SUBSCRIBE.equals(messageType) )
-                roomEntranceProcessor.processParticipate(message);
-            else if(SimpMessageType.DISCONNECT.equals(messageType) ||
-                    SimpMessageType.UNSUBSCRIBE.equals(messageType))
-                roomEntranceProcessor.processExit(message);
+                roomEntranceManager.processParticipate(message);
+            else if(SimpMessageType.DISCONNECT.equals(messageType))
+                roomEntranceManager.processExit(message);
         }
-        // 예외가 발생한 경우 subscribe 시키지 않습니다.
+        // 예외가 발생한 경우 message를 드랍시킵니다.
         catch (Exception e) {
-            e.printStackTrace();
             message = null;
         }
         finally {
