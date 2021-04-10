@@ -49,4 +49,9 @@ public class RoomEntranceCounter {
                 participantsCounter.put(roomKey, count);
         }
     }
+
+    // 활성화된 채팅방 수를 반환합니다.
+    public Integer getActiveRoomCount(){
+        return participantsCounter.size();
+    }
 }
