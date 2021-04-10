@@ -26,7 +26,7 @@ public class RoomEntranceMonitor implements ChannelInterceptor {
             else if(SimpMessageType.DISCONNECT.equals(messageType))
                 roomEntranceManager.processExit(message);
         }
-        // 예외가 발생한 경우 subscribe 시키지 않습니다.
+        // 예외가 발생한 경우 message를 드랍시킵니다.
         catch (Exception e) {
             message = null;
         }
