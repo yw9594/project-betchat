@@ -20,7 +20,7 @@ public class RoomEntranceCounter {
     // 채팅방 참가 요청을 처리합니다.
     public synchronized void participate(Message<?> message) throws RoomEntranceCounterException {
         String simpSessionId = StompHeaderParser.getSimpSessionId(message);
-        String roomKey = StompHeaderParser.getSimpSessionId(message);
+        String roomKey = StompHeaderParser.getRoomKey(message);
 
         // 비활성화 채팅방 목록에 roomKey가 존재한다면 예외를 발생시킵니다.
         if(disabledRoom.contains(roomKey))
