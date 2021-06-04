@@ -3,10 +3,10 @@ package com.study.loge.betchat.monitor;
 import com.study.loge.betchat.model.entity.Participate;
 import com.study.loge.betchat.model.entity.Room;
 import com.study.loge.betchat.model.entity.User;
-import com.study.loge.betchat.utils.exception.SubscribeException;
 import com.study.loge.betchat.repository.ParticipateRepository;
 import com.study.loge.betchat.repository.RoomRepository;
 import com.study.loge.betchat.repository.UserRepository;
+import com.study.loge.betchat.utils.parser.StompHeaderParser;
 import com.study.loge.betchat.utils.validation.message.ParticipateValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
@@ -38,10 +38,11 @@ public class RoomEntranceManager {
         User user = userReposotory.findByUserKey(userKey);
         Room room = roomRepository.findByRoomKey(roomKey);
 
+        // 참가 요청의 유효성을 검사합니다.
         participateValidationChecker.check(message);
 
         // 채팅방 참가를 카운팅합니다.
-        if(roomEntranceCounter.participate(simpSessionId, roomKey)) throw new SubscribeException("유효하지 않은 채팅방 참가입니다.");
+        roomEntranceCounter.participate(message);
 
         // 유저가 채팅방에 참가한 것을 DB에 저장합니다.
         Participate participate = Participate.builder()
@@ -57,11 +58,10 @@ public class RoomEntranceManager {
 
     // 유저가 채팅방에서 나가는 행위를 처리합니다.
     public void processExit(Message<?> message) {
-        StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
-        String simpSessionId = stompHeaderAccessor.getSessionId();
+        String simpSessionId = StompHeaderParser.getSimpSessionId(message);
 
         // 채팅방 퇴장을 카운팅합니다.
-        roomEntranceCounter.exit(simpSessionId);
+        roomEntranceCounter.exit(message);
 
         Participate participate = participateRepository.findBySimpSessionId(simpSessionId);
         participate.setIsJoined(0);
