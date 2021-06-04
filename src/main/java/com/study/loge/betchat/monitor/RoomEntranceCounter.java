@@ -37,7 +37,8 @@ public class RoomEntranceCounter {
     }
 
     // 채팅방 퇴장 요청을 처리합니다.
-    public synchronized void exit(String simpSessionId){
+    public synchronized void exit(Message<?> message){
+        String simpSessionId = StompHeaderParser.getSimpSessionId(message);
         String roomKey = participants.remove(simpSessionId);
 
         // DISCONNECT가 STOMP 프로토콜에 의해 2회 이상 발생할 수 있습니다. 따라서 null일 경우 count를 감소시키지 않습니다.
