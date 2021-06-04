@@ -3,10 +3,11 @@ package com.study.loge.betchat.monitor;
 import com.study.loge.betchat.model.entity.Participate;
 import com.study.loge.betchat.model.entity.Room;
 import com.study.loge.betchat.model.entity.User;
-import com.study.loge.betchat.utils.exception.SubscribeException;
 import com.study.loge.betchat.repository.ParticipateRepository;
 import com.study.loge.betchat.repository.RoomRepository;
 import com.study.loge.betchat.repository.UserRepository;
+import com.study.loge.betchat.utils.parser.StompHeaderParser;
+import com.study.loge.betchat.utils.validation.message.ParticipateValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -24,8 +25,10 @@ public class RoomEntranceManager {
 
     private RoomEntranceCounter roomEntranceCounter;
 
+    private ParticipateValidationChecker participateValidationChecker;
+
     // 유저가 채팅방에 참가하는 행위를 처리합니다.
-    public void processParticipate(Message<?> message) throws SubscribeException {
+    public void processParticipate(Message<?> message) throws Exception {
         StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
 
         String userKey = stompHeaderAccessor.getNativeHeader("user_key").get(0);
@@ -35,11 +38,11 @@ public class RoomEntranceManager {
         User user = userReposotory.findByUserKey(userKey);
         Room room = roomRepository.findByRoomKey(roomKey);
 
-        // 유효하지 않은 user 또는 room일 경우 예외를 발생시킵니다.
-        if(user==null || room==null) throw new SubscribeException("유효하지 않은 user key 또는 room key입니다.");
+        // 참가 요청의 유효성을 검사합니다.
+        participateValidationChecker.check(message);
 
         // 채팅방 참가를 카운팅합니다.
-        roomEntranceCounter.participate(simpSessionId, roomKey);
+        roomEntranceCounter.participate(message);
 
         // 유저가 채팅방에 참가한 것을 DB에 저장합니다.
         Participate participate = Participate.builder()
@@ -55,11 +58,10 @@ public class RoomEntranceManager {
 
     // 유저가 채팅방에서 나가는 행위를 처리합니다.
     public void processExit(Message<?> message) {
-        StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
-        String simpSessionId = stompHeaderAccessor.getSessionId();
+        String simpSessionId = StompHeaderParser.getSimpSessionId(message);
 
         // 채팅방 퇴장을 카운팅합니다.
-        roomEntranceCounter.exit(simpSessionId);
+        roomEntranceCounter.exit(message);
 
         Participate participate = participateRepository.findBySimpSessionId(simpSessionId);
         participate.setIsJoined(0);
