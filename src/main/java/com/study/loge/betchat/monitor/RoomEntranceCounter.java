@@ -1,6 +1,8 @@
 package com.study.loge.betchat.monitor;
 
 import com.study.loge.betchat.utils.exception.RoomEntranceCounterException;
+import com.study.loge.betchat.utils.parser.StompHeaderParser;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -16,7 +18,9 @@ public class RoomEntranceCounter {
     private Set<String> disabledRoom = new TreeSet<>();                   // 비활성화된 채팅방의 roomKey를 저장합니다.
 
     // 채팅방 참가 요청을 처리합니다.
-    public synchronized void participate(String simpSessionId, String roomKey) throws RoomEntranceCounterException {
+    public synchronized void participate(Message<?> message) throws RoomEntranceCounterException {
+        String simpSessionId = StompHeaderParser.getSimpSessionId(message);
+        String roomKey = StompHeaderParser.getSimpSessionId(message);
 
         // 비활성화 채팅방 목록에 roomKey가 존재한다면 예외를 발생시킵니다.
         if(disabledRoom.contains(roomKey))
