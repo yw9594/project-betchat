@@ -5,6 +5,7 @@ import com.study.loge.betchat.model.entity.User;
 import com.study.loge.betchat.repository.RoomRepository;
 import com.study.loge.betchat.repository.UserRepository;
 import com.study.loge.betchat.utils.exception.SubscribeException;
+import com.study.loge.betchat.utils.parser.StompHeaderParser;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -17,16 +18,16 @@ public class ParticipateValidationChecker extends AbstractMessageValidationCheck
     private UserRepository userReposotory;
     private RoomRepository roomRepository;
 
+    private StompHeaderParser stompHeaderParser;
+
     @Override
     public void isValid(Message<?> message) throws Exception {
         isKeyValidationCheck(message);
     }
 
     private void isKeyValidationCheck(Message<?> message) throws SubscribeException {
-        StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
-
-        String userKey = stompHeaderAccessor.getNativeHeader("user_key").get(0);
-        String roomKey = stompHeaderAccessor.getNativeHeader("room_key").get(0);
+        String userKey = StompHeaderParser.getUserKey(message);
+        String roomKey = StompHeaderParser.getRoomKey(message);
 
         User user = userReposotory.findByUserKey(userKey);
         Room room = roomRepository.findByRoomKey(roomKey);
