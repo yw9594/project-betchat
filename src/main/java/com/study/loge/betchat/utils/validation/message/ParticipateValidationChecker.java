@@ -8,7 +8,6 @@ import com.study.loge.betchat.utils.exception.SubscribeException;
 import com.study.loge.betchat.utils.parser.StompHeaderParser;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 
 // 참가 요청에 대한 유효성을 검사합니다.
@@ -17,8 +16,6 @@ import org.springframework.stereotype.Component;
 public class ParticipateValidationChecker extends AbstractMessageValidationChecker{
     private UserRepository userReposotory;
     private RoomRepository roomRepository;
-
-    private StompHeaderParser stompHeaderParser;
 
     @Override
     public void isValid(Message<?> message) throws Exception {
