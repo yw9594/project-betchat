@@ -1,6 +1,5 @@
 package com.study.loge.betchat.monitor;
 
-import com.study.loge.betchat.utils.exception.SubscribeException;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -16,10 +15,10 @@ public class RoomEntranceCounter {
     private Set<String> disabledRoom = new TreeSet<>();                   // 비활성화된 채팅방의 roomKey를 저장합니다.
 
     // 채팅방 참가 요청을 처리합니다.
-    public synchronized void participate(String simpSessionId, String roomKey) throws SubscribeException {
+    public synchronized boolean participate(String simpSessionId, String roomKey) {
         // 비활성화 채팅방 목록에 roomKey가 존재한다면 예외를 발생시킵니다.
         if(disabledRoom.contains(roomKey))
-            throw new SubscribeException("참가할 수 없는 방입니다.");
+            return false;
         // 참가수를 1 증가시킵니다.
         else {
             Integer count = participantsCounter.get(roomKey);
@@ -28,6 +27,8 @@ public class RoomEntranceCounter {
 
             participantsCounter.put(roomKey, count);
             participants.put(simpSessionId, roomKey);
+
+            return true;
         }
     }
 
