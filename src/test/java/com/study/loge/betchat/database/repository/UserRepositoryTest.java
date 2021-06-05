@@ -2,8 +2,8 @@ package com.study.loge.betchat.database.repository;
 
 import com.study.loge.betchat.model.entity.User;
 import com.study.loge.betchat.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +63,7 @@ public class UserRepositoryTest {
         });
     }
 
-    @BeforeEach
+    @AfterEach
     public void deleteTestUser() {
         User user = userRepository.findByUserKey(userKey);
         if(user!=null) userRepository.delete(user);
