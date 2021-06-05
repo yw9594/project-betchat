@@ -1,7 +1,6 @@
-package com.study.loge.betchat.database.repository;
+package com.study.loge.betchat.repository;
 
 import com.study.loge.betchat.model.entity.User;
-import com.study.loge.betchat.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
