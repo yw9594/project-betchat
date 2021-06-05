@@ -27,15 +27,12 @@ public class HomeService {
             // 로그인 요청의 유효성을 검사합니다.
             loginValidationChecker.check(request);
 
-            // response에 필요한 값을 생성합니다.
             resultState = ResultState.OK;
             userKey = userDao.create(userName);
         }
-        catch(LoginException e){
-            resultState = ResultState.ERROR;
-        }
         catch(Exception e){
-            e.printStackTrace();
+            resultState = ResultState.ERROR;
+            userKey = null;
         }
         finally {
             // response를 생성한 뒤, 반환합니다.
