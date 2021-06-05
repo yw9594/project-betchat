@@ -1,10 +1,10 @@
 package com.study.loge.betchat.monitor;
 
+import com.study.loge.betchat.utils.parser.StompHeaderParser;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessageType;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +16,7 @@ public class RoomEntranceMonitor implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        StompHeaderAccessor stompHeaderAccessor = (StompHeaderAccessor) StompHeaderAccessor.getAccessor(message);
-        SimpMessageType messageType = stompHeaderAccessor.getMessageType();
+        SimpMessageType messageType = StompHeaderParser.getSimpMessageType(message);
 
         // Stomp Message Type에 따라 정보를 처리합니다.
         try {
