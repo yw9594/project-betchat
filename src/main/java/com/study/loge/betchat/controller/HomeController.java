@@ -3,7 +3,7 @@ package com.study.loge.betchat.controller;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
 import com.study.loge.betchat.model.MessageHeader;
-import com.study.loge.betchat.service.HomeService;
+import com.study.loge.betchat.service.business.HomeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

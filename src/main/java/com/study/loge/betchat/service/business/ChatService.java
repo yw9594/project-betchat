@@ -1,4 +1,4 @@
-package com.study.loge.betchat.service;
+package com.study.loge.betchat.service.business;
 
 import com.study.loge.betchat.utils.enums.ResultState;
 import com.study.loge.betchat.model.MessageHeader;
