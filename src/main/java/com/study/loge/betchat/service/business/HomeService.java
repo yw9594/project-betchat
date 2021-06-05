@@ -1,11 +1,10 @@
 package com.study.loge.betchat.service.business;
 
-import com.study.loge.betchat.service.dao.UserDao;
-import com.study.loge.betchat.utils.enums.ResultState;
-import com.study.loge.betchat.utils.exception.LoginException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.UserLoginRequest;
 import com.study.loge.betchat.model.response.UserLoginResponse;
+import com.study.loge.betchat.service.dao.UserDao;
+import com.study.loge.betchat.utils.enums.ResultState;
 import com.study.loge.betchat.utils.validation.messageheader.LoginValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,8 @@ public class HomeService {
             loginValidationChecker.check(request);
 
             resultState = ResultState.OK;
+
+            // 유저를 생성하고 userKey를 반환받습니다.
             userKey = userDao.create(userName);
         }
         catch(Exception e){
