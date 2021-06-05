@@ -2,8 +2,8 @@ package com.study.loge.betchat.database.repository;
 
 import com.study.loge.betchat.model.entity.Room;
 import com.study.loge.betchat.repository.RoomRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public class RoomRepositoryTest {
         });
     }
 
-    @BeforeEach
+    @AfterEach
     public void deleteTestRoom() {
         Room room = roomRepository.findByRoomKey(roomKey);
         if(room!=null) roomRepository.delete(room);
