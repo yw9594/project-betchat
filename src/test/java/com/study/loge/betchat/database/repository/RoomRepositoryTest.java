@@ -42,7 +42,7 @@ public class RoomRepositoryTest {
     }
 
     @Test
-    public void constraintRedundantUserKeyTest() {
+    public void constraintRedundantRoomKeyTest() {
         Room room1 = Room.builder().roomKey(roomKey).createdAt(LocalDateTime.now()).build();
         Room room2 = Room.builder().roomKey(roomKey).createdAt(LocalDateTime.now()).build();
 
@@ -53,7 +53,7 @@ public class RoomRepositoryTest {
     }
 
     @BeforeEach
-    public void deleteTestUser() {
+    public void deleteTestRoom() {
         Room room = roomRepository.findByRoomKey(roomKey);
         if(room!=null) roomRepository.delete(room);
     }
