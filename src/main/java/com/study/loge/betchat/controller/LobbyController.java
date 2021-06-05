@@ -5,7 +5,7 @@ import com.study.loge.betchat.model.request.RoomCreateRequest;
 import com.study.loge.betchat.model.request.RoomJoinRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
 import com.study.loge.betchat.model.response.RoomJoinResponse;
-import com.study.loge.betchat.service.LobbyService;
+import com.study.loge.betchat.service.business.LobbyService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
