@@ -15,7 +15,7 @@ public class RoomDao {
     private final KeyGenerator keyGenerator;
     private final RoomRepository roomRepository;
 
-    // 채팅방을 데이터베이스에 저장하고 UserKey를 저장합니다.
+    // 채팅방을 데이터베이스에 저장하고 RoomKey를 저장합니다.
     public String create(){
         String roomKey = keyGenerator.generateKey();
 
