@@ -1,30 +1,24 @@
 package com.study.loge.betchat.service.business;
 
-import com.study.loge.betchat.utils.KeyGenerator;
-import com.study.loge.betchat.model.entity.Room;
-import com.study.loge.betchat.utils.enums.ResultState;
-import com.study.loge.betchat.utils.exception.RoomCreateException;
-import com.study.loge.betchat.utils.exception.RoomJoinException;
 import com.study.loge.betchat.model.MessageHeader;
 import com.study.loge.betchat.model.request.RoomCreateRequest;
 import com.study.loge.betchat.model.request.RoomJoinRequest;
 import com.study.loge.betchat.model.response.RoomCreateResponse;
 import com.study.loge.betchat.model.response.RoomJoinResponse;
-import com.study.loge.betchat.repository.RoomRepository;
+import com.study.loge.betchat.service.dao.RoomDao;
+import com.study.loge.betchat.utils.enums.ResultState;
+import com.study.loge.betchat.utils.exception.RoomJoinException;
 import com.study.loge.betchat.utils.validation.messageheader.RoomCreationValidationChecker;
 import com.study.loge.betchat.utils.validation.messageheader.RoomJoinValidationChecker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 // 로비 페이지에서의 로직을 정의합니다.
 @AllArgsConstructor
 @Service
 public class LobbyService {
     // userId를 생성하기 위한 객체입니다.
-    private final KeyGenerator keyGenerator;
-    private final RoomRepository roomRepository;
+    private final RoomDao roomDao;
 
     private final RoomCreationValidationChecker roomCreationValidationChecker;
     private final RoomJoinValidationChecker roomJoinValidationChecker;
@@ -38,18 +32,10 @@ public class LobbyService {
             roomCreationValidationChecker.check(request);
 
             resultState = ResultState.OK;
-            roomKey = keyGenerator.generateKey();
-
-            Room room = Room.builder()
-                    .roomKey(roomKey)
-                    .createdAt(LocalDateTime.now())
-                    .build();
-
-            roomRepository.save(room);
-        } catch (RoomCreateException e) {
-            resultState = ResultState.ERROR;
+            roomKey = roomDao.create();
         } catch (Exception e) {
-            e.printStackTrace();
+            resultState = ResultState.ERROR;
+            roomKey = null;
         } finally {
             RoomCreateResponse roomCreateResponse = RoomCreateResponse
                     .builder()
