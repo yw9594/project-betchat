@@ -23,6 +23,15 @@ public class RoomEntranceCounterTest {
     private final StompCommand stompCommand = StompCommand.SEND;
     private Message<?> message;
 
+    @Test
+    public void disabledRoomAccessTest(){
+
+    }
+    @Test
+    public void raceConditionTest() {
+
+    }
+
 //    @BeforeEach
     @Test
     public void createTestMessge(){
